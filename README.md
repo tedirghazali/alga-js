@@ -1,2 +1,2 @@
-# PidieScript
-PidieScript is component to build web application
+# PidieJS
+PidieJS is components for building a web application
