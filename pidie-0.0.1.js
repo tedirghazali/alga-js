@@ -6,8 +6,20 @@
 */
 
 class Pidie {
-  constructor(component, type){
-    this.component = component
-    this.type = type
+  constructor(){
+    //this.id = id
+  }
+  // getters
+  get panel(){
+    return this.jendela();
+  }
+  // methods
+  jendela() {
+    document.getElementById("panel").addEventListener("click", function(){
+      document.querySelector(".pd-panel").style.display = "block";
+    });
+    document.querySelector(".pd-panel").addEventListener("click", function(){
+      document.querySelector(".pd-panel").style.display = "none";
+    });
   }
 }

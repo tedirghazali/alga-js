@@ -3,44 +3,41 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>PidieJS</title>
+  <title>PidieUI</title>
   <link href="pidie-0.0.1.css" rel="stylesheet"/>
 </head>
 <body>
 
+  <div class="pd-panel"></div>
+
   <nav class="pd-nav">
-    <div class="pd-nav-brand">
-      <a href="#">
-        <img src="images/pidiejs.png"/>
-        <h1>PidieJS</h1>
-      </a>
-    </div>
-    <ul>
+    <button id="panel" class="pd-nav-toggle">
+      <span class="pd-nav-toggle-icon"></span>
+    </button>
+    <a class="pd-nav-brand" href="#">
+      <img src="images/pidiejs.png"/>
+      <h1>PidieUI</h1>
+    </a>
+    <ul class="pd-nav-menu">
       <li><a href="#">Home</a></li>
-      <li class="pd-nav-dropdown">
-        <a class="pd-nav-caret" href="#">Product</a> 
-        <ul>
-          <li><a href="#">Product item 1</a></li>
-          <li><a href="#">Product item 2</a></li>
-          <li><a href="#">Product item 3</a></li>
-          <li><a href="#">Product item 5</a></li>
-          <li><a href="#">Product item 6</a></li>
-        </ul>
-      </li>
+      <li><a href="#">Product</a></li>
+      <li><a href="#">Tutorial</a></li>
       <li><a href="#">Documentation</a></li>
-      <li><a href="#">Download</a></li>
-      <li><a href="#">About</a></li>
     </ul>
     <form>
-        <input type="search" name="q"/>
-        <button>Search</button>
+      <input type="search" name="q"/>
+      <button type="submit">Search</button>
     </form>
-    <ul>
+    <ul class="pd-nav-menu pd-menu-right">
       <li><a href="#">Login</a></li>
       <li><a href="#">Register</a></li>
     </ul>
   </nav>
 
   <script src="pidie-0.0.1.js"></script>
+  <script>
+    var pidie = new Pidie();
+    pidie.panel
+  </script>
 </body>
 </html>
