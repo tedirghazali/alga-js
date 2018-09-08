@@ -138,7 +138,8 @@ body{ font-family: ubuntu; }
   color: #ffffff;
   cursor: pointer;
 }
-.pd-nav input{
+.pd-nav form input{
+  width: 200px;
   height: calc(2.25rem + 4px);
   padding: 0.1rem 5px 0.3rem 5px;
   font-size: 1rem;
@@ -149,6 +150,24 @@ body{ font-family: ubuntu; }
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+@media only screen and (max-width: 1200px) {
+    .pd-nav form {
+        display: none;
+    }
+}
+@media only screen and (max-width: 1024px) {
+    .pd-menu-right {
+        display: none;
+    }
+}
+@media only screen and (max-width: 800px) {
+    .pd-menu-left {
+        display: none;
+    }
+    .pd-nav{
+      height: 60px;
+    }
 }
 
 /*
@@ -163,6 +182,33 @@ body{ font-family: ubuntu; }
   overflow:auto;
   display: none;
   border-right: 1px solid #ccc;
+}
+.pd-panel form{
+  display: -ms-flexbox;
+  display: flex;
+}
+.pd-panel form input{
+  width: 200px;
+  height: calc(2.25rem + 4px);
+  padding: 0.1rem 5px 0.3rem 5px;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+}
+.pd-panel form button{
+  width: 100px;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid transparent;
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+.pd-panel form{
+  display: none;
+}
+.pd-panel .pd-nav-menu{
+  margin: 0;
 }
 
 /*
