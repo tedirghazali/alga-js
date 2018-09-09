@@ -15,23 +15,30 @@ class Pidie {
   }
   // methods
   jendela() {
-    document.getElementById("panel").addEventListener("click", function(){
-      document.querySelector(".pd-panel").style.display = "block";
-      document.querySelector(".pd-panel").appendChild(document.querySelector("form"));
-      document.querySelector(".pd-panel").appendChild(document.querySelector(".pd-menu-left"));
-      document.querySelector(".pd-panel").appendChild(document.querySelector(".pd-menu-right"));
-      document.querySelector(".pd-nav").style.height = "60px";
-      document.querySelector(".pd-menu-left").style.display = "block";
-      document.querySelector(".pd-menu-right").style.display = "block";
+    var panel = document.getElementById("panel");
+    var pdPanel = document.querySelector(".pd-panel");
+    var pdNav = document.querySelector(".pd-nav");
+    var pdForm = document.querySelector("form");
+    var pdMenuLeft = document.querySelector(".pd-menu-left");
+    var pdMenuRight = document.querySelector(".pd-menu-right");
+    var clPanel = document.querySelector(".container");
+    panel.addEventListener("click", function(){
+      pdPanel.style.display = "block";
+      (pdForm)? pdPanel.appendChild(pdForm): "";
+      (pdMenuLeft)? pdPanel.appendChild(pdMenuLeft): "";
+      (pdMenuRight)? pdPanel.appendChild(pdMenuRight): "";
+      pdNav.style.height = "60px";
+      pdMenuLeft.style.display = "block";
+      pdMenuRight.style.display = "block";
     });
-    document.querySelector(".pd-panel").addEventListener("click", function(){
-      document.querySelector(".pd-panel").style.display = "none";
-      document.querySelector(".pd-nav").appendChild(document.querySelector(".pd-menu-left"));
-      document.querySelector(".pd-nav").appendChild(document.querySelector("form"));
-      document.querySelector(".pd-nav").appendChild(document.querySelector(".pd-menu-right"));
-      document.querySelector(".pd-nav").style.height = "auto";
-      document.querySelector(".pd-menu-left").style.display = "";
-      document.querySelector(".pd-menu-right").style.display = "";
+    clPanel.addEventListener("click", function(){
+      pdPanel.style.display = "none";
+      (pdMenuLeft)? pdNav.appendChild(pdMenuLeft): "";
+      (pdForm)? pdNav.appendChild(pdForm): "";
+      (pdMenuRight)? pdNav.appendChild(pdMenuRight): "";
+      pdNav.style.height = "auto";
+      pdMenuLeft.style.display = "";
+      pdMenuRight.style.display = "";
     });
   }
 }

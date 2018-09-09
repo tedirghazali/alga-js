@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>PidieUI</title>
+  <title>PidieUi</title>
   <link href="pidie-0.0.1.css" rel="stylesheet"/>
 </head>
 <body>
@@ -16,26 +16,44 @@
     </button>
     <a class="pd-nav-brand" href="#">
       <img src="images/pidiejs.png"/>
-      <h1>PidieUI</h1>
+      <h1>PidieUi</h1>
     </a>
     <ul class="pd-nav-menu pd-menu-left">
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Product</a></li>
-      <li><a href="#">Tutorial</a></li>
+      <li class="active"><a href="#">Home</a></li>
+      <li class="pd-nav-dropdown"><a href="#">Product</a>
+        <ul>
+          <li><a href="#">Product 1</a></li>
+          <li><a href="#">Product 2</a></li>
+          <li><a href="#">Product 3</a></li>
+          <li><a href="#">Product 4</a></li>
+          <li><a href="#">Product 5</a></li>
+        </ul>
+      </li>
       <li><a href="#">Docs</a></li>
+      <li class="pd-nav-dropdown"><a href="#">Tutorial</a>
+        <ul>
+          <li><a href="#">Tutorial 1</a></li>
+          <li><a href="#">Tutorial 2</a></li>
+          <li><a href="#">Tutorial 3</a></li>
+          <li><a href="#">Tutorial 4</a></li>
+          <li><a href="#">Tutorial 5</a></li>
+        </ul>
+      </li>
       <li><a href="#">Download</a></li>
       <li><a href="#">Support</a></li>
       <li><a href="#">About</a></li>
     </ul>
-    <form>
+    <!--<form>
       <input type="search" name="q"/>
       <button type="submit">Search</button>
     </form>
     <ul class="pd-nav-menu pd-menu-right">
       <li><a href="#">Login</a></li>
       <li><a href="#">Register</a></li>
-    </ul>
+    </ul>-->
   </nav>
+
+  <div class="container"></div>
 
   <script src="pidie-0.0.1.js"></script>
   <script>

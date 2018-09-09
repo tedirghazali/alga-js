@@ -1,2 +1,2 @@
-# PidieUI
-PidieUI is components for building a web application
+# PidieUi
+PidieUi is UI components for building a web applications

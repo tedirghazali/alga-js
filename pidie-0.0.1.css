@@ -26,6 +26,16 @@ body{ font-family: ubuntu; }
 .text-center{ text-align: center; }
 .text-right{ text-align: right; }
 .text-justify{ text-align: justify; }
+.container{
+  width: 100%;
+  height: 300px;
+}
+@media only screen and (max-width: 800px) {
+  .container{
+    width: 100%;
+    height: 300px;
+  }
+}
 
 /*
 * Pidie Navigation
@@ -55,6 +65,7 @@ body{ font-family: ubuntu; }
   max-width: 3em;
   text-align: left;
   cursor: pointer;
+  display: none;
 }
 .pd-nav-toggle-icon{
   background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
@@ -114,6 +125,13 @@ body{ font-family: ubuntu; }
 .pd-nav-menu a:hover{
   background-color: #ccc;
 }
+.pd-nav-menu .active a{
+  background-color: #ccc;
+}
+.pd-nav-menu .active ul li a{
+  background-color: #ffffff;
+  border-radius: 0.25rem;
+}
 .pd-nav form{
   padding: 0 10px;
 }
@@ -168,6 +186,9 @@ body{ font-family: ubuntu; }
     .pd-nav{
       height: 60px;
     }
+    .pd-nav-toggle{
+      display: block;
+    }
 }
 
 /*
@@ -214,14 +235,14 @@ body{ font-family: ubuntu; }
 /*
 * Pidie Navigation Dropdown
 */
-.pd-nav ul .pd-nav-dropdown > ul{
+.pd-nav-dropdown > ul{
   position: absolute;
   display: none;
   top: 100%;
   z-index: 1000;
   float: left;
   min-width: 10rem;
-  padding: 0.5rem 0;
+  padding: 0;
   margin: 0.125rem 0 0;
   font-size: 1rem;
   color: #212529;
@@ -234,35 +255,62 @@ body{ font-family: ubuntu; }
   transition: transform .3s, opacity .5s;
   transform: translateY(-10px);
 }
-.pd-nav ul .pd-nav-dropdown > ul a{
+.pd-panel .pd-nav-dropdown > ul{
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  float: none;
+  border-radius: 0;
+  border: none;
+}
+.pd-panel .pd-nav-dropdown ul{
+  display: none;
+}
+.pd-panel .active ul{
+  display: block;
+}
+.pd-panel .active ul li a{
+  background-color: #ffffff;
+}
+.pd-nav-dropdown > ul a{
   display: block;
   padding: 1rem 1rem;
 }
-.pd-nav ul .pd-nav-dropdown > ul li{
+.pd-nav-dropdown > ul li{
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
-.pd-nav ul .pd-nav-dropdown > ul li:last-child{
+.pd-nav-dropdown > ul li:last-child{
   border-bottom: none;
 }
-.pd-nav ul .pd-nav-dropdown .pd-nav-caret::before{
-  content: '\00bb';
+.pd-nav-dropdown > a::after{
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='11px' height='7px' viewBox='0 0 11 7' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='Memweb-Header' transform='translate(-987.000000, -32.000000)' fill='%23333333'%3e%3cg id='Group-32'%3e%3cg transform='translate(859.000000, 15.687500)'%3e%3cpolygon id='navigatedown' points='133.177885 23 138.355769 17.8221154 137.540865 17 133.177885 21.3629808 128.814904 17 128 17.8221154'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
   display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
   vertical-align: middle;
+  content: "";
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 0.255em;
+}
+.pd-panel .pd-nav-dropdown > a::after{
   float: right;
-  margin-right: -15px;
+  margin-top: -15px;
 }
-.pd-nav ul .pd-nav-dropdown:hover > ul{
+.pd-nav-dropdown:hover > ul{
   display: block;
 }
-.pd-nav ul .pd-nav-dropdown > ul ul{
+.pd-nav-dropdown > ul ul{
   position: absolute;
   display: none;
-  top: 50%;
+  top: 0;
   left: 100%;
   z-index: 1000;
-  float: left;
   min-width: 10rem;
-  padding: 0.5rem 0;
+  padding: 0;
   margin: 0.125rem 0 0;
   font-size: 1rem;
   color: #212529;
@@ -275,10 +323,19 @@ body{ font-family: ubuntu; }
   transition: transform .3s, opacity .5s;
   transform: translateY(-10px);
 }
-.pd-nav ul .pd-nav-dropdown > ul li:hover ul{
+.pd-panel .pd-nav-dropdown > ul ul{
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+}
+.pd-nav-dropdown > ul li:hover ul{
   display: block;
 }
-.pd-nav ul .pd-nav-dropdown > ul ul ul{
+.pd-nav-dropdown > ul ul ul{
   position: absolute;
   display: none;
   top: 50%;
@@ -286,7 +343,7 @@ body{ font-family: ubuntu; }
   z-index: 1000;
   float: left;
   min-width: 10rem;
-  padding: 0.5rem 0;
+  padding: 0;
   margin: 0.125rem 0 0;
   font-size: 1rem;
   color: #212529;
@@ -299,10 +356,22 @@ body{ font-family: ubuntu; }
   transition: transform .3s, opacity .5s;
   transform: translateY(-10px);
 }
-.pd-nav ul .pd-nav-dropdown ul ul li:hover ul{
+.pd-panel .pd-nav-dropdown > ul ul ul{
+  display: block;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  float: none;
+  border-radius: 0;
+  border: none;
+}
+.pd-nav-dropdown ul ul li:hover ul{
   display: block;
 }
 
 /*
 * Product Slideshow
 */
+
+
