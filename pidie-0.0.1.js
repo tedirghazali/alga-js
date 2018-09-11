@@ -21,7 +21,6 @@ class Pidie {
     var pdForm = document.querySelector(".pd-nav-search");
     var pdMenuLeft = document.querySelector(".pd-menu-left");
     var pdMenuRight = document.querySelector(".pd-menu-right");
-    var clPanel = document.querySelector(".container");
     panel.addEventListener("click", function(){
       pdPanel.style.display = "block";
       (pdForm)? pdPanel.appendChild(pdForm): "";
@@ -31,7 +30,7 @@ class Pidie {
       pdMenuLeft.style.display = "block";
       pdMenuRight.style.display = "block";
     });
-    clPanel.addEventListener("click", function(){
+    pdPanel.addEventListener("click", function(){
       pdPanel.style.display = "none";
       (pdMenuLeft)? pdNav.appendChild(pdMenuLeft): "";
       (pdForm)? pdNav.appendChild(pdForm): "";
