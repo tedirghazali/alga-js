@@ -18,7 +18,7 @@ class Pidie {
     var panel = document.getElementById("panel");
     var pdPanel = document.querySelector(".pd-panel");
     var pdNav = document.querySelector(".pd-nav");
-    var pdForm = document.querySelector("form");
+    var pdForm = document.querySelector(".pd-nav-search");
     var pdMenuLeft = document.querySelector(".pd-menu-left");
     var pdMenuRight = document.querySelector(".pd-menu-right");
     var clPanel = document.querySelector(".container");
