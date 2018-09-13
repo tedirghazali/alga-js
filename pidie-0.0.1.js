@@ -16,6 +16,9 @@ class Pidie {
   get slide(){
     return this.headerSlide();
   }
+  get gridList(){
+    return this.listGrid();
+  }
   // methods
   jendela() {
     var panel = document.getElementById("panel");
@@ -103,5 +106,52 @@ class Pidie {
     sliderItems.addEventListener('mouseout', function(){
       autoPlayIndex();
     })
+  }
+  listGrid(){
+    let vm = this;
+    var listGridFilter = document.querySelector('.pd-filter');
+    var listFilterItem = document.querySelector('.pd-list-grid');
+    var listButton = document.querySelector('.pd-button-list');
+    var listFilter = document.querySelector('.pd-filter-list');
+    var gridButton = document.querySelector('.pd-button-grid');
+    var gridFilter = document.querySelector('.pd-filter-grid');
+    //var listGridItem = document.querySelector('data-product');
+    listButton.addEventListener('click', function(e){
+      e.preventDefault();
+      vm.removeClass(listGridFilter, 'pd-row');
+      vm.removeClass(listGridFilter, 'pd-filter-grid');
+      vm.addClass(listGridFilter, 'pd-filter-list');
+      for(var i = 1;i <= listGridFilter.children.length;i++){
+        vm.removeClass(document.querySelector('.pd-list-grid:nth-child('+i+')'), 'pd-col-md-4');
+      }
+    })
+    gridButton.addEventListener('click', function(e){
+      e.preventDefault();
+      vm.addClass(listGridFilter, 'pd-row');
+      vm.addClass(listGridFilter, 'pd-filter-grid');
+      vm.removeClass(listGridFilter, 'pd-filter-list');
+      for(var i = 1;i <= listGridFilter.children.length;i++){
+        vm.addClass(document.querySelector('.pd-list-grid:nth-child('+i+')'), 'pd-col-md-4');
+      }
+    })
+  }
+  hasClass(el, className) {
+    if (el.classList)
+      return el.classList.contains(className)
+    else
+      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'))
+  }
+  addClass(el, className) {
+    if (el.classList)
+      el.classList.add(className)
+    else if (!this.hasClass(el, className)) el.className += " " + className
+  }
+  removeClass(el, className) {
+    if (el.classList)
+      el.classList.remove(className)
+    else if (this.hasClass(el, className)) {
+      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)')
+      el.className=el.className.replace(reg, ' ')
+    }
   }
 }
