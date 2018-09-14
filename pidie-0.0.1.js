@@ -173,11 +173,15 @@ class Pidie {
         }
       }
     }
-    verticalSearch.addEventListener('keyup', function(){
-      searchItem(verticalSearch);
-    })
-    horizontalSearch.addEventListener('keyup', function(){
-      searchItem(horizontalSearch);
-    })
+    if(verticalSearch){
+      verticalSearch.addEventListener('keyup', function(){
+        searchItem(verticalSearch);
+      })
+    }
+    if(horizontalSearch){
+      horizontalSearch.addEventListener('keyup', function(){
+        searchItem(horizontalSearch);
+      })
+    }
   }
 }
