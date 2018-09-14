@@ -19,6 +19,9 @@ class Pidie {
   get gridList(){
     return this.listGrid();
   }
+  get filterSearch(){
+    return this.searchFilter();
+  }
   // methods
   jendela() {
     var panel = document.getElementById("panel");
@@ -153,5 +156,28 @@ class Pidie {
       var reg = new RegExp('(\\s|^)' + className + '(\\s|$)')
       el.className=el.className.replace(reg, ' ')
     }
+  }
+  searchFilter() {
+    var verticalSearch = document.querySelector('.pd-vertical-filter input[type=search]');
+    var horizontalSearch = document.querySelector('.pd-horizontal-filter input[type=search]');
+    function searchItem(filter) {
+      var inputCase = filter.value.toUpperCase();
+      var productCase = document.querySelector('.pd-filter');
+      var productItem = productCase.getElementsByClassName('pd-list-grid');
+      for(var i = 0; i < productItem.length; i++){
+        var titleItem = productItem[i].getElementsByClassName('pd-card-title')[0];
+        if(titleItem.innerHTML.toUpperCase().indexOf(inputCase) > -1){
+          productItem[i].style.display = "";
+        } else{
+          productItem[i].style.display = "none";
+        }
+      }
+    }
+    verticalSearch.addEventListener('keyup', function(){
+      searchItem(verticalSearch);
+    })
+    horizontalSearch.addEventListener('keyup', function(){
+      searchItem(horizontalSearch);
+    })
   }
 }

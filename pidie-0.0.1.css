@@ -135,7 +135,7 @@ body{ font-family: ubuntu; }
 }
 
 /*
-* Pidie Navigation
+* Navigation
 */
 .pd-nav{
   position: relative;
@@ -2686,7 +2686,7 @@ input[type="button"].pd-block {
 /*
 * Horizontal Filter
 */
-.pd-horizontal-filter{
+.pd-horizontal-filter, .pd-vertical-filter{
   width: 100%;
   padding: 5px 10px;
   background-color: #eeeeee;
