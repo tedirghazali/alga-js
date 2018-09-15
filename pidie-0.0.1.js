@@ -22,6 +22,15 @@ class Pidie {
   get filterSearch(){
     return this.searchFilter();
   }
+  get tabs(){
+    return this.tab();
+  }
+  get megaTabs(){
+    return this.tabsMega();
+  }
+  get filterCheckbox(){
+    return this.checkboxFilter();
+  }
   // methods
   jendela() {
     var panel = document.getElementById("panel");
@@ -183,5 +192,62 @@ class Pidie {
         searchItem(horizontalSearch);
       })
     }
+  }
+  tab() {
+    var wrapTabs = document.querySelector('.pd-tabs');
+    var activeTabs = 'active';
+    var titleTabs = 'pd-tabs-title';
+    var contentTabs = 'pd-tabs-content';
+    var tabOpen = 0;
+    var numTabs = wrapTabs.querySelectorAll('.'+titleTabs).length;
+    var init = checkTabs(tabOpen);
+    for (var i = 0; i < numTabs; i++) {
+      wrapTabs.querySelectorAll('.' + titleTabs)[i].setAttribute('data-tab', i);
+      if (i === init) openTabs(i);
+    }
+    function checkTabs(n) {
+      return (n < 0 || isNaN(n) || n > numTabs) ? 0 : n;
+    }
+    function resetTabs() {
+      Array.prototype.forEach.call(wrapTabs.querySelectorAll('.' + contentTabs), function(item) {
+          item.style.display = 'none';
+      });
+      Array.prototype.forEach.call(wrapTabs.querySelectorAll('.' + titleTabs), function(item) {
+          item.className = removeTabs(item.className, activeTabs);
+      });
+    }
+    function removeTabs(str, cls) {
+      var reg = new RegExp('(\ )' + cls + '(\)', 'g');
+      return str.replace(reg, '');
+    }
+    function openTabs(n) {
+      resetTabs();
+      var i = checkTabs(n);
+      wrapTabs.querySelectorAll('.'+titleTabs)[i].className += ' ' + activeTabs;
+      wrapTabs.querySelectorAll('.'+contentTabs)[i].style.display = '';
+    }
+    wrapTabs.addEventListener('click', function(e){
+      if (e.target.className.indexOf(titleTabs) === -1) return;
+      e.preventDefault();
+      openTabs(e.target.getAttribute('data-tab'));
+    });
+  }
+  tabsMega() {
+    /*let vm = this;
+    var megaTabsList = document.querySelector('.pd-mega-tabs-list');
+    if(megaTabsList){
+      var elem = megaTabsList.getElementsByTagName('li');
+      for(var i = 0; i < elem.length; i++){
+        elem[i].addEventListener('mouseover', function(){
+          vm.addClass(elem[i], 'active');
+        })
+        elem[i].addEventListener('mouseout', function(){
+          vm.removeClass(elem[i], 'active');
+        })
+      }
+    }*/
+  }
+  checkboxFilter() {
+
   }
 }
