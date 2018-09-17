@@ -553,23 +553,50 @@ body{ font-family: ubuntu; }
 .pd-mega-tabs .pd-mega-tabs-list li:last-child{
   border-bottom: none;
 }
-.pd-mega-tabs .pd-mega-tabs-list li.active{
+.pd-mega-tabs .pd-mega-tabs-list li:hover{
   border-right: 1px solid #ffffff;
 }
-.pd-mega-tabs .pd-mega-tabs-list li.active a{
+.pd-mega-tabs .pd-mega-tabs-list li:hover a{
   background-color: #ffffff;
 }
-.pd-mega-tabs .pd-mega-tabs-list li.active a::after{
+.pd-mega-tabs .pd-mega-tabs-list > li:hover > a::after{
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg version='1.1' id='Layer_1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' viewBox='0 0 7 10' style='enable-background:new 0 0 7 10;' xml:space='preserve'%3e%3cstyle type='text/css'%3e .st0%7bfill:%23444444;%7d %3c/style%3e%3cpolygon class='st0' points='1.8,0 0.2,1.7 3.5,5 0.2,8.3 1.8,10 5.2,6.7 6.8,5 '/%3e%3c/svg%3e");
   display: inline-block;
   width: 12px;
   height: 12px;
-  margin-top: -2px;
+  margin-top: -15px;
   vertical-align: middle;
   content: "";
   background-repeat: no-repeat;
   background-position: center;
-  margin-left: 8em;
+  float: right;
+}
+.pd-mega-tabs .pd-mega-tabs-list .pd-mega-tabs-sub{
+  position: absolute;
+  left: 250px;
+  top: 0;
+  z-index: 2001;
+  margin-top: 15px;
+  visibility: hidden;
+}
+.pd-mega-tabs .pd-mega-tabs-list li:hover .pd-mega-tabs-sub{
+  visibility: visible;
+}
+.pd-mega-tabs .pd-mega-tabs-list li:first-child .pd-mega-tabs-sub{
+  visibility: visible;
+}
+.pd-mega-tabs .pd-mega-tabs-list .pd-mega-tabs-sub .pd-mega-tabs-item{
+  background: #eeeeee;
+  border: 1px solid #cdcdcd;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 0.25em;
+}
+.pd-mega-tabs .pd-mega-tabs-list .pd-mega-tabs-sub .pd-mega-tabs-item:first-child{
+  margin-left: 20px;
+}
+.pd-mega-tabs .pd-mega-tabs-list .pd-mega-tabs-sub .pd-mega-tabs-item:hover{
+  background: #dddddd;
 }
 
 /*

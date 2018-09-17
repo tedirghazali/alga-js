@@ -275,21 +275,6 @@ class Pidie {
       }
     }
   }
-  tabsMega() {
-    /*let vm = this;
-    var megaTabsList = document.querySelector('.pd-mega-tabs-list');
-    if(megaTabsList){
-      var elem = megaTabsList.getElementsByTagName('li');
-      for(var i = 0; i < elem.length; i++){
-        elem[i].addEventListener('mouseover', function(){
-          vm.addClass(elem[i], 'active');
-        })
-        elem[i].addEventListener('mouseout', function(){
-          vm.removeClass(elem[i], 'active');
-        })
-      }
-    }*/
-  }
   checkboxFilter() {
 
   }
