@@ -598,6 +598,10 @@ body{ font-family: ubuntu; }
 .pd-mega-tabs .pd-mega-tabs-list .pd-mega-tabs-sub .pd-mega-tabs-item:hover{
   background: #dddddd;
 }
+.pd-panel .pd-nav-mega .pd-mega-tabs{
+  display: none;
+  visibility: hidden;
+}
 
 /*
 * Column
