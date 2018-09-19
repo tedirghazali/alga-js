@@ -2770,11 +2770,16 @@ input[type="button"].pd-block {
   border:1px solid #dddddd;
   margin: 10px 0;
 }
+.pd-horizontal-filter{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
 .pd-horizontal-filter a{
   color: #666666;
-  padding: 7px 0 4px 0;
 }
-.pd-horizontal-filter a:hover{
+.pd-horizontal-filter a:hover, .pd-horizontal-filter span:hover{
   color: #333333;
 }
 .pd-horizontal-filter a .pd-icon{
@@ -2784,12 +2789,10 @@ input[type="button"].pd-block {
   padding-bottom: 20px;
 }
 .pd-input-filter{
-  width: 150px;
-  float: right;
-  display: block;
+  width: 170px;
   height: calc(1.8rem + 2px);
   padding: 0.375rem 0.75rem;
-  margin: 5px 0 5px 0;
+  margin: 5px 0 5px 5px;
   font-size: 1rem;
   line-height: 1.5;
   color: #495057;
@@ -2798,6 +2801,14 @@ input[type="button"].pd-block {
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.pd-horizontal-filter .pd-filter-total{
+  margin-top: 10px;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+.pd-filter-right{
+  margin: 0 0 0 auto;
 }
 .pd-filter .pd-card{
   margin-bottom: 20px;

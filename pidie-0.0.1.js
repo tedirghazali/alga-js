@@ -28,8 +28,8 @@ class Pidie {
   get accordionCollapse(){
     return this.collapseAccordion();
   }
-  get megaTabs(){
-    return this.tabsMega();
+  get filterSort(){
+    return this.sortFilter();
   }
   get filterCheckbox(){
     return this.checkboxFilter();
@@ -274,6 +274,46 @@ class Pidie {
         target.style.height = target.scrollHeight + 'px';
       }
     }
+  }
+  sortFilter() {
+    var sortList = document.querySelector('.pd-filter');
+    var sortValue = document.querySelector('.pd-horizontal-filter select');
+    var sortItem = sortList.getElementsByClassName('pd-list-grid');
+    document.querySelector('.pd-filter-total').innerHTML = 'Total items: '+sortItem.length;
+    sortValue.addEventListener('change', function(){
+      var pindah = true, harusPindah, hitungPindah = 0, x, y;
+      while (pindah) {
+        pindah = false;
+        for(var i = 0;i < sortItem.length;i++){
+          harusPindah = false;
+          x = sortItem[i].getElementsByTagName('p')[0];
+          y = sortItem[i + 1].getElementsByTagName('p')[0];
+          if(sortValue.value == 'low'){
+            if(Number(x.innerHTML) > Number(y.innerHTML)){
+              harusPindah = true;
+              break;
+            }
+          } else if(sortValue.value == 'high'){
+            if(Number(x.innerHTML) < Number(y.innerHTML)){
+              harusPindah = true;
+              break;
+            }
+          } else{
+
+          }
+        }
+        if (harusPindah) {
+          sortItem[i].parentNode.insertBefore(sortItem[i + 1], sortItem[i]);
+          pindah = true;
+          hitungPindah ++;
+        } else{
+          if (hitungPindah == 0 && sortValue.value == "low") {
+            sortValue.value = "high";
+            pindah = true;
+          }
+        }
+      }
+    }, false)
   }
   checkboxFilter() {
 
