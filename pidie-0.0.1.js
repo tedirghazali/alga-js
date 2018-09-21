@@ -34,6 +34,9 @@ class Pidie {
   get filterCheckbox(){
     return this.checkboxFilter();
   }
+  get filterPagination(){
+    return this.paginationFilter();
+  }
 
   // methods
   jendela() {
@@ -94,6 +97,7 @@ class Pidie {
     function movetoIndex(e) {
       e.preventDefault();
       var linkIndex = e.target;
+      stopPlayIndex();
       gotoIndex(linkIndex.getAttribute('data-slide'));
       autoPlayIndex();
     }
@@ -314,6 +318,130 @@ class Pidie {
         }
       }
     }, false)
+  }
+  paginationFilter() {
+    var pageProduct = document.querySelector('.pd-filter');
+    var pageFilter = document.querySelector('.pd-filter-pagination');
+    var pageItem = pageProduct.getElementsByClassName('pd-list-grid');
+    var pageJumlah = pageFilter.dataset.pagination;
+    var pageSemua = pageItem.length;
+    var pageBagi = pageSemua / pageJumlah;
+    var current = 1;
+    for(var j = 0;j < pageItem.length;j++){
+      pageItem[j].style.display = 'none';
+    }
+    if(current == 1){
+      pagi();
+      pageFPNL(current);
+      for(var k = 0;k < 6;k++){
+        pageItem[k].style.display = '';
+      }
+    }
+    function pageFPNL(fpnlcurrent){
+      if(fpnlcurrent == 1){
+        document.querySelector('.pd-pagination-first').style.display = 'none';
+        document.querySelector('.pd-pagination-prev').style.display = 'none';
+        document.querySelector('.pd-pagination-next').style.display = '';
+        document.querySelector('.pd-pagination-last').style.display = '';
+      } else if(fpnlcurrent == 2){
+        document.querySelector('.pd-pagination-first').style.display = 'none';
+        document.querySelector('.pd-pagination-prev').style.display = '';
+        document.querySelector('.pd-pagination-next').style.display = '';
+        document.querySelector('.pd-pagination-last').style.display = '';
+      } else if(fpnlcurrent == (pageBagi.toFixed(0) - 1)){
+        document.querySelector('.pd-pagination-first').style.display = '';
+        document.querySelector('.pd-pagination-prev').style.display = '';
+        document.querySelector('.pd-pagination-next').style.display = '';
+        document.querySelector('.pd-pagination-last').style.display = 'none';
+      } else if(fpnlcurrent == pageBagi.toFixed(0)){
+        document.querySelector('.pd-pagination-first').style.display = '';
+        document.querySelector('.pd-pagination-prev').style.display = '';
+        document.querySelector('.pd-pagination-next').style.display = 'none';
+        document.querySelector('.pd-pagination-last').style.display = 'none';
+      } else{
+        document.querySelector('.pd-pagination-first').style.display = '';
+        document.querySelector('.pd-pagination-last').style.display = '';
+        document.querySelector('.pd-pagination-prev').style.display = '';
+        document.querySelector('.pd-pagination-next').style.display = '';
+      }
+    }
+    var pagePagi = document.querySelector('.pd-pagination');
+    Array.prototype.forEach.call(pagePagi.children, function (elem) {
+      elem.onclick = function(e){
+        e.preventDefault();
+        var link = e.target.getAttribute('data-pagitem');
+        if(link == 'first' || link == 'prev' || link == 'next' || link == 'last'){
+          pageButton(link, current);
+        } else{
+          pageMove(link);
+        }
+      };
+    });
+    function pageButton(button, index){
+      var btnone = 1, btncurrent;
+      if (button == 'first') {
+        pageMove(btnone);
+      } else if(button == 'prev'){
+        if(index != 0){
+          btncurrent = (index + 1) - 1;
+          pageMove(btncurrent);
+        } else{
+          pageMove(btnone);
+        }
+      } else if(button == 'next'){
+        if(index > pageBagi.toFixed(0)){
+          pageMove(pageBagi.toFixed(0));
+        } else{
+          btncurrent = (index + 1) + 1;
+          pageMove(btncurrent);
+        }
+      } else if(button == 'last'){
+        pageMove(pageBagi.toFixed(0));
+      } else{
+        pageMove(index);
+      }
+    }
+    function pageMove(index){
+      if (index < 1 ) {
+        current = pageBagi.toFixed(0);
+      } else if (index > pageBagi.toFixed(0)) {
+        current = 1;
+      } else {
+        current = index - 1;
+      }
+      Array.prototype.forEach.call(pagePagi.getElementsByClassName('pd-pagination-link'), function(item) {
+        item.classList.remove('active');
+      });
+      pagePagi.getElementsByClassName('pd-pagination-link')[current].classList.add('active');
+      var jumlahPagi = Number(pageJumlah) * current;
+      var jumlahProduct = jumlahPagi + Number(pageJumlah);
+      if(jumlahProduct >= Number(pageItem.length)){
+        jumlahProduct = Number(pageItem.length);
+      }
+      pageFPNL(current + 1);
+      for(var m = 0;m < pageItem.length;m++){
+        pageItem[m].style.display = 'none';
+      }
+      for(var l = jumlahPagi;l < jumlahProduct;l++){
+        pageItem[l].style.display = '';
+      }
+    }
+    function pagi(){
+      var pageContent = '';
+      pageContent += '<a href="#" class="pd-pagination-item pd-pagination-first" data-pagitem="first">&laquo;</a>';
+      pageContent += '<a href="#" class="pd-pagination-item pd-pagination-prev" data-pagitem="prev">&#10094;</a>';
+      for(var i = 1;i <= pageBagi.toFixed(0);i++){
+        if(i == current){
+          pageContent += '<a href="#" class="pd-pagination-item pd-pagination-link active" data-pagitem="'+i+'">'+i+'</a>';
+        }
+        if(i != current ){
+          pageContent += '<a href="#" class="pd-pagination-item pd-pagination-link" data-pagitem="'+i+'">'+i+'</a>';
+        }
+      }
+      pageContent += '<a href="#" class="pd-pagination-item pd-pagination-next" data-pagitem="next">&#10095;</a>';
+      pageContent += '<a href="#" class="pd-pagination-item pd-pagination-last" data-pagitem="last">&raquo;</a>';
+      pageFilter.innerHTML = '<div class="pd-pagination">'+pageContent+'</div>';
+    }
   }
   checkboxFilter() {
 
