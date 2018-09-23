@@ -35,6 +35,47 @@
     </div>
   </div>
 
+  <div class="pd-container">
+    <button 
+      class="pd-button pd-button-primary" 
+      id="dl1" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/odt/example.odt" 
+      data-download-time="12">
+      Download LibreOffice Writer
+    </button>
+    <button 
+      class="pd-button pd-button-warning" 
+      id="dl2" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/docx/example.docx" 
+      data-download-time="15">
+      Download Microsoft Word
+    </button>
+    <button 
+      class="pd-button pd-button-danger" 
+      id="dl3" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/pdf/example.pdf" 
+      data-download-time="20">
+      Download PDF
+    </button>
+    <button 
+      class="pd-button pd-button-info" 
+      id="dl4" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/xps/example.xps" 
+      data-download-time="23">
+      Download XPS
+    </button>
+    <button 
+      class="pd-button pd-button-success" 
+      id="dl5" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/wps/example.wps" 
+      data-download-time="25">
+      Download WPS
+    </button>
+    <div class="pd-ad-top pd-hide"><img src="https://via.placeholder.com/728x90"/></div>
+    <div class="pd-ad-left pd-hide"><img src="https://via.placeholder.com/300x250"/></div>
+    <div class="pd-ad-right pd-hide"><img src="https://via.placeholder.com/250x250"/></div>
+  </div>
+
   <footer class="pd-text-center">
     <p>Apache License 2.0 Tedir Ghazali</p>
   </footer>
@@ -44,6 +85,11 @@
     var pidie = new Pidie();
     pidie.togglePassword('#pw1')
     pidie.togglePassword('#pw2')
+    pidie.downloadLoading('#dl1');
+    pidie.downloadLoading('#dl2');
+    pidie.downloadLoading('#dl3');
+    pidie.downloadLoading('#dl4');
+    pidie.downloadLoading('#dl5');
   </script>
 </body>
 </html>

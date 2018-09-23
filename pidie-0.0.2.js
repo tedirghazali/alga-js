@@ -24,6 +24,66 @@ class Pidie {
       }
     })
   }
+  downloadLoading(id){
+    var downloadButton = document.querySelector(id);
+    downloadButton.addEventListener('click', function(){
+      var downloadPage = document.createElement("div");
+      downloadPage.classList.add('pd-download-page');
+      document.body.appendChild(downloadPage);
+      document.body.classList.add('pd-download-scrollbar');
+      var downloadColumn = '';
+      downloadColumn += '<div class="pd-download-top"></div>';
+      downloadColumn += '<div class="pd-row" style="margin-top:100px">';
+      downloadColumn += '<div class="pd-col-md-4 pd-download-left"></div>';
+      downloadColumn += '<div class="pd-col-md-4 pd-download-center"></div>';
+      downloadColumn += '<div class="pd-col-md-4 pd-download-right"></div>';
+      downloadColumn += '</div>';
+      downloadPage.innerHTML= downloadColumn;
+      var adTop = document.querySelector('.pd-ad-top');
+      if(adTop){
+        adTop.classList.remove('pd-hide');
+        downloadPage.querySelector('.pd-download-top').appendChild(adTop);
+      }
+      var adLeft = document.querySelector('.pd-ad-left');
+      if(adLeft){
+        adLeft.classList.remove('pd-hide');
+        downloadPage.querySelector('.pd-download-left').appendChild(adLeft);
+      }
+      var adRight = document.querySelector('.pd-ad-right');
+      if(adRight){
+        adRight.classList.remove('pd-hide');
+        downloadPage.querySelector('.pd-download-right').appendChild(adRight);
+      }
+      var downloadLink = downloadButton.getAttribute('data-download-link');
+      var downloadTime = downloadButton.getAttribute('data-download-time');
+      var downloadBody = downloadPage.querySelector('.pd-download-center');
+      var downloadContent = '';
+      downloadContent += '<div class="pd-card pd-card-body">';
+      downloadContent += '<h1 class="pd-download-count">'+Number(downloadTime)+'</h1>';
+      downloadContent += '<p class="pd-download-loading">Please Wait, Download Loading...</p>';
+      downloadContent += '<p class="pd-download-button pd-hide"><a href="'+downloadLink+'" class="pd-button pd-button-primary" style="text-decoration:none">Download Again</a><br/><button style="margin-top:10px" class="pd-button pd-button-danger pd-download-close">Cancel</button></p>';
+      downloadContent += '</div>';
+      downloadBody.innerHTML = downloadContent;
+      var downloadCount = downloadBody.querySelector('.pd-download-count');
+      var jumlahWaktu = Number(downloadTime);
+      setInterval(function(){
+        jumlahWaktu--;
+        if(jumlahWaktu >= 0){
+          downloadCount.innerHTML = jumlahWaktu
+        }
+        if(jumlahWaktu === 0){
+          clearInterval(jumlahWaktu);
+          location.assign(downloadLink);
+          downloadBody.querySelector('.pd-download-loading').classList.add('pd-hide');
+          downloadBody.querySelector('.pd-download-button').classList.remove('pd-hide');
+        }
+      }, 1000);
+      downloadBody.querySelector('.pd-download-close').addEventListener('click', function(){
+        downloadPage.classList.add('pd-hide');
+        document.body.classList.remove('pd-download-scrollbar');
+      })
+    })
+  }
 
   // getters v0.0.1
   get panel(){
