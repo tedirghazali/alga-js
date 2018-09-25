@@ -84,6 +84,39 @@ class Pidie {
       })
     })
   }
+  demoPage(id) {
+    var pageDemo = document.querySelector(id);
+    pageDemo.addEventListener('click', function(){
+      var createDemo = document.createElement('div');
+      createDemo.classList.add('pd-demo-page');
+      document.body.classList.add('pd-demo-scrollbar');
+      document.body.appendChild(createDemo);
+      var contentDemo = '';
+      contentDemo += '<div class="pd-demo-nav"><div class="pd-row">';
+      contentDemo += '<div class="pd-col-md-6">';
+      contentDemo += '<h1 class="pd-demo-title">'+pageDemo.getAttribute('data-demo-title')+'</h1>';
+      contentDemo += '</div>';
+      contentDemo += '<div class="pd-col-md-5 pd-demo-top">';
+      contentDemo += '</div>';
+      contentDemo += '<div class="pd-col-md-1 pd-text-right">';
+      contentDemo += '<button class="pd-demo-close pd-button pd-button-outline-danger">&times</button>';
+      contentDemo += '</div>';
+      contentDemo += '</div></div>';
+      contentDemo += '<iframe src="'+pageDemo.getAttribute('data-demo-link')+'" class="pd-demo-frame"></iframe>';
+      createDemo.innerHTML = contentDemo;
+      var adTop = document.querySelector('.pd-ad-top');
+      if(adTop){
+        adTop.classList.remove('pd-hide');
+        createDemo.querySelector('.pd-demo-top').appendChild(adTop);
+      }
+      var tinggi = createDemo.clientHeight;
+      createDemo.querySelector('.pd-demo-frame').style.height = (tinggi - 80) + 'px';
+      createDemo.querySelector('.pd-demo-close').addEventListener('click', function(){
+        createDemo.classList.add('pd-hide');
+        document.body.classList.remove('pd-demo-scrollbar');
+      })
+    });
+  }
 
   // getters v0.0.1
   get panel(){

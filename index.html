@@ -11,6 +11,30 @@
   <p><br/></p>
 
   <div class="pd-container">
+    <button
+      class="pd-button pd-button-primary"
+      id="dm1"
+      data-demo-link="https://vuejs.org"
+      data-demo-title="Demo Vue.js">
+      Demo Vue
+    </button>
+    <button
+      class="pd-button pd-button-success"
+      id="dm2"
+      data-demo-link="https://kautube.com/downloads"
+      data-demo-title="Demo Kautube">
+      Demo Kautube Downloads
+    </button>
+    <button
+      class="pd-button pd-button-danger"
+      id="dm3"
+      data-demo-link="https://siswakode.net"
+      data-demo-title="Demo SiswaKode">
+      Demo Siswa Kode
+    </button>
+  </div>
+
+  <div class="pd-container">
     <div class="pd-row">
       <div class="pd-col-md-4 pd-offset-md-4">
         <div class="pd-field">
@@ -71,7 +95,7 @@
       data-download-time="25">
       Download WPS
     </button>
-    <div class="pd-ad-top pd-hide"><img src="https://via.placeholder.com/728x90"/></div>
+    <div class="pd-ad-top pd-hide"><img src="https://via.placeholder.com/428x60"/></div>
     <div class="pd-ad-left pd-hide"><img src="https://via.placeholder.com/300x250"/></div>
     <div class="pd-ad-right pd-hide"><img src="https://via.placeholder.com/250x250"/></div>
   </div>
@@ -90,6 +114,9 @@
     pidie.downloadLoading('#dl3');
     pidie.downloadLoading('#dl4');
     pidie.downloadLoading('#dl5');
+    pidie.demoPage('#dm1');
+    pidie.demoPage('#dm2');
+    pidie.demoPage('#dm3');
   </script>
 </body>
 </html>
