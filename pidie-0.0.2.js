@@ -27,6 +27,7 @@ class Pidie {
   downloadLoading(id){
     var downloadButton = document.querySelector(id);
     downloadButton.addEventListener('click', function(){
+      window.scrollTo(0, 0);
       var downloadPage = document.createElement("div");
       downloadPage.classList.add('pd-download-page');
       document.body.appendChild(downloadPage);
@@ -87,6 +88,7 @@ class Pidie {
   demoPage(id) {
     var pageDemo = document.querySelector(id);
     pageDemo.addEventListener('click', function(){
+      window.scrollTo(0, 0);
       var createDemo = document.createElement('div');
       createDemo.classList.add('pd-demo-page');
       document.body.classList.add('pd-demo-scrollbar');
@@ -116,6 +118,79 @@ class Pidie {
         document.body.classList.remove('pd-demo-scrollbar');
       })
     });
+  }
+  galleryLightbox() {
+    var no = 0, datasrc = '', datalightbox = 0;
+    var lightLength = document.querySelectorAll('.pd-gallery').length - 1;
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-gallery'), function(item){
+      item.setAttribute('data-lightbox-item', no++);
+      item.onclick = function() {
+        datasrc = item.getAttribute('src');
+        datalightbox = item.getAttribute('data-lightbox-item');
+        lightboxOpen(datasrc, datalightbox);
+      }
+    })
+    function lightboxOpen(src, lightbox) {
+      window.scrollTo(0, 0);
+      datasrc = src;
+      datalightbox = lightbox;
+      var lightboxPage = document.createElement('div');
+      lightboxPage.classList.add('pd-lightbox');
+      document.body.appendChild(lightboxPage);
+      document.body.classList.add('pd-lightbox-scrollbar');
+      var lightboxContent = '';
+      lightboxContent += '<div class="pd-lightbox-nav"><span class="pd-lightbox-close">&times</span></div>';
+      if(datalightbox != 0){
+        lightboxContent += '<div class="pd-lightbox-prev">&lsaquo;</div>';
+      }
+      if(datalightbox != Number(lightLength)){
+        lightboxContent += '<div class="pd-lightbox-next">&rsaquo;</div>';
+      }
+      lightboxContent += '<div class="pd-lightbox-image"><img src="'+datasrc+'" height="400"/></div>';
+      lightboxContent += '<div class="pd-lightbox-thumbnail"></div>';
+      lightboxPage.innerHTML = lightboxContent;
+      var lightboxThumbnail = lightboxPage.querySelector('.pd-lightbox-thumbnail');
+      for(var i = Number(datalightbox); i < (Number(datalightbox) + 7); i++){
+        if(document.getElementsByClassName('pd-gallery')[i]){
+          var lightboxThumbnailImage = document.createElement('img');
+          lightboxThumbnailImage.setAttribute('src', document.getElementsByClassName('pd-gallery')[i].getAttribute('src'));
+          lightboxThumbnailImage.setAttribute('data-lightbox-thumbnail-item', document.getElementsByClassName('pd-gallery')[i].getAttribute('data-lightbox-item'));
+          lightboxThumbnail.appendChild(lightboxThumbnailImage);
+          lightboxThumbnailImage.onclick = function(e) {
+            lightboxPage.classList.add('pd-hide');
+            document.body.classList.remove('pd-lightbox-scrollbar');
+            var datathumb = e.target.getAttribute('data-lightbox-thumbnail-item');
+            datalightbox = Number(datathumb);
+            datasrc = document.getElementsByClassName('pd-gallery')[datalightbox].getAttribute('src');
+            lightboxOpen(datasrc, datalightbox);
+          }
+        }
+      }
+      lightboxPage.querySelector('.pd-lightbox-close').addEventListener('click', function(){
+        lightboxPage.classList.add('pd-hide');
+        document.body.classList.remove('pd-lightbox-scrollbar');
+      })
+      if(datalightbox != 0){
+        lightboxPage.querySelector('.pd-lightbox-prev').addEventListener('click', function(){
+          lightboxPage.classList.add('pd-hide');
+          document.body.classList.remove('pd-lightbox-scrollbar');
+          var lightboxPrev = Number(datalightbox) - 1; 
+          datalightbox = lightboxPrev;
+          datasrc = document.getElementsByClassName('pd-gallery')[datalightbox].getAttribute('src');
+          lightboxOpen(datasrc, datalightbox);
+        })
+      }
+      if(datalightbox != Number(lightLength)){
+        lightboxPage.querySelector('.pd-lightbox-next').addEventListener('click', function(){
+          lightboxPage.classList.add('pd-hide');
+          document.body.classList.remove('pd-lightbox-scrollbar');
+          var lightboxNext = Number(datalightbox) + 1; 
+          datalightbox = Number(lightboxNext);
+          datasrc = document.getElementsByClassName('pd-gallery')[datalightbox].getAttribute('src');
+          lightboxOpen(datasrc, datalightbox);
+        })
+      }
+    }
   }
 
   // getters v0.0.1

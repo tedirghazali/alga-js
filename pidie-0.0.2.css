@@ -3486,7 +3486,7 @@ input[type="button"].pd-block {
   width: 100%;
   height: 100%;
 }
-.pd-download-scrollbar, .pd-demo-scrollbar{
+.pd-download-scrollbar, .pd-demo-scrollbar, .pd-lightbox-scrollbar{
   overflow: hidden;
 }
 .pd-download-center{
@@ -3520,4 +3520,76 @@ input[type="button"].pd-block {
 }
 .pd-demo-top .pd-ad-top{
   text-align: right;
+}
+
+/*
+* Gallery Lightbox
+*/
+.pd-lightbox{
+  position: absolute;
+  z-index: 3000;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+}
+.pd-lightbox-prev{
+  position: absolute;
+  z-index: 3001;
+  top: 33%;
+  left: 0;
+  cursor: pointer;
+}
+.pd-lightbox-next{
+  position: absolute;
+  z-index: 3001;
+  top: 33%;
+  right: 0;
+  cursor: pointer;
+}
+.pd-lightbox-thumbnail{
+  position: absolute;
+  z-index: 3001;
+  left: 0;
+  bottom: 0;
+  overflow: hidden;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.pd-lightbox-thumbnail img, img{
+  cursor: pointer;
+}
+.pd-lightbox-thumbnail{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+.pd-lightbox-thumbnail img{
+  height: 130px;
+  padding: 10px;
+}
+.pd-lightbox-nav{
+  text-align: right;
+  padding: 5px 20px;
+}
+.pd-lightbox-nav .pd-lightbox-close{
+  font-size: 40pt;
+  color: #ffffff;
+  opacity: 0.7;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+.pd-lightbox-next, .pd-lightbox-prev{
+  padding: 10px;
+  font-size: 45pt;
+  color: #ffffff;
+  opacity: 0.7;
+}
+.pd-lightbox-image{
+  text-align: center;
 }
