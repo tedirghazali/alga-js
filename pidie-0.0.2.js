@@ -192,6 +192,35 @@ class Pidie {
       }
     }
   }
+  modalDialog() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-modal-open'), function(elem){
+      elem.onclick = function() {
+        var modalCreate = document.createElement('div');
+        modalCreate.classList.add('pd-modal-show');
+        document.body.appendChild(modalCreate);
+        document.body.classList.add('pd-modal-scrollbar');
+        var modalOpen = document.getElementById(elem.getAttribute('data-target'));
+        modalCreate.appendChild(modalOpen);
+        var modalClose = modalCreate.querySelector('.pd-modal-close');
+        modalClose.addEventListener('click', function() {
+          elem.parentNode.insertBefore(modalOpen, elem.nextElementSibling);
+          modalCreate.remove();
+          modalDimiss.remove();
+          document.body.classList.remove('pd-modal-scrollbar');
+        })
+        var modalDimiss = document.createElement('span');
+        modalDimiss.classList.add('pd-modal-dimiss');
+        modalDimiss.innerHTML = '&times;';
+        modalCreate.querySelector('.pd-card-header').appendChild(modalDimiss);
+        modalDimiss.addEventListener('click', function() {
+          elem.parentNode.insertBefore(modalOpen, elem.nextElementSibling);
+          modalCreate.remove();
+          modalDimiss.remove();
+          document.body.classList.remove('pd-modal-scrollbar');
+        })
+      }
+    })
+  }
 
   // getters v0.0.1
   get panel(){
