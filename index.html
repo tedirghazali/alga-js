@@ -10,6 +10,24 @@
 
   <p><br/></p>
   <div class="pd-container">
+        <div class="pd-field pd-titlelink-input">
+          <label>Title</label>
+          <input type="text" class="pd-input" />
+        </div>
+        <div class="pd-field pd-titlelink-output">
+          <div class="pd-input-group">
+            <div class="pd-input-group-append">
+              <button class="pd-input-group-text pd-button">https://siswakode.net/</button>
+            </div>
+            <input type="text" class="pd-input pd-input-link" readonly/>
+            <div class="pd-input-group-prepend">
+              <button class="pd-input-group-text pd-button">.html</button>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <div class="pd-container">
     <button class="pd-button pd-button-primary pd-modal-open" data-target="modal1">Open Modal</button>
     <button class="pd-button pd-button-danger pd-modal-open" data-target="modal2">Open Modal</button>
     <div class="pd-modal" id="modal1">
@@ -26,22 +44,21 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="pd-modal" id="modal2">
-    <div class="pd-card pd-width-3">
-      <div class="pd-card-header">
-        <h1 class="pd-card-title">Modal Title 2</h1>
-      </div>
-      <div class="pd-card-body">
-        <b class="pd-card-title">Modal Title 2</b>
-        <p class="pd-card-text">Saya suka 2</p>
-      </div>
-      <div class="pd-card-footer pd-text-right">
-        <button class="pd-button pd-modal-close">Close</button>
+    <div class="pd-modal" id="modal2">
+      <div class="pd-card pd-width-3">
+        <div class="pd-card-header">
+          <h1 class="pd-card-title">Modal Title 2</h1>
+        </div>
+        <div class="pd-card-body">
+          <b class="pd-card-title">Modal Title 2</b>
+          <p class="pd-card-text">Saya suka 2</p>
+        </div>
+        <div class="pd-card-footer pd-text-right">
+          <button class="pd-button pd-modal-close">Close</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
   <div class="pd-container">
     <img src="https://loremflickr.com/600/400/cat?lock=1" height="150" class="pd-gallery"/>
@@ -167,6 +184,7 @@
     pidie.demoPage('#dm3');
     pidie.galleryLightbox();
     pidie.modalDialog();
+    pidie.titleLink();
   </script>
 </body>
 </html>
