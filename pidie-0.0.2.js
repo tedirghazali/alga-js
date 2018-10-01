@@ -268,6 +268,38 @@ class Pidie {
       urlLink.value = txt;
     })
   }
+  generatePassword() {
+    var generatePasswordInput = document.querySelector('.pd-generate-password input');
+    var generatePasswordButton = document.querySelector('.pd-generate-password button');
+    generatePasswordButton.addEventListener('click', function(){
+      var generatePasswordChar = generatePasswordInput.getAttribute('data-generate-password') || '';
+      var generatePasswordMax = generatePasswordInput.getAttribute('data-generate-max') || '';
+      var characters = '', result = '';
+      if(generatePasswordChar == 'all'){
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()_+|~-={}[]:";<>?,./';
+      } else if(generatePasswordChar == 'alphabet'){
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+      } else if(generatePasswordChar == 'uppercase'){
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      } else if(generatePasswordChar == 'lowercase'){
+        characters = 'abcdefghijklmnopqrstuvwxyz';
+      } else if(generatePasswordChar == 'numeric'){
+        characters = '1234567890';
+      } else if(generatePasswordChar == 'alphanumeric'){
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+      } else if(generatePasswordChar == 'special'){
+        characters = '!@#$%^&*()_+|~-={}[]:";<>?,./';
+      } else if(generatePasswordChar == 'alphaspecial'){
+        characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*()_+|~-={}[]:";<>?,./';
+      } else {
+        characters = '1234567890!@#$%^&*()_+|~-={}[]:";<>?,./';
+      }
+      for(var i = 0; i < generatePasswordMax; i++){
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      generatePasswordInput.value = result;
+    })
+  }
 
   // getters v0.0.1
   get panel(){

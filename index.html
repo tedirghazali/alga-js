@@ -10,6 +10,18 @@
 
   <p><br/></p>
   <div class="pd-container">
+    <div class="pd-field pd-generate-password">
+      <label>Generate Password</label>
+      <div class="pd-input-group">
+        <input type="text" class="pd-input" data-generate-password="alphaspecial" data-generate-max="30"/>
+        <div class="pd-input-group-prepend">
+          <button class="pd-input-group-text pd-button pd-button-primary">Generate Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pd-container">
         <div class="pd-field pd-titlelink-input">
           <label>Title</label>
           <input type="text" class="pd-input" />
@@ -185,6 +197,7 @@
     pidie.galleryLightbox();
     pidie.modalDialog();
     pidie.titleLink();
+    pidie.generatePassword();
   </script>
 </body>
 </html>
