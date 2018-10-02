@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>PidieUi</title>
+  <link href="pidie-0.0.2.css" rel="stylesheet"/>
+</head>
+<body>
+
+  <p><br/></p>
+  <div class="pd-container">
+    <div class="pd-field pd-generate-password">
+      <label>Generate Password</label>
+      <div class="pd-input-group">
+        <input type="text" class="pd-input" data-generate-password="alphaspecial" data-generate-max="30"/>
+        <div class="pd-input-group-prepend">
+          <button class="pd-input-group-text pd-button pd-button-primary">Generate Password</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pd-container">
+        <div class="pd-field pd-titlelink-input">
+          <label>Title</label>
+          <input type="text" class="pd-input" />
+        </div>
+        <div class="pd-field pd-titlelink-output">
+          <div class="pd-input-group">
+            <div class="pd-input-group-append">
+              <button class="pd-input-group-text pd-button">https://siswakode.net/</button>
+            </div>
+            <input type="text" class="pd-input pd-input-link" readonly/>
+            <div class="pd-input-group-prepend">
+              <button class="pd-input-group-text pd-button">.html</button>
+            </div>
+          </div>
+        </div>
+  </div>
+
+  <div class="pd-container">
+    <button class="pd-button pd-button-primary pd-modal-open" data-target="modal1">Open Modal</button>
+    <button class="pd-button pd-button-danger pd-modal-open" data-target="modal2">Open Modal</button>
+    <div class="pd-modal" id="modal1">
+      <div class="pd-card pd-width-3">
+        <div class="pd-card-header">
+          <h1 class="pd-card-title">Modal Title 1</h1>
+        </div>
+        <div class="pd-card-body">
+          <b class="pd-card-title">Modal Title 1</b>
+          <p class="pd-card-text">Saya suka 1</p>
+        </div>
+        <div class="pd-card-footer pd-text-right">
+          <button class="pd-button pd-modal-close">Close</button>
+        </div>
+      </div>
+    </div>
+    <div class="pd-modal" id="modal2">
+      <div class="pd-card pd-width-3">
+        <div class="pd-card-header">
+          <h1 class="pd-card-title">Modal Title 2</h1>
+        </div>
+        <div class="pd-card-body">
+          <b class="pd-card-title">Modal Title 2</b>
+          <p class="pd-card-text">Saya suka 2</p>
+        </div>
+        <div class="pd-card-footer pd-text-right">
+          <button class="pd-button pd-modal-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pd-container">
+    <img src="https://loremflickr.com/600/400/cat?lock=1" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=2" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/800/400/cat?lock=3" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=4" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=5" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=6" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=7" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=8" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=9" height="150" class="pd-gallery"/>
+    <img src="https://loremflickr.com/600/400/cat?lock=10" height="150" class="pd-gallery"/>
+  </div>
+
+  <p><br/></p>
+
+  <div class="pd-container">
+    <button
+      class="pd-button pd-button-primary"
+      id="dm1"
+      data-demo-link="https://vuejs.org"
+      data-demo-title="Demo Vue.js">
+      Demo Vue
+    </button>
+    <button
+      class="pd-button pd-button-success"
+      id="dm2"
+      data-demo-link="https://kautube.com/downloads"
+      data-demo-title="Demo Kautube">
+      Demo Kautube Downloads
+    </button>
+    <button
+      class="pd-button pd-button-danger"
+      id="dm3"
+      data-demo-link="https://siswakode.net"
+      data-demo-title="Demo SiswaKode">
+      Demo Siswa Kode
+    </button>
+  </div>
+
+  <div class="pd-container">
+    <div class="pd-row">
+      <div class="pd-col-md-4 pd-offset-md-4">
+        <div class="pd-field">
+          <label>Password 1</label>
+          <div class="pd-input-group" id="pw1">
+            <input type="password" class="pd-input"/>
+            <div class="pd-input-group-prepend">
+              <button class="pd-input-group-item pd-button pd-button-primary"><i class="pd-icon">visibility</i></button>
+            </div>
+          </div>
+        </div>
+        <div class="pd-field">
+          <label>Password 2</label>
+          <div class="pd-input-group" id="pw2">
+            <input type="password" class="pd-input"/>
+            <div class="pd-input-group-prepend">
+              <button class="pd-input-group-item pd-button pd-button-primary"><i class="pd-icon">visibility</i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pd-container">
+    <button 
+      class="pd-button pd-button-primary" 
+      id="dl1" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/odt/example.odt" 
+      data-download-time="12">
+      Download LibreOffice Writer
+    </button>
+    <button 
+      class="pd-button pd-button-warning" 
+      id="dl2" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/docx/example.docx" 
+      data-download-time="15">
+      Download Microsoft Word
+    </button>
+    <button 
+      class="pd-button pd-button-danger" 
+      id="dl3" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/pdf/example.pdf" 
+      data-download-time="20">
+      Download PDF
+    </button>
+    <button 
+      class="pd-button pd-button-info" 
+      id="dl4" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/xps/example.xps" 
+      data-download-time="23">
+      Download XPS
+    </button>
+    <button 
+      class="pd-button pd-button-success" 
+      id="dl5" 
+      data-download-link="https://cdn.online-convert.com/example-file/document/wps/example.wps" 
+      data-download-time="25">
+      Download WPS
+    </button>
+    <div class="pd-ad-top pd-hide"><img src="https://via.placeholder.com/428x60"/></div>
+    <div class="pd-ad-left pd-hide"><img src="https://via.placeholder.com/300x250"/></div>
+    <div class="pd-ad-right pd-hide"><img src="https://via.placeholder.com/250x250"/></div>
+  </div>
+
+  <footer class="pd-text-center">
+    <p>Apache License 2.0 Tedir Ghazali</p>
+  </footer>
+
+  <script src="pidie-0.0.2.js"></script>
+  <script>
+    var pidie = new Pidie();
+    pidie.togglePassword('#pw1')
+    pidie.togglePassword('#pw2')
+    pidie.downloadLoading('#dl1');
+    pidie.downloadLoading('#dl2');
+    pidie.downloadLoading('#dl3');
+    pidie.downloadLoading('#dl4');
+    pidie.downloadLoading('#dl5');
+    pidie.demoPage('#dm1');
+    pidie.demoPage('#dm2');
+    pidie.demoPage('#dm3');
+    pidie.galleryLightbox();
+    pidie.modalDialog();
+    pidie.titleLink();
+    pidie.generatePassword();
+  </script>
+</body>
+</html>
