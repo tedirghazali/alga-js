@@ -1,5 +1,5 @@
 /*
-* PidieCSS 0.0.1
+* PidieCSS 0.0.3
 * 2018
 * Tedir Ghazali
 * Apache License 2.0
@@ -138,6 +138,13 @@ body{ font-family: ubuntu; }
 }
 .pd-hide{
   display: none;
+}
+a {
+  color: #0645ad;
+  text-decoration: none;
+}
+a:hover{
+  text-decoration: underline;
 }
 
 /*
@@ -3648,4 +3655,30 @@ body .pd-modal{
   cursor: pointer;
   color: #5a6268;
   font-weight: 900;
+}
+
+/*
+* Back to Top
+*/
+.pd-back-to-top{
+  position: fixed;
+  z-index: 3001;
+  bottom: 0;
+  right: 0;
+  margin: 20px;
+  border: 3px solid #040505;
+  color: #040505;
+  padding: 6px 6px 3px 6px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+.pd-back-to-top .pd-icon{
+  font-weight: 900;
+  font-size: 25pt;
+}
+.pd-back-to-top:hover{
+  color: #062c33;
+  border-color: #062c33;
 }

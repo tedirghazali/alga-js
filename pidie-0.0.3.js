@@ -1,5 +1,5 @@
 /*
-* PidieJS 0.0.1
+* PidieJS 0.0.3
 * 2018
 * Tedir Ghazali
 * Apache License 2.0
@@ -8,6 +8,82 @@
 class Pidie {
 
   constructor(){}
+
+  // methods v0.0.3
+  backToTop() {
+    var backToTopButton = document.querySelector('.pd-back-to-top');
+    backToTopButton.style.opacity = "0.1";
+    window.onscroll = function(){
+      var scrollHeight = window.scrollY;
+      if(scrollHeight < 300){
+        backToTopButton.style.opacity = "0.1";
+      } else{
+        backToTopButton.style.opacity = "1";
+      }
+      console.log(scrollHeight);
+    }
+    backToTopButton.addEventListener('click', function(e){
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    })
+  }
+  tableOfContents() {
+    var tocPanel = document.querySelector('.pd-table-of-contents');
+    var tocTajuk = document.querySelector('.pd-heading-of-contents');
+    var tocJudul = document.createElement('h4');
+    tocPanel.appendChild(tocJudul);
+    tocPanel.style.border = '1px solid #aaaaaa';
+    tocPanel.style.padding = '10px 10px 10px 10px';
+    tocJudul.innerHTML = 'Table of Contents'
+    tocJudul.style.textAlign = 'center';
+    tocJudul.style.margin = '0px 0px 10px 0px';
+    var tocOl = document.createElement('ul');
+    tocOl.style.listStyle = 'none';
+    tocOl.style.paddingLeft = '0';
+    tocPanel.appendChild(tocOl);
+    var tocTotalH2 = document.querySelectorAll('.pd-heading-of-contents h2').length;
+    var tocContent = '';
+    for(var i = 0; i < tocTotalH2; i++){
+      var separator = '-';
+      var arrHeading = [];
+      for( var j = 0; j < tocTajuk.getElementsByTagName('h2')[i].innerText.length; j++ ){
+				var c = tocTajuk.getElementsByTagName('h2')[i].innerText.charAt(j);
+				arrHeading.push(c);
+			}
+      var mytxt = arrHeading.join('');
+      var repsep = mytxt.replace(/^\s+|\s+$/g, "")
+				.replace(/[_|\s]+/g, separator )
+				.replace(/[^a-zA-z\u0400-\u04FF0-9-%-]+/g, "")
+				.replace(/[-]+/g, separator )
+				.replace(/^-+|-+$/g, "")
+				.replace(/[-]+/g, separator );
+      var idtxt = repsep;
+      tocTajuk.getElementsByTagName('h2')[i].setAttribute('id', idtxt);
+      tocContent += '<li style="margin-bottom:7px;"><span>'+(i + 1)+'</span> ';
+      tocContent += '<a href="#'+tocTajuk.getElementsByTagName('h2')[i].getAttribute('id')+'">'+tocTajuk.getElementsByTagName('h2')[i].innerText+'</a>';
+      var tocTotalH3 = document.querySelectorAll('.pd-heading-of-contents h3').length;
+      if(tocTotalH3){
+        tocContent += '<ul>';
+        for(var k = 0; k < tocTotalH3; k++){
+          tocContent += '<li>saya</li>';
+        }
+        tocContent += '</ul>';
+      }
+      tocContent += '</li>';
+    }
+    tocOl.innerHTML = tocContent;
+    Array.prototype.forEach.call(tocOl.querySelectorAll('li a'), function(elem){
+      elem.onclick = function(){
+        if(location.hash !== ''){
+          var hash = location.hash;
+          window.location.hash = hash;
+        }
+      }
+    })
+  }
 
   // methods v0.0.2
   togglePassword(id) {
