@@ -15,7 +15,7 @@ class Pidie {
     backToTopButton.style.opacity = "0.1";
     window.onscroll = function(){
       var scrollHeight = window.scrollY;
-      if(scrollHeight < 300){
+      if(scrollHeight < 100){
         backToTopButton.style.opacity = "0.1";
       } else{
         backToTopButton.style.opacity = "1";
