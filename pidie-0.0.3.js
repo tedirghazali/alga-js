@@ -10,6 +10,17 @@ class Pidie {
   constructor(){}
 
   // methods v0.0.3
+  equalHeight(kelas) {
+    var sameHeight = document.querySelectorAll('.'+kelas);
+    var allHeight = [];
+    for(var i = 0; i < sameHeight.length; i++){
+      allHeight.push(document.getElementsByClassName(kelas)[i].clientHeight);
+    }
+    var bagiHeight = Math.max(...allHeight);
+    Array.prototype.forEach.call(sameHeight, function(elem){
+      elem.style.height = bagiHeight + 'px';
+    })
+  }
   backToTop() {
     var backToTopButton = document.querySelector('.pd-back-to-top');
     backToTopButton.style.opacity = "0.1";
@@ -20,7 +31,6 @@ class Pidie {
       } else{
         backToTopButton.style.opacity = "1";
       }
-      console.log(scrollHeight);
     }
     backToTopButton.addEventListener('click', function(e){
       e.preventDefault();
