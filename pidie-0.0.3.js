@@ -21,6 +21,21 @@ class Pidie {
       elem.style.height = bagiHeight + 'px';
     })
   }
+  stickyNavigation(elemen) {
+    var stickyElemen = document.querySelector(elemen);
+    var stickyHeight = stickyElemen.offsetTop;
+    window.onscroll = function(){
+      if(window.pageYOffset > stickyHeight){
+        stickyElemen.style.position = 'fixed';
+        stickyElemen.style.top = '0';
+        stickyElemen.style.left = '0';
+        stickyElemen.style.width = '100%';
+        stickyElemen.style.zIndex = '3001';
+      } else{
+        stickyElemen.style.position = 'relative';
+      }
+    }
+  }
   backToTop() {
     var backToTopButton = document.querySelector('.pd-back-to-top');
     backToTopButton.style.opacity = "0.1";

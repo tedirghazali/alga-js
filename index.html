@@ -9,6 +9,29 @@
 <body style="background: skyblue">
 
   <p><br/></p>
+    
+  <div class="pd-container">
+      <header>
+          <h1>Title Page</h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula, mauris ut luctus euismod, nunc urna ultricies dui, ac fringilla nisl magna sit amet eros. Morbi finibus, nibh ut porttitor pharetra, orci lacus blandit augue, quis convallis nisl odio vitae eros. Etiam tincidunt lectus pharetra massa tincidunt accumsan. Curabitur porta nisi nec diam placerat egestas. Donec sed vehicula leo. Vestibulum blandit consectetur leo sed sagittis. Fusce et arcu non arcu scelerisque volutpat. Sed posuere metus vel quam euismod, a cursus eros egestas. Pellentesque viverra interdum pellentesque. Nullam egestas lorem vel erat aliquam cursus. Morbi tincidunt lectus eget arcu lobortis, ut malesuada nulla faucibus. Mauris facilisis diam nec massa tincidunt congue. Nullam at mauris ut turpis mattis dictum. Quisque ultricies turpis eget fermentum varius. Vivamus sed interdum lectus.</p>
+      </header>
+      <nav class="pd-nav sticky-navigation">
+          <a href="#" class="pd-nav-brand">
+            <img src="images/pidiejs.png"/>
+            <h1>PidieUi</h1>
+          </a>
+          <ul class="pd-nav-menu pd-menu-right">
+            <li><a href="">Beranda</a></li>
+            <li><a href="">Unduh</a></li>
+            <li><a href="">Artikel</a></li>
+            <li><a href="">Dokumentasi</a></li>
+            <li><a href="">Forum</a></li>
+            <li><a href="">Kontak</a></li>
+            <li><a href="">Bantuan</a></li>
+          </ul>
+      </nav>
+  </div>
+
   <div class="pd-container">
     <div class="pd-row">
       <div class="pd-col-md-3">
@@ -182,6 +205,7 @@
     pidie.backToTop();
     pidie.equalHeight('equal-height');
     pidie.equalHeight('same-height');
+    pidie.stickyNavigation('.sticky-navigation');
   </script>
 </body>
 </html>
