@@ -10,6 +10,24 @@ class Pidie {
   constructor(){}
 
   // methods v0.0.3
+  popupChat() {
+    var chatButton = document.querySelector('.pd-chat-button');
+    var chatOpen = document.querySelector('.pd-chat-popup');
+    chatButton.addEventListener('click', function(e){
+      e.preventDefault();
+      if(chatOpen.style.display == 'block'){
+        chatOpen.style.display = 'none';
+      } else{
+        chatOpen.style.display = 'block';
+      }
+    })
+  }
+  horizontalTimeline() {
+    var timeline = document.querySelector('.pd-timeline-horizontal');
+    if(timeline){
+      
+    }
+  }
   equalHeight(kelas) {
     var sameHeight = document.querySelectorAll('.'+kelas);
     var allHeight = [];
