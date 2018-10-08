@@ -4,11 +4,33 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>PidieUi</title>
-  <link href="pidie-0.0.3.css" rel="stylesheet"/>
+  <link href="pidie-0.0.4.css" rel="stylesheet"/>
 </head>
 <body style="background: white">
 
   <p><br/></p>
+  <div class="pd-container">
+      <div class="pd-quotes">
+        <div class="pd-quotes-slideshow">
+          <div class="pd-quotes-slide">
+            <img src="https://loremflickr.com/100/100/cat?lock=2">
+            <p><q>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</q></p>
+            <p class="pd-quotes-author">- Tedir Ghazali</p>
+          </div>
+          <div class="pd-quotes-slide">
+            <img src="https://loremflickr.com/100/100/cat?lock=3">
+            <p><q>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</q></p>
+            <p class="pd-quotes-author">- Bukhari Zulkifli</p>
+          </div>
+          <div class="pd-quotes-slide">
+            <img src="https://loremflickr.com/100/100/cat?lock=4">
+            <p><q>Lorem ipsum dolor sit amet, quo ei simul congue exerci, ad nec admodum perfecto mnesarchum, vim ea mazim fierent detracto. Ea quis iuvaret expetendis his, te elit voluptua dignissim per, habeo iusto primis ea eam.</q></p>
+            <p class="pd-quotes-author">- Boyhaki Usman</p>
+          </div>
+        </div>
+      </div>
+  </div>
+
   <div class="pd-container">
     <div class="pd-chat-message">
       <img src="https://loremflickr.com/100/100/cat?lock=2">
@@ -313,7 +335,7 @@
 
   <!--<a href="#" class="pd-back-to-top"><i class="pd-icon">arrow_upward</i></a>-->
 
-  <script src="pidie-0.0.3.js"></script>
+  <script src="pidie-0.0.4.js"></script>
   <script>
     var pidie = new Pidie();
     pidie.equalHeight('equal-height');
@@ -321,6 +343,7 @@
     pidie.stickyNavigation('.sticky-navigation');
     //pidie.horizontalTimeline();
     pidie.popupChat();
+    pidie.quotesSlideshow();
   </script>
 </body>
 </html>
