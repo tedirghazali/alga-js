@@ -497,3 +497,41 @@ a:hover{
 }
 .pd-quotes-slide q {font-style: italic;}
 .pd-quotes-author {color: cornflowerblue;}
+
+/*
+* Image Compare
+*/
+.pd-image-comparison {
+  position: relative;
+}
+.pd-image-compare {
+  position: absolute;
+  width: auto;
+  height: auto;
+  overflow:hidden;
+}
+.pd-image-compare img {
+  display:block;
+  vertical-align:middle;
+}
+.pd-image-compare-slider {
+  position: absolute;
+  z-index:9;
+  cursor: ew-resize;
+  width: 40px;
+  height: 40px;
+  background-color: rgb(255, 165, 0);
+  opacity: 0.8;
+  border-radius: 50%;
+  margin-left: -2px;
+}
+.pd-image-compare-overlay{
+  border-right: 3px solid rgb(255, 165, 0);
+}
+.pd-image-compare-icon{
+  font-size: 20px;
+  margin-left: 7px;
+  top: 20%;
+  position: absolute;
+  color: rgb(134, 96, 26);
+}
