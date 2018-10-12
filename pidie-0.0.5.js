@@ -1,5 +1,5 @@
 /*
-* PidieJS 0.0.4
+* PidieJS 0.0.5
 * 2018
 * Tedir Ghazali
 * Apache License 2.0
@@ -9,7 +9,56 @@ class Pidie {
 
   constructor(){}
 
-  // methods v0.0.3
+  // methods v0.0.3 - v0.0.5
+  imageZoom() {
+    var img, lens, result, cx, cy;
+    img = document.querySelector('.pd-image-zoom-content');
+    result = document.querySelector('.pd-image-zoom-preview');
+    lens = document.createElement("div");
+    lens.setAttribute("class", "pd-image-zoom-lens");
+    lens.style.visibility = 'hidden';
+    img.parentElement.insertBefore(lens, img);
+    cx = result.offsetWidth / lens.offsetWidth;
+    cy = result.offsetHeight / lens.offsetHeight;
+    result.style.backgroundImage = "url('" + img.src + "')";
+    result.style.backgroundSize = (img.width * cx) + "px " + (img.height * cy) + "px";
+    lens.addEventListener("mousemove", moveLens);
+    img.addEventListener("mousemove", moveLens);
+    lens.addEventListener("touchmove", moveLens);
+    img.addEventListener("touchmove", moveLens);
+    lens.addEventListener("mouseout", outLens);
+    function outLens(e){
+      e.preventDefault();
+      result.style.visibility = 'hidden';
+      lens.style.visibility = 'hidden';
+    }
+    function moveLens(e) {
+      var pos, x, y;
+      e.preventDefault();
+      lens.style.visibility = 'visible';
+      result.style.visibility = 'visible';
+      pos = getCursorPos(e);
+      x = pos.x - (lens.offsetWidth / 2);
+      y = pos.y - (lens.offsetHeight / 2);
+      if (x > img.width - lens.offsetWidth) {x = img.width - lens.offsetWidth;}
+      if (x < 0) {x = 0;}
+      if (y > img.height - lens.offsetHeight) {y = img.height - lens.offsetHeight;}
+      if (y < 0) {y = 0;}
+      lens.style.left = x + "px";
+      lens.style.top = y + "px";
+      result.style.backgroundPosition = "-" + (x * cx) + "px -" + (y * cy) + "px";
+    }
+    function getCursorPos(e) {
+      var a, x = 0, y = 0;
+      e = e || window.event;
+      a = img.getBoundingClientRect();
+      x = e.pageX - a.left;
+      y = e.pageY - a.top;
+      x = x - window.pageXOffset;
+      y = y - window.pageYOffset;
+      return {x : x, y : y};
+    }
+  }
   treeView() {
     var toggler = document.getElementsByClassName("pd-tree-item");
     var i;

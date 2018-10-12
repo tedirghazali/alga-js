@@ -11,6 +11,23 @@
   <p><br/></p>
   <div class="pd-container">
     <div class="pd-row">
+      <div class="pd-col-md-4 pd-image-zoom-body">
+        <img src="https://loremflickr.com/800/600/cat?lock=2" class="pd-image-zoom-content" width="340" height="255"/>
+      </div>
+      <div class="pd-col-md-8">
+        <div class="pd-image-zoom-preview"></div>
+        <h1>Product 1</h1>
+        <p>Description of product 1</p>
+        <p><b>Size:</b> XL<br/>
+        <b>Color</b>: Red<br/>
+        <b>Expired</b>: 12-12-2025</p>
+        <button class="pd-button pd-button-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="pd-container">
+    <div class="pd-row">
       <div class="pd-col-md-4">
         <h3>Basic</h3>
         <ul class="pd-tree pd-tree-basic">
@@ -198,6 +215,7 @@
     var pidie = new Pidie();
     //pidie.horizontalTimeline();
     pidie.treeView();
+    pidie.imageZoom();
   </script>
 </body>
 </html>

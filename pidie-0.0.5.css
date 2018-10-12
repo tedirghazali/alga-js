@@ -1,5 +1,5 @@
 /*
-* PidieCSS 0.0.4
+* PidieCSS 0.0.5
 * 2018
 * Tedir Ghazali
 * Apache License 2.0
@@ -603,4 +603,26 @@ a:hover{
 }
 .pd-tree-checkbox .pd-tree-child{
   margin-left: -17px;
+}
+
+/*
+* Image Zoom
+*/
+.pd-image-zoom-body{
+  padding: 0;
+}
+.pd-image-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 166, 0, 0.432);
+}
+.pd-image-zoom-preview {
+  border: 1px solid #d4d4d4;
+  position: absolute;
+  z-index: 3001;
+  width: 740px;
+  height: 555px;
+  visibility: hidden;
 }
