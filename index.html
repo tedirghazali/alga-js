@@ -11,6 +11,25 @@
   <p><br/></p>
   <div class="pd-container">
     <div class="pd-row">
+      <div class="pd-col-md-6 pd-image-magnifier">
+        <img src="https://loremflickr.com/800/600/cat?lock=3" id="magnify" width="555" height="458"/>
+      </div>
+      <div class="pd-col-md-6">
+        <h1>Product 2</h1>
+        <p>Description of product 2</p>
+        <p><b>Size:</b> XL<br/>
+        <b>Color</b>: Red<br/>
+        <b>Expired</b>: 12-12-2025</p>
+        <h3>$ 560</h3>
+        <h3>Qunatity: 1</h3>
+        <button class="pd-button pd-button-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="pd-container">
+    <div class="pd-row">
       <div class="pd-col-md-4 pd-image-zoom-body">
         <img src="https://loremflickr.com/800/600/cat?lock=2" class="pd-image-zoom-content" width="340" height="255"/>
       </div>
@@ -216,6 +235,12 @@
     //pidie.horizontalTimeline();
     pidie.treeView();
     pidie.imageZoom();
+    pidie.imageMagnifier({
+      el: '#magnify',
+      zoom: 4,
+      width: '200',
+      height: '200'
+    });
   </script>
 </body>
 </html>

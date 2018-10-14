@@ -10,6 +10,62 @@ class Pidie {
   constructor(){}
 
   // methods v0.0.3 - v0.0.5
+  imageMagnifier(options = {}) {
+    var settings = {
+      selector: options.el || '.pd-image-magnifier img',
+      zoom: options.zoom || 3,
+      width: options.width || '150',
+      height: options.height || '150'
+    }
+    var img, glass, w, h, bw;
+    img = document.querySelector(settings.selector);
+    glass = document.createElement("div");
+    glass.setAttribute("class", "pd-image-magnifier-glass");
+    glass.style.visibility = 'hidden';
+    glass.style.width = settings.width + 'px';
+    glass.style.height = settings.height + 'px';
+    img.parentElement.insertBefore(glass, img);
+    glass.style.backgroundImage = "url('" + img.src + "')";
+    glass.style.backgroundRepeat = "no-repeat";
+    glass.style.backgroundSize = (img.width * settings.zoom) + "px " + (img.height * settings.zoom) + "px";
+    bw = 3;
+    w = glass.offsetWidth / 2;
+    h = glass.offsetHeight / 2;
+    glass.addEventListener("mousemove", moveMagnifier);
+    img.addEventListener("mousemove", moveMagnifier);
+    glass.addEventListener("touchmove", moveMagnifier);
+    img.addEventListener("touchmove", moveMagnifier);
+    glass.addEventListener("mouseout", outMagnifier);
+    function outMagnifier(e){
+      e.preventDefault();
+      glass.style.visibility = 'hidden';
+    }
+    function moveMagnifier(e) {
+      var pos, x, y;
+      e.preventDefault();
+      glass.style.visibility = 'visible';
+      pos = getCursorPos(e);
+      x = pos.x;
+      y = pos.y;
+      if (x > img.width - (w / settings.zoom)) {x = img.width - (w / settings.zoom);}
+      if (x < w / settings.zoom) {x = w / settings.zoom;}
+      if (y > img.height - (h / settings.zoom)) {y = img.height - (h / settings.zoom);}
+      if (y < h / settings.zoom) {y = h / settings.zoom;}
+      glass.style.left = (x - w) + "px";
+      glass.style.top = (y - h) + "px";
+      glass.style.backgroundPosition = "-" + ((x * settings.zoom) - w + bw) + "px -" + ((y * settings.zoom) - h + bw) + "px";
+    }
+    function getCursorPos(e) {
+      var a, x = 0, y = 0;
+      e = e || window.event;
+      a = img.getBoundingClientRect();
+      x = e.pageX - a.left;
+      y = e.pageY - a.top;
+      x = x - window.pageXOffset;
+      y = y - window.pageYOffset;
+      return {x : x, y : y};
+    }
+  }
   imageZoom() {
     var img, lens, result, cx, cy;
     img = document.querySelector('.pd-image-zoom-content');

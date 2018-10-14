@@ -626,3 +626,22 @@ a:hover{
   height: 555px;
   visibility: hidden;
 }
+
+/*
+* Image Magnifier
+*/ 
+.pd-image-magnifier {
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+.pd-image-magnifier-glass {
+  position: absolute;
+  border: 3px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+  cursor: none;
+  width: 150px;
+  height: 150px;
+  z-index: 3001;
+}
