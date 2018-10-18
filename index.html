@@ -10,6 +10,46 @@
 
   <p><br/></p>
   <div class="pd-container">
+    <form class="pd-card pd-card-body">
+      <div class="pd-field">
+        <label>Username</label>
+        <input type="text" class="pd-input" required>
+      </div>
+      <div class="pd-field">
+        <label>Password</label>
+        <input type="password" class="pd-input pd-password-validation" required/>
+        <small class="pd-password-message"></small>
+      </div>
+      <button class="pd-button pd-button-primary">Submit</button>
+    </form>
+  </div>
+  <p><br/></p>
+  <!--
+  <div class="pd-container">
+    <div class="pd-row">
+      <div class="pd-col-md-5 pd-product-image">
+        <div class="pd-product-image-slider">
+          <img class="pd-product-image-slide pd-product-image-active" src="https://loremflickr.com/800/600/cat?lock=1" width="458" height="358"/>
+          <img class="pd-product-image-slide" src="https://loremflickr.com/800/600/cat?lock=2" width="458" height="358"/>
+          <img class="pd-product-image-slide" src="https://loremflickr.com/800/600/cat?lock=3" width="458" height="358"/>
+          <img class="pd-product-image-slide" src="https://loremflickr.com/800/600/cat?lock=4" width="458" height="358"/>
+        </div>
+      </div>
+      <div class="pd-col-md-7">
+        <h1>Product 2</h1>
+        <p>Description of product 2</p>
+        <p><b>Size:</b> XL<br/>
+        <b>Color</b>: Red<br/>
+        <b>Expired</b>: 12-12-2025</p>
+        <h3>$ 560</h3>
+        <h3>Qunatity: 1</h3>
+        <button class="pd-button pd-button-primary">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+
+  <p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>
+  <div class="pd-container">
     <div class="pd-row">
       <div class="pd-col-md-6 pd-image-magnifier">
         <img src="https://loremflickr.com/800/600/cat?lock=3" id="magnify" width="555" height="458"/>
@@ -162,7 +202,7 @@
       </div>
     </div>
   </div>
-
+-->
   <div class="pd-container">
     <div class="pd-row">
       <div class="pd-col-md-4">
@@ -233,7 +273,7 @@
   <script>
     var pidie = new Pidie();
     //pidie.horizontalTimeline();
-    pidie.treeView();
+    /*pidie.treeView();
     pidie.imageZoom();
     pidie.imageMagnifier({
       el: '#magnify',
@@ -241,6 +281,9 @@
       width: '200',
       height: '200'
     });
+    pidie.productImage();*/
+    pidie.tableOfContents();
+    pidie.passwordValidation();
   </script>
 </body>
 </html>

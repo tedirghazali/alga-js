@@ -645,3 +645,62 @@ a:hover{
   height: 150px;
   z-index: 3001;
 }
+
+/*
+* Product Image
+*/
+.pd-product-image{
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+.pd-product-image-slider{
+
+}
+.pd-product-image-slider img.pd-product-image-slide{
+  display: none;
+}
+.pd-product-image-slider img.pd-product-image-active{
+  display: block;
+  border: 1px solid #dedede;
+}
+.pd-product-image-pagination{
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+.pd-product-image-pagination img{
+  margin: 10px 5px;
+  border: 1px solid #dedede;
+}
+.pd-product-image-zoom{
+  position: absolute;
+  z-index: 3001;
+  width: 458px;
+  height: 358px;
+  top: 0;
+  left: 0;
+}
+
+/*
+* Password Validation
+*/
+.pd-password-valid {
+  color: green;
+}
+
+.pd-password-valid:before {
+  position: relative;
+  left: -5px;
+  content: "✔";
+}
+.pd-password-invalid {
+  color: red;
+}
+
+.pd-password-invalid:before {
+  position: relative;
+  left: -5px;
+  content: "✖";
+}

@@ -10,6 +10,126 @@ class Pidie {
   constructor(){}
 
   // methods v0.0.3 - v0.0.5
+  passwordValidation() {
+    var passValidate = document.querySelector('.pd-password-validation');
+    passValidate.setAttribute('pattern', '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}');
+    passValidate.setAttribute('title', 'Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters');
+    var passMessage = document.querySelector('.pd-password-message');
+    if(passMessage){
+      passMessage.innerHTML = passValidate.getAttribute('title');
+    }
+    passValidate.addEventListener('blur', function(){
+      passMessage.innerHTML = passValidate.getAttribute('title');
+    });
+    passValidate.addEventListener('keyup', function(){
+      var passInfo = '';
+      passInfo += '<h3>Password must contain the following:</h3>';
+      passInfo += '<p id="pd-password-letter" class="pd-password-invalid">Only one or more <b>lowercase</b> letter</p>' 
+      passInfo += '<p id="pd-password-capital" class="pd-password-invalid">Only one or more <b>capital (uppercase)</b> letter</p>' 
+      passInfo += '<p id="pd-password-number" class="pd-password-invalid">Only one or more <b>number</b></p>' 
+      passInfo += '<p id="pd-password-length" class="pd-password-invalid">Minimum <b>8 characters</b> letter or number</p>' 
+      passMessage.innerHTML = passInfo;
+      var lowerCaseLetters = /[a-z]/g;
+      var letter = document.getElementById('pd-password-letter');
+      if(passValidate.value.match(lowerCaseLetters)) {  
+        letter.classList.remove("pd-password-invalid");
+        letter.classList.add("pd-password-valid");
+      } else {
+        letter.classList.remove("pd-password-valid");
+        letter.classList.add("pd-password-invalid");
+      }
+      var upperCaseLetters = /[A-Z]/g;
+      var capital = document.getElementById('pd-password-capital');
+      if(passValidate.value.match(upperCaseLetters)) {  
+        capital.classList.remove("pd-password-invalid");
+        capital.classList.add("pd-password-valid");
+      } else {
+        capital.classList.remove("pd-password-valid");
+        capital.classList.add("pd-password-invalid");
+      }
+      var numbers = /[0-9]/g;
+      var number = document.getElementById('pd-password-number');
+      if(passValidate.value.match(numbers)) {  
+        number.classList.remove("pd-password-invalid");
+        number.classList.add("pd-password-valid");
+      } else {
+        number.classList.remove("pd-password-valid");
+        number.classList.add("pd-password-invalid");
+      }
+      var length = document.getElementById('pd-password-length');
+      if(passValidate.value.length >= 8) {
+        length.classList.remove("pd-password-invalid");
+        length.classList.add("pd-password-valid");
+      } else {
+        length.classList.remove("pd-password-valid");
+        length.classList.add("pd-password-invalid");
+      }
+    });
+  }
+  productImage() {
+    var wrapImageProduct = document.querySelector('.pd-product-image');
+    var sliderImageProduct = document.querySelector('.pd-product-image-slider');
+    var pagiImageProduct = document.createElement('div');
+    pagiImageProduct.classList.add('pd-product-image-pagination');
+    wrapImageProduct.appendChild(pagiImageProduct);
+    var pagiItem = '';
+    for(var i = 0; i < 4; i++){
+      pagiItem += '<img src="'+sliderImageProduct.getElementsByClassName('pd-product-image-slide')[i].getAttribute('src')+'" data-product-image="'+i+'" width="100" height="80"/>';
+    }
+    pagiImageProduct.innerHTML = pagiItem;
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-product-image-pagination img'), function(elem){
+      elem.onclick = function(e){
+        e.preventDefault();
+        for(var j = 0; j < 4; j++){
+          sliderImageProduct.getElementsByClassName('pd-product-image-slide')[j].classList.remove('pd-product-image-active');
+        }
+        var no = elem.getAttribute('data-product-image');
+        sliderImageProduct.getElementsByClassName('pd-product-image-slide')[no].classList.add('pd-product-image-active');
+      }
+    })
+    var zoomImageProduct = document.querySelector('.pd-product-image-active');
+    var resultImageProduct = document.createElement('div');
+    resultImageProduct.classList.add('pd-product-image-zoom');
+    resultImageProduct.style.visibility = 'hidden';
+    resultImageProduct.style.backgroundImage = "url('" + zoomImageProduct.src + "')";
+    resultImageProduct.style.backgroundSize = (zoomImageProduct.width * 2) + "px " + (zoomImageProduct.height * 2) + "px";
+    sliderImageProduct.appendChild(resultImageProduct);
+    zoomImageProduct.addEventListener("mousemove", moveImage);
+    zoomImageProduct.addEventListener("touchmove", moveImage);
+    sliderImageProduct.addEventListener("mouseout", outImage);
+    function moveImage(e){
+      e.preventDefault();
+      resultImageProduct.style.visibility = 'visible';
+      var pos = getCursorPos(e);
+      var x = pos.x;
+      var y = pos.y;
+      var zoom = 3;
+      var w = '150';
+      var h = '150';
+      var bw = 3;
+      if (x > zoomImageProduct.width - (w / zoom)) {x = zoomImageProduct.width - (w / zoom);}
+      if (x < w / zoom) {x = w / zoom;}
+      if (y > zoomImageProduct.height - (h / zoom)) {y = zoomImageProduct.height - (h / zoom);}
+      if (y < h / zoom) {y = h / zoom;}
+      //resultImageProduct.style.left = x + "px";
+      //resultImageProduct.style.top = y + "px";
+      resultImageProduct.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+    }
+    function outImage(e){
+      e.preventDefault();
+      resultImageProduct.style.visibility = 'hidden';
+    }
+    function getCursorPos(e) {
+      var a, x = 0, y = 0;
+      e = e || window.event;
+      a = zoomImageProduct.getBoundingClientRect();
+      x = e.pageX - a.left;
+      y = e.pageY - a.top;
+      x = x - window.pageXOffset;
+      y = y - window.pageYOffset;
+      return {x : x, y : y};
+    }
+  }
   imageMagnifier(options = {}) {
     var settings = {
       selector: options.el || '.pd-image-magnifier img',
@@ -312,10 +432,57 @@ class Pidie {
     var tocOl = document.createElement('ul');
     tocOl.style.listStyle = 'none';
     tocOl.style.paddingLeft = '0';
-    tocPanel.appendChild(tocOl);
+    //tocPanel.appendChild(tocOl);
+    var selectorHeaders = 'h2, h3, h4, h5, h6';
+    var primaryHeaderLevels = [2,3,4,5,6];
+    var newLevel;
+    var level = 1;
+    var links = '';
+    var headings = tocTajuk.querySelectorAll(selectorHeaders);
+    if (headings.length < 1)
+      return;
+    for (var i = 0; i < headings.length; i++) {
+      newLevel = parseInt(headings[i].tagName.slice(1), 10);
+      console.log(`newLevel: ${newLevel}.`);
+      if (!headings[i].id) {
+        headings[i].id = headings[i].innerHTML.replace( /^[^a-z]+|[^\w:.-]+/gi, '_' ).toLowerCase();
+      }
+      if ( newLevel > level && primaryHeaderLevels.indexOf(newLevel) !== 1 ) {
+          links += '<ul><li>';
+          console.log(`A: Lvl: ${newLevel}, val: ${headings[i].textContent}.`);
+      } else if ( newLevel < level ) {
+          links += '</li></ul></li><li>';
+          console.log(`B: Lvl: ${newLevel}, val: ${headings[i].textContent}.`);
+      } else {
+          links += '</li><li>';
+          console.log(`C: Lvl: ${newLevel}, val: ${headings[i].textContent}.`);
+      }
+      links += '<a href="#' + headings[i].id + '">' + toTitleCase(headings[i].innerHTML) + '</a>';
+      level = newLevel;
+    }
+    links += '</li></ul>';
+    tocPanel.innerHTML = '<h2>Table of Contents</h2>' + links;
+    function toTitleCase(str) {
+      str = str.toLowerCase().split(' ');
+      for (var i = 0; i < str.length; i++) {
+        str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
+      }
+      return str.join(' ');
+    };
+    /*for(var i = 1;i <= 6;i++){
+      Array.prototype.forEach.call(document.querySelectorAll('h'+i), function(elem){
+        console.log(elem);
+        
+      })
+    }
     var tocTotalH2 = document.querySelectorAll('.pd-heading-of-contents h2').length;
+    var tocTotalH3 = document.querySelectorAll('.pd-heading-of-contents h3').length;
+    var tocTotalH4 = document.querySelectorAll('.pd-heading-of-contents h4').length;
+    var tocTotalH5 = document.querySelectorAll('.pd-heading-of-contents h5').length;
+    var tocTotalH6 = document.querySelectorAll('.pd-heading-of-contents h6').length;
+    var tocTotal = (tocTotalH2 + tocTotalH3) + (tocTotalH4 + tocTotalH5) + tocTotalH6;
     var tocContent = '';
-    for(var i = 0; i < tocTotalH2; i++){
+    for(var i = 0; i < tocTotal; i++){
       var separator = '-';
       var arrHeading = [];
       for( var j = 0; j < tocTajuk.getElementsByTagName('h2')[i].innerText.length; j++ ){
@@ -333,14 +500,6 @@ class Pidie {
       tocTajuk.getElementsByTagName('h2')[i].setAttribute('id', idtxt);
       tocContent += '<li style="margin-bottom:7px;"><span>'+(i + 1)+'</span> ';
       tocContent += '<a href="#'+tocTajuk.getElementsByTagName('h2')[i].getAttribute('id')+'">'+tocTajuk.getElementsByTagName('h2')[i].innerText+'</a>';
-      var tocTotalH3 = document.querySelectorAll('.pd-heading-of-contents h3').length;
-      if(tocTotalH3){
-        tocContent += '<ul>';
-        for(var k = 0; k < tocTotalH3; k++){
-          tocContent += '<li>saya</li>';
-        }
-        tocContent += '</ul>';
-      }
       tocContent += '</li>';
     }
     tocOl.innerHTML = tocContent;
@@ -351,7 +510,7 @@ class Pidie {
           window.location.hash = hash;
         }
       }
-    })
+    })*/
   }
 
   // methods v0.0.2
