@@ -10,6 +10,53 @@ class Pidie {
   constructor(){}
 
   // methods v0.0.7
+  tryitLike(editor) {
+    var tryit = document.querySelector('.pd-tryit-wrap');
+    var lebar = (document.documentElement.scrollWidth / 2) - 5;
+    var tinggi = document.documentElement.scrollHeight - (document.querySelector('.pd-nav').scrollHeight + 8);
+    editor.setSize(lebar, tinggi);
+    var dragbar = document.createElement('div');
+    dragbar.classList.add('pd-tryit-dragbar');
+    dragbar.style.height = (tinggi + 4) +'px';
+    var hasil = tryit.querySelector('.pd-tryit-run');
+    hasil.style.width = lebar +'px';
+    hasil.style.height = tinggi +'px';
+    tryit.insertBefore(dragbar, tryit.querySelector('.pd-tryit-result'));
+    var menurun = document.querySelector('.pd-menu-run');
+    menurun.addEventListener('click', function(e){
+      e.preventDefault();
+      var konten = (hasil.contentWindow) ? hasil.contentWindow : (hasil.contentDocument.document) ? hasil.contentDocument.document : hasil.contentDocument;
+      konten.document.open();
+      konten.document.write(editor.doc.getValue());  
+      konten.document.close();
+      if (konten.document.body && !konten.document.body.isContentEditable) {
+        konten.document.body.contentEditable = true;
+        konten.document.body.contentEditable = false;
+      }
+    })
+    var menusave = document.querySelector('.pd-menu-save');
+    menusave.addEventListener('click', function(e){
+      e.preventDefault();
+      var svTeks = editor.doc.getValue();
+      var svTeksBlob = new Blob([ svTeks ], { type: 'text/html' });
+      var svTeksFile = "index.html";
+      var svTeksUnduh = document.createElement("a");
+      svTeksUnduh.download = svTeksFile;
+      svTeksUnduh.innerHTML = "Download File";
+      if (window.webkitURL != null) {
+        svTeksUnduh.href = window.webkitURL.createObjectURL(svTeksBlob);
+      } else {
+        svTeksUnduh.href = window.URL.createObjectURL(svTeksBlob);
+        svTeksUnduh.onclick = destroySaveTeks;
+        svTeksUnduh.style.display = "none";
+        document.body.appendChild(svTeksUnduh);
+      }
+      svTeksUnduh.click();
+    })
+    function destroySaveTeks(event) {
+      document.body.removeChild(event.target);
+    }
+  }
   parallax() {
     Array.prototype.forEach.call(document.querySelectorAll('.pd-parallax'), function(elem){
       elem.style.backgroundImage = 'url('+elem.getAttribute('data-parallax-image')+')';

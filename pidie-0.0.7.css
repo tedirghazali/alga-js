@@ -14,7 +14,7 @@
 * Basic
 */
 
-*, ::after, ::before { box-sizing: border-box; }
+*, ::after, ::before { box-sizing: border-box; margin: 0; padding: 0; }
 .pd-left{ float: left; }
 .pd-right{ float: right; }
 .pd-text-left{ text-align: left; }
@@ -728,4 +728,35 @@ a:hover{
   .pd-parallax {
       background-attachment: scroll;
   }
+}
+
+/*
+* TryIt-like
+*/
+.pd-tryit{
+  position: relative;
+}
+.pd-tryit-wrap{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  border-bottom: 3px solid rgb(220, 220, 220);
+}
+.pd-tryit-editor, .pd-tryit-result{
+  width: auto;
+  height: auto;
+}
+.pd-tryit-dragbar{
+  cursor: ew-resize;
+  width: 10px;
+  background-color: rgb(220, 220, 220);
+}
+.pd-tryit-code{
+  min-width: 49%;
+}
+.pd-tryit-run{
+  min-width: 49%;
+  border: none;
+  background: #ffffff;;
 }

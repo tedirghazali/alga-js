@@ -4,115 +4,56 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>PidieUi</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">-->
   <link href="pidie-0.0.7.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/codemirror.css" rel="stylesheet"/>
 </head>
 <body>
 
-  <div class="pd-parallax" data-parallax-image="https://loremflickr.com/800/600/cat?lock=1">
+  <nav class="pd-nav">
+    <a href="#" class="pd-nav-brand">
+      <img src="images/pidiejs.png" />
+      <h1>PidieUi</h1>
+    </a>
+    <ul class="pd-nav-menu pd-menu-left">
+      <li><a href="#" class="pd-menu-run"><i class="pd-icon">play_arrow</i></a></li>
+      <li><a href="#" class="pd-menu-save"><i class="pd-icon">save</i></a></li>
+    </ul>
+  </nav>
+  <div class="pd-tryit">
+    <div class="pd-tryit-wrap">
+      <div class="pd-tryit-editor">
+        <textarea class="pd-tryit-code">
+<p>saya</p>
+        </textarea>
+      </div>
+      <div class="pd-tryit-result">
+        <iframe class="pd-tryit-run"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <!--<div class="pd-parallax" data-parallax-image="https://loremflickr.com/800/600/cat?lock=1">
     <div class="pd-title"><h1>Pidie Parallax</h1></div>
-  </div>
-  
-  <div class="container pt-3 pb-3">
-    <h3>Lorem ipsum dolor sit amet</h3>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula, mauris ut luctus euismod, nunc urna ultricies dui, ac fringilla nisl magna sit amet eros. Morbi finibus, nibh ut porttitor pharetra, orci lacus blandit augue, quis convallis nisl odio vitae eros. Etiam tincidunt lectus pharetra massa tincidunt accumsan. Curabitur porta nisi nec diam placerat egestas. Donec sed vehicula leo. Vestibulum blandit consectetur leo sed sagittis. Fusce et arcu non arcu scelerisque volutpat. Sed posuere metus vel quam euismod, a cursus eros egestas. Pellentesque viverra interdum pellentesque. Nullam egestas lorem vel erat aliquam cursus. Morbi tincidunt lectus eget arcu lobortis, ut malesuada nulla faucibus. Mauris facilisis diam nec massa tincidunt congue. Nullam at mauris ut turpis mattis dictum. Quisque ultricies turpis eget fermentum varius. Vivamus sed interdum lectus.</p>
-    <h3>Proin accumsan diam a augue molestie mollis</h3>
-    <p>Proin accumsan diam a augue molestie mollis. Duis non ipsum blandit, lacinia risus sit amet, varius urna. Curabitur diam turpis, ullamcorper at fringilla a, sollicitudin ac enim. Cras nulla turpis, iaculis eget sem et, egestas iaculis lorem. Nulla vitae pulvinar orci. Duis feugiat posuere semper. Nam eleifend vulputate aliquet. Nullam vitae sollicitudin tortor. Phasellus lobortis mauris nec elementum mollis. Donec efficitur odio in augue suscipit consectetur. Vivamus pretium elit sed tempus viverra.</p>
-  </div>
-  
-  <div class="pd-parallax" data-parallax-image="https://loremflickr.com/800/600/cat?lock=2">
-    <div class="container">
-      <div class="row pt-5 pb-5">
-        <div class="col-md-4">
-          <div class="card card-body">
-            <h3>Vestibulum venenatis urna vel augue vestibulum</h3>
-            <p>Vestibulum venenatis urna vel augue vestibulum, nec dapibus augue vestibulum. Aenean lacus odio, gravida quis quam vel, malesuada aliquet elit. Vestibulum posuere arcu nec neque volutpat, vitae rhoncus mi iaculis. Phasellus aliquet orci in diam eleifend, sit amet volutpat elit mattis. Pellentesque egestas pharetra egestas. Curabitur quis felis in mauris volutpat ultricies. Pellentesque fringilla iaculis est, non suscipit velit rhoncus vitae.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-body">
-            <h3>Vivamus vulputate</h3>
-            <p>Vivamus vulputate, eros a malesuada consequat, eros ligula ultrices est, et malesuada orci mauris vitae diam. Nulla tempus dolor ut fermentum tempor. Sed id sagittis est, non consectetur nulla. Sed mauris ante, tempor vehicula urna quis, commodo congue nisl. Curabitur feugiat est vel mi venenatis ultrices. Nunc auctor iaculis ultricies. Nunc commodo nibh auctor eros luctus, eget efficitur nibh ultricies. Integer vulputate ex sed varius fringilla. Morbi aliquam magna vel suscipit fermentum. Duis nec augue dui.</p>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-body">
-            <h3>Pellentesque nunc mauris</h3>
-            <p>Pellentesque nunc mauris, consequat vel quam a, vehicula aliquam purus. Praesent eu lobortis arcu. Vestibulum sed neque facilisis eros suscipit pharetra ac in lorem. Mauris gravida augue eu est dapibus tristique. Curabitur nisl diam, interdum in ultrices vel, euismod vitae odio. Donec iaculis elit lacus, quis tincidunt nisi malesuada non. Morbi hendrerit tincidunt nisl non convallis. Curabitur tempor eleifend sollicitudin. Pellentesque id pharetra sapien.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="container pt-3 pb-3">
-    <h3>Etiam tincidunt vulputate accumsan</h3>
-    <p>Etiam tincidunt vulputate accumsan. Vivamus suscipit, dolor eu sagittis porttitor, magna sem porttitor lorem, non placerat mi mauris nec lacus. Nunc consectetur in nisi nec vulputate. Integer et leo in odio varius vulputate ac eget quam. Sed ut arcu dapibus, auctor orci non, molestie quam. Sed vel tortor sit amet ipsum eleifend pulvinar. Aliquam eleifend massa lacus, vel commodo sem accumsan a. Aliquam tincidunt tellus nunc, eu lacinia nulla aliquam nec. In porttitor sagittis dui, et porttitor odio aliquam sodales. Fusce gravida, mauris eu elementum placerat, tellus neque ultricies urna, eget pretium lacus felis et tellus. Aenean eu sapien nisi. Mauris rhoncus velit turpis, sed aliquam est pellentesque eu. Fusce maximus sapien sed nibh tempor, at malesuada tortor dignissim. Interdum et malesuada fames ac ante ipsum primis in faucibus.</p>
-    <h3>Ut at lectus ipsum</h3>
-    <p>Ut at lectus ipsum. Aliquam ut faucibus sem, at egestas odio. Nunc sit amet fermentum augue, eget vehicula massa. Sed a sodales leo, vel euismod neque. In sodales malesuada augue, id euismod felis tincidunt sit amet. Praesent luctus sapien id libero blandit ullamcorper. Suspendisse pretium gravida commodo. Curabitur accumsan eleifend auctor. Sed fermentum finibus leo, ut faucibus magna pulvinar id. Nulla lacus tortor, lobortis et mauris ut, vestibulum consectetur elit. Maecenas ultricies imperdiet turpis ut iaculis.</p>
-  </div>
-  
-  <div class="pd-parallax" data-parallax-image="https://loremflickr.com/800/600/cat?lock=3">
-    <div class="container">
-      <div class="row pt-4 pb-4">
-        <div class="col-md-4">
-          <div class="card">
-            <img class="card-img-top" src="https://loremflickr.com/800/600/cat?lock=6" />
-            <div class="card-body">
-              <h3 class="card-title">Product 1</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img class="card-img-top" src="https://loremflickr.com/800/600/cat?lock=7" />
-            <div class="card-body">
-              <h3 class="card-title">Product 2</h3>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card">
-            <img class="card-img-top" src="https://loremflickr.com/800/600/cat?lock=8" />
-            <div class="card-body">
-              <h3 class="card-title">Product 3</h3>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <div class="container pt-3 pb-3">
-    <h3>Aenean erat lectus</h3>
-    <p>Aenean erat lectus, euismod eu mi eu, posuere rutrum leo. Nam vestibulum nisl ut ipsum hendrerit posuere. Donec id elit nec nunc facilisis sollicitudin. Mauris blandit lectus ipsum, ut tincidunt dolor tempus eget. Aliquam elit diam, ornare in dui non, gravida venenatis leo. Suspendisse porttitor, nulla quis pharetra aliquet, ex diam pharetra orci, vitae scelerisque leo lorem eu nunc. Quisque varius sapien vel maximus ultrices. Vivamus condimentum convallis purus ac egestas.</p>
-    <h3>Proin augue nisi</h3>
-    <p>Proin augue nisi, rutrum a mi ac, consectetur efficitur nisi. Praesent pharetra ipsum gravida, rutrum erat a, egestas lacus. Sed quis aliquam tortor. Praesent posuere ligula ante, non maximus quam euismod id. Donec vitae maximus felis. Cras malesuada finibus feugiat. Ut eleifend cursus eleifend. Morbi vitae orci dapibus lorem bibendum malesuada convallis in odio. Maecenas feugiat vulputate nisi vel pulvinar. Donec pellentesque hendrerit ante lobortis placerat. Nullam metus metus, placerat in pretium ut, pulvinar id metus. Sed non feugiat risus, et sagittis tortor. Pellentesque sodales pretium tortor, id ultricies diam. Curabitur et ex egestas, pretium neque id, aliquet ligula. Nam cursus bibendum ligula aliquet cursus. Nulla nec mauris tortor.</p>
-  </div>
-  
-  <div class="pd-parallax" data-parallax-image="https://loremflickr.com/800/600/cat?lock=4">
-    
-  </div>
-  
-  <div class="container pt-3 pb-3">
-    <h3>Proin tincidunt a nibh quis blandit</h3>
-    <p>Proin tincidunt a nibh quis blandit. Curabitur sed quam et ipsum faucibus fermentum eu ac sem. Pellentesque blandit pulvinar volutpat. In hac habitasse platea dictumst. Mauris ut elementum eros. Morbi pellentesque felis ut quam dictum, quis mollis odio iaculis. Nunc eget quam velit. Donec egestas nulla in laoreet vulputate. In ac nisl sit amet ligula vehicula rutrum eu at dui. Nulla porttitor arcu metus, fermentum interdum orci faucibus et.</p>
-    <h3>Nulla rutrum bibendum nisl rutrum rutrum</h3>
-    <p>Nulla rutrum bibendum nisl rutrum rutrum. Sed consequat, orci et pulvinar tincidunt, nibh quam auctor mi, viverra euismod leo tortor non eros. Donec ultrices porta nisi sagittis hendrerit. Donec feugiat lacus ac neque viverra, in dictum leo sagittis. Aliquam ultrices vehicula nunc, interdum scelerisque nibh scelerisque ac. Quisque egestas ut sapien at pulvinar. Fusce molestie accumsan placerat. Sed vitae lorem et mauris condimentum gravida in a elit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras accumsan condimentum sapien eu aliquam. Aliquam sit amet faucibus nunc. Proin vitae rutrum quam, non bibendum lacus. Sed ut mattis nisi. Pellentesque lacinia fringilla pharetra. Aenean sit amet leo turpis. Integer ullamcorper dolor nec fermentum laoreet.</p>
-  </div>
-  
-  <div class="pd-parallax" data-parallax-image="https://loremflickr.com/800/600/cat?lock=5">
-    <div class="pd-title"><h1>Thank You</h1></div>
   </div>
   
   <footer class="pd-text-center pt-4 pb-3">
     <p>Apache License 2.0 Tedir Ghazali</p>
-  </footer>
+  </footer>-->
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/codemirror.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/javascript/javascript.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/css/css.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/xml/xml.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/htmlmixed/htmlmixed.js"></script>
   <script src="pidie-0.0.7.js"></script>
   <script>
+    var editor = CodeMirror.fromTextArea(document.querySelector('.pd-tryit-code'), {
+      lineNumbers: true,
+      mode:  "htmlmixed"
+    });
     var pidie = new Pidie();
-    pidie.parallax();
+    pidie.tryitLike(editor);
   </script>
 </body>
 </html>
