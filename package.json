@@ -1,0 +1,33 @@
+{
+  "name": "pidieui",
+  "version": "0.0.1-alpha-1",
+  "description": "PidieUi is Web Component",
+  "main": "src/pidie-ui-0.0.1-alpha-1.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tedirghazali/pidie.git"
+  },
+  "keywords": [
+    "pidieui",
+    "framework",
+    "front-end"
+  ],
+  "author": "Tedir Ghazali",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/tedirghazali/pidie/issues"
+  },
+  "homepage": "https://github.com/tedirghazali/pidie#readme",
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^2.0.0",
+    "grunt-contrib-nodeunit": "^2.0.0",
+    "grunt-contrib-qunit": "^3.0.1",
+    "grunt-contrib-uglify": "^4.0.0",
+    "grunt-contrib-watch": "^1.1.0"
+  }
+}
