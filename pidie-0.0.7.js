@@ -10,6 +10,45 @@ class Pidie {
   constructor(){}
 
   // methods v0.0.7
+  richTextEditor(options = {}) {
+    var toolbar = document.querySelector('.pd-text-toolbar');
+    var bold = toolbar.querySelector('.pd-bold');
+    var italic = toolbar.querySelector('.pd-italic');
+    var underline = toolbar.querySelector('.pd-underline');
+    var alignleft = toolbar.querySelector('.pd-alignleft');
+    var aligncenter = toolbar.querySelector('.pd-aligncenter');
+    var alignright = toolbar.querySelector('.pd-alignright');
+    var alignjustify = toolbar.querySelector('.pd-alignjustify');
+    var orderedlist = toolbar.querySelector('.pd-orderedlist');
+    var unorderedlist = toolbar.querySelector('.pd-unorderedlist');
+    bold.addEventListener('click', function(){
+      document.execCommand('bold');
+    })
+    italic.addEventListener('click', function(){
+      document.execCommand('italic');
+    })
+    underline.addEventListener('click', function(){
+      document.execCommand('underline');
+    })
+    alignleft.addEventListener('click', function(){
+      document.execCommand('justifyLeft');
+    })
+    aligncenter.addEventListener('click', function(){
+      document.execCommand('justifyCenter');
+    })
+    alignright.addEventListener('click', function(){
+      document.execCommand('justifyRight');
+    })
+    alignjustify.addEventListener('click', function(){
+      document.execCommand('justifyFull');
+    })
+    orderedlist.addEventListener('click', function(){
+      document.execCommand('insertOrderedList');
+    })
+    unorderedlist.addEventListener('click', function(){
+      document.execCommand('insertUnorderedList');
+    })
+  }
   tryitLike(editor) {
     var tryit = document.querySelector('.pd-tryit-wrap');
     var lebar = (document.documentElement.scrollWidth / 2) - 5;
