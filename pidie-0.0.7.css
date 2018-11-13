@@ -762,8 +762,137 @@ a:hover{
 }
 
 /*
-* Content Editable
+* Animated Popover Menu
 */
-.pd-text-wrap{
-
+.popover {
+    line-height: 1.5;
+    display: inline-block;
 }
+.pd-popover-wrap{
+    position: relative;
+    display: inline-block;
+}
+.pd-popover-button{
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    padding: 25px;
+    background-color: #ddd;
+    border: none;
+    border-radius: 5px;
+    display: inline-block;
+    cursor: pointer;
+    display: inline-block;
+    text-decoration: none
+    user-select: none;
+    vertical-align: middle;
+    white-space: nowrap;
+    outline: none;
+    -webkit-transition: all 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    -moz-transition: all 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: all 0.1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.pd-popover-button span{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    opacity: 1;
+    width: 30px;
+    height: 5px;
+    background-color: #333;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-transition: 250ms ease-in-out;
+    -moz-transition: 250ms ease-in-out;
+    transition: 250ms ease-in-out;
+}
+.pd-popover-button span:first-child {
+    margin: -9px 0 0;
+}
+.pd-popover-button span:last-child {
+    margin: 9px 0 0;
+}
+.pd-popover-button:hover span:first-child {
+    margin: -7px 0 0;
+}
+.pd-popover-button:hover span:last-child {
+    margin: 7px 0 0;
+}
+.pd-popover-change span:nth-child(1){
+    -webkit-transform: translate(-50%, -50%) rotate(45deg);
+    -moz-transform: translate(-50%, -50%) rotate(45deg);
+    -ms-transform: translate(-50%, -50%) rotate(45deg);
+    -o-transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg);
+    margin: 0;
+}
+.pd-popover-change:hover span:nth-child(1){
+    margin: 0;
+}
+.pd-popover-change span:nth-child(2){
+    opacity: 0;
+}
+.pd-popover-change span:nth-child(3){
+    -webkit-transform: translate(-50%, -50%) rotate(-45deg);
+    -moz-transform: translate(-50%, -50%) rotate(-45deg);
+    -ms-transform: translate(-50%, -50%) rotate(-45deg);
+    -o-transform: translate(-50%, -50%) rotate(-45deg);
+    transform: translate(-50%, -50%) rotate(-45deg);
+    margin: 0;
+}
+.pd-popover-change:hover span:nth-child(3){
+    margin: 0;
+}
+.pd-popover-content{
+    width: 228px;
+    position: absolute;
+    z-index: 301;
+    top: 50px;
+    display: none;
+    overflow: visible;
+    margin: 0;
+    color: #1D262D;
+    border: 1px solid #E3E9ED;
+    border-radius: 3px;
+    background: #fff;
+    box-shadow: 1px 1px 3px rgba(11,34,57,0.2);
+    -webkit-animation: popover 0.2s ease-in-out;
+    -moz-animation: popover 0.2s ease-in-out;
+    animation: popover 0.2s ease-in-out;
+}
+.pd-popover-wrap .pd-show{
+    display: block;
+}
+.pd-popover-content::before{
+    position: absolute;
+    left: 14px;
+    font-size: 1.4em;
+    display: block;
+    width: 0;
+    height: 0;
+    content: '';
+    pointer-events: none;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -.45em;
+    right: .97em;
+}
+.pd-popover-right{
+    text-align: right;
+}
+.pd-popover-right .pd-popover-content{
+    right: 0;
+}
+.pd-popover-right .pd-popover-content::before{
+    left: 192px;
+}
+
+/*
+*
+*/

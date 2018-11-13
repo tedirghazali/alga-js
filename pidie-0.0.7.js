@@ -7,47 +7,21 @@
 
 class Pidie {
 
-  constructor(){}
+  constructor(){
+    this.popover();
+  }
 
   // methods v0.0.7
-  richTextEditor(options = {}) {
-    var toolbar = document.querySelector('.pd-text-toolbar');
-    var bold = toolbar.querySelector('.pd-bold');
-    var italic = toolbar.querySelector('.pd-italic');
-    var underline = toolbar.querySelector('.pd-underline');
-    var alignleft = toolbar.querySelector('.pd-alignleft');
-    var aligncenter = toolbar.querySelector('.pd-aligncenter');
-    var alignright = toolbar.querySelector('.pd-alignright');
-    var alignjustify = toolbar.querySelector('.pd-alignjustify');
-    var orderedlist = toolbar.querySelector('.pd-orderedlist');
-    var unorderedlist = toolbar.querySelector('.pd-unorderedlist');
-    bold.addEventListener('click', function(){
-      document.execCommand('bold');
-    })
-    italic.addEventListener('click', function(){
-      document.execCommand('italic');
-    })
-    underline.addEventListener('click', function(){
-      document.execCommand('underline');
-    })
-    alignleft.addEventListener('click', function(){
-      document.execCommand('justifyLeft');
-    })
-    aligncenter.addEventListener('click', function(){
-      document.execCommand('justifyCenter');
-    })
-    alignright.addEventListener('click', function(){
-      document.execCommand('justifyRight');
-    })
-    alignjustify.addEventListener('click', function(){
-      document.execCommand('justifyFull');
-    })
-    orderedlist.addEventListener('click', function(){
-      document.execCommand('insertOrderedList');
-    })
-    unorderedlist.addEventListener('click', function(){
-      document.execCommand('insertUnorderedList');
-    })
+  popover() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-popover-wrap'), function(elem){
+        var btn = elem.querySelector('.pd-popover-button');
+        var isi = elem.querySelector('.pd-popover-content');
+        btn.onclick = function(e){
+            e.preventDefault();
+            btn.classList.toggle('pd-popover-change');
+            isi.classList.toggle('pd-show');
+        }
+    });
   }
   tryitLike(editor) {
     var tryit = document.querySelector('.pd-tryit-wrap');
