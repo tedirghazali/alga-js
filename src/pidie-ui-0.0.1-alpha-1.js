@@ -5,12 +5,18 @@
 * Apache License 2.0
 */
 
-class PidieUi {
-    
-    constructor() {
-    
+(function() {
+
+    "use strict";
+
+    function init(){
+        action();
     }
     
-}
+    function action(){
+        
+    }
+    
+    init();
 
-new PidieUi()
+})();
