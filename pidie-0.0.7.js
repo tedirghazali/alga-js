@@ -12,6 +12,59 @@ class Pidie {
   }
 
   // methods v0.0.7
+  spinner(options = {}){
+    var settings = {
+      el: options.el || '.pd-spinner',
+      decrementButton: options.decrementButton || '<strong>-</strong>',
+      incrementButton: options.incrementButton || '<strong>+</strong>',
+      buttonsClass: options.buttonsClass || 'btn-outline-secondary',
+      buttonsWidth: options.buttonsWidth || '35px',
+      inputAlign: options.inputAlign || 'center'
+    }
+    var spin = document.querySelector(settings.el);
+    var spinElm = document.createElement('div');
+    spinElm.classList.add('input-group');
+    var spinItem = '';
+    spinItem += '<div class="input-group-prepend">';
+    spinItem += '<button type="button" style="width: '+settings.buttonsWidth+'" class="pd-spinner-decrement btn '+settings.buttonsClass+'">'+settings.decrementButton+'</button>';
+    spinItem += '</div>';
+    spinItem += '<input type="text" style="text-align: '+settings.inputAlign+'" class="pd-spinner-input form-control"/>';
+    spinItem += '<div class="input-group-append">';
+    spinItem += '<button type="button" style="width: '+settings.buttonsWidth+'" class="pd-spinner-increment btn '+settings.buttonsClass+'">'+settings.incrementButton+'</button>';
+    spinItem += '</div>';
+    spinElm.innerHTML = spinItem;
+    spin.parentNode.replaceChild(spinElm, spin);
+    var min = parseInt(spin.getAttribute('min')) || 0;
+    var max = isNaN(spin.getAttribute('max')) || spin.getAttribute('max') === '' ? Infinity : parseInt(spin.getAttribute('max'));
+    var step = parseInt(spin.getAttribute('step')) || 1;
+    var decButton = document.querySelector('.pd-spinner-decrement');
+    var incButton = document.querySelector('.pd-spinner-increment');
+    var inputSpin = document.querySelector('.pd-spinner-input');
+    var numberSpin = step;
+    inputSpin.value = numberSpin;
+    decButton.addEventListener('click', function(e){
+      e.preventDefault();
+      if(numberSpin <= min){
+        decButton.setAttribute('disabled', 'disabled');
+      } else{
+        decButton.removeAttribute('disabled');
+        incButton.removeAttribute('disabled');
+        numberSpin = parseInt(inputSpin.value) - 1;
+        inputSpin.value = numberSpin;
+      }
+    })
+    incButton.addEventListener('click', function(e){
+      e.preventDefault();
+      if(numberSpin >= max){
+        incButton.setAttribute('disabled', 'disabled');
+      } else{
+        decButton.removeAttribute('disabled');
+        incButton.removeAttribute('disabled');
+        numberSpin = parseInt(inputSpin.value) + 1;
+        inputSpin.value = numberSpin;
+      }
+    })
+  }
   popover() {
     Array.prototype.forEach.call(document.querySelectorAll('.pd-popover-wrap'), function(elem){
         var btn = elem.querySelector('.pd-popover-button');

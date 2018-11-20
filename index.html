@@ -6,77 +6,23 @@
   <title>PidieUi</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link href="pidie-0.0.7.css" rel="stylesheet"/>
-  <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/codemirror.css" rel="stylesheet"/>-->
 </head>
 <body>
 
-  <!--<nav class="pd-nav">
-    <a href="#" class="pd-nav-brand">
-      <img src="images/pidiejs.png" />
-      <h1>PidieUi</h1>
-    </a>
-    <ul class="pd-nav-menu pd-menu-left">
-      <li><a href="#" class="pd-menu-run"><i class="pd-icon">play_arrow</i></a></li>
-      <li><a href="#" class="pd-menu-save"><i class="pd-icon">save</i></a></li>
-    </ul>
-  </nav>
-  <div class="pd-tryit">
-    <div class="pd-tryit-wrap">
-      <div class="pd-tryit-editor">
-        <textarea class="pd-tryit-code">
-<p>saya</p>
-        </textarea>
-      </div>
-      <div class="pd-tryit-result">
-        <iframe class="pd-tryit-run"></iframe>
-      </div>
-    </div>
-  </div>
-
-  <div class="pd-parallax" data-parallax-image="https://loremflickr.com/800/600/cat?lock=1">
-    <div class="pd-title"><h1>Pidie Parallax</h1></div>
-  </div>-->
-
   <p><br/></p>
 
-    <div class="container mt-4">
-        <div class="pd-popover pd-popover-right">
-          <div class="pd-popover-wrap">
-          	<button type="button" class="pd-popover-button">
-            	<span></span>
-            	<span></span>
-            	<span></span>
-            </button>
-            <div class="pd-popover-content">
-                <div class="list-group list-group-flush">
-                    <a href="#" class="list-group-item">Popover Item 1</a>
-                    <a href="#" class="list-group-item">Popover Item 2</a>
-                    <a href="#" class="list-group-item">Popover Item 3</a>
-                    <a href="#" class="list-group-item">Popover Item 4</a>
-                    <a href="#" class="list-group-item">Popover Item 5</a>
-                </div>
-            </div>
-          </div>
-        </div>
+    <div class="container mt-4" style="width:300px">
+        <input type="number" max="5" class="pd-spinner form-control"/>
     </div>
   
   <!--<footer class="pd-text-center pt-4 pb-3">
     <p>Apache License 2.0 Tedir Ghazali</p>
-  </footer>
+  </footer>-->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/codemirror.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/javascript/javascript.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/css/css.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/xml/xml.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.41.0/mode/htmlmixed/htmlmixed.js"></script>-->
   <script src="pidie-0.0.7.js"></script>
   <script>
-    /*var editor = CodeMirror.fromTextArea(document.querySelector('.pd-tryit-code'), {
-      lineNumbers: true,
-      mode:  "htmlmixed"
-    });*/
     var pidie = new Pidie();
-    //pidie.tryitLike(editor);
+    pidie.spinner();
   </script>
 </body>
 </html>
