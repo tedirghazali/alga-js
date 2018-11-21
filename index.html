@@ -12,7 +12,17 @@
   <p><br/></p>
 
     <div class="container mt-4" style="width:300px">
-        <input type="number" min="2" step="2" max="10" class="pd-spinner form-control"/>
+        <input type="number" min="2" step="2" max="20" id="spin1"/>
+        <br/>
+        <input type="number" min="1" step="1" max="10" id="spin2"/>
+        <br/>
+        <input type="number" min="3" step="3" max="30" id="spin3"/>
+        <br/>
+        <input type="number" min="5" step="5" max="100" id="spin4"/>
+        <br/>
+        <input type="number" min="0" step="10" max="100" id="spin5"/>
+        <br/>
+        <input type="number" min="15" step="15" max="150" id="spin6"/>
     </div>
   
   <!--<footer class="pd-text-center pt-4 pb-3">
@@ -22,7 +32,29 @@
   <script src="pidie-0.0.7.js"></script>
   <script>
     var pidie = new Pidie();
-    pidie.spinner();
+    pidie.spinner({
+      el: '#spin1'
+    });
+    pidie.spinner({
+      el: '#spin2',
+      buttonsClass: 'btn-primary'
+    });
+    pidie.spinner({
+      el: '#spin3',
+      buttonsClass: 'btn-success'
+    });
+    pidie.spinner({
+      el: '#spin4',
+      buttonsClass: 'btn-warning'
+    });
+    pidie.spinner({
+      el: '#spin5',
+      buttonsClass: 'btn-info'
+    });
+    pidie.spinner({
+      el: '#spin6',
+      buttonsClass: 'btn-danger'
+    });
   </script>
 </body>
 </html>
