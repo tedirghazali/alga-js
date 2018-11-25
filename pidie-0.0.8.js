@@ -1,5 +1,5 @@
 /*
-* PidieJS 0.0.7
+* PidieJS 0.0.8
 * 2018
 * Tedir Ghazali
 * Apache License 2.0
@@ -10,6 +10,23 @@ class Pidie {
   constructor(){
     this.popover();
     this.spinner();
+    this.rangeSlider();
+  }
+
+  // methods v0.0.8
+  rangeSlider() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-range'), function(elem){
+      let sliderRange = elem.querySelector('.pd-range-slider');
+      let createRange = document.createElement('div');
+      createRange.classList.add('pd-range-value');
+      elem.appendChild(createRange);
+      createRange.innerHTML = sliderRange.getAttribute('max') / 2 || 50;
+      sliderRange.onchange = function(e){
+        e.preventDefault();
+        sliderRange.setAttribute('title', sliderRange.value);
+        createRange.innerHTML = sliderRange.value;
+      }
+    })
   }
 
   // methods v0.0.7
@@ -143,12 +160,6 @@ class Pidie {
   }
 
   // methods v0.0.3 - v0.0.6
-  horizontalTimeline() {
-    var timeline = document.querySelector('.pd-timeline-horizontal');
-    if(timeline){
-      
-    }
-  }
   passwordValidation() {
     var passValidate = document.querySelector('.pd-password-validation');
     passValidate.setAttribute('pattern', '(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}');
