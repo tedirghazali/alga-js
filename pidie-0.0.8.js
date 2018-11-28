@@ -11,9 +11,17 @@ class Pidie {
     this.popover();
     this.spinner();
     this.rangeSlider();
+    this.toggleSwitch();
   }
 
   // methods v0.0.8
+  toggleSwitch() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-toggle-switch'), function(elem){
+      var switchSlider = document.createElement('span');
+      switchSlider.classList.add('pd-switch-slider');
+      elem.appendChild(switchSlider);
+    })
+  }
   rangeSlider() {
     Array.prototype.forEach.call(document.querySelectorAll('.pd-range'), function(elem){
       let sliderRange = elem.querySelector('.pd-range-slider');
