@@ -12,9 +12,135 @@ class Pidie {
     this.spinner();
     this.rangeSlider();
     this.toggleSwitch();
+    this.flagSelectBox();
+  }
+
+  countries() {
+    return [
+      { id: 'AF', name: 'Afghanistan', currency_code: 'AFN', currency_name: 'Afghani', internet: '.af', phone: '+93', drive: 'right', language_code: 'ps', language_name: 'پښتو', capital: 'Kabul', demonym: 'Afghan' }, 
+      { id: 'AL', name: 'Albania', currency_code: 'ALL', currency_name: 'Lek', internet: '.al', phone: '+355', drive: 'right', language_code: 'sq', language_name: 'Shqip', capital: 'Tirana', demonym: 'Albanian' }, 
+      { id: 'DZ', name: 'Algeria', currency_code: 'DZD', currency_name: 'Dinar', internet: '.dz', phone: '+213', drive: 'right', language_code: 'ar', language_name: 'العربية', capital: 'Algiers', demonym: 'Algerian' }, 
+      { id: 'AD', name: 'Andorra', currency_code: 'EUR', currency_name: 'Euro', internet: '.ad', phone: '+376', drive: 'right', language_code: 'ca', language_name: 'Català', capital: 'Andorra la Vella', demonym: 'Andorran' }, 
+      { id: 'AO', name: 'Angola', currency_code: 'AOA', currency_name: 'Kwanza', internet: '.ao', phone: '+244', drive: 'right', language_code: 'pt', language_name: 'Português', capital: 'Luanda', demonym: 'Angolan' }, 
+      { id: 'AG', name: 'Antigua and Barbuda', currency_code: 'XCD', currency_name: '	East Caribbean Dollar', internet: '.ag', phone: '+1-268', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Saint John', demonym: 'Antiguan' },
+      { id: 'AR', name: 'Argentina', currency_code: 'ARS', currency_name: 'Peso', internet: '.ar', phone: '+54', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Buenos Aires', demonym: 'Argentinian' }, 
+      { id: 'AM', name: 'Armenia', currency_code: 'AMD', currency_name: 'Dram', internet: '.am', phone: '+374', drive: 'right', language_code: 'hy', language_name: 'Հայերեն', capital: 'Yerevan', demonym: 'Armenian' }, 
+      { id: 'AU', name: 'Australia', currency_code: 'AUD', currency_name: 'Dollar', internet: '.au', phone: '	+61', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Canberra', demonym: 'Australian' }, 
+      { id: 'AT', name: 'Austria', currency_code: 'EUR', currency_name: 'Euro', internet: '.at', phone: '+43', drive: 'right', language_code: 'de', language_name: 'Deutsch', capital: 'Vienna', demonym: 'Austrian' }, 
+      { id: 'AZ', name: 'Azerbaijan', currency_code: 'AZN', currency_name: 'Manat', internet: '.az', phone: '+994', drive: 'right', language_code: 'az', language_name: 'Azərbaycan dili', capital: 'Baku', demonym: 'Azerbaijani' }, 
+      { id: 'BS', name: 'The Bahamas', currency_code: 'BSD', currency_name: 'Dollar', internet: '.bs', phone: '+1-242', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Nassau', demonym: 'Bahamian' }, 
+      { id: 'BH', name: 'Bahrain', currency_code: 'BHD', currency_name: 'Dinar', internet: '.bh', phone: '+973', drive: 'Right', language_code: 'ar', language_name: 'العربية', capital: 'Manama', demonym: 'Bahraini' }, 
+      { id: 'BD', name: 'Bangladesh', currency_code: 'BDT', currency_name: 'Taka', internet: '.bd', phone: '+880', drive: 'left', language_code: 'bn', language_name: 'বাংলা', capital: 'Dhaka', demonym: 'Bengali' }, 
+      { id: 'BB', name: 'Barbados', currency_code: 'BBD', currency_name: 'Dollar', internet: '.bb', phone: '+1-246', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Bridgetown', demonym: 'Barbadian' }, 
+      { id: 'BY', name: 'Belarus', currency_code: 'BYR', currency_name: 'Ruble', internet: '.by', phone: '+375', drive: 'right', language_code: 'be', language_name: 'беларуская мова', capital: 'Minsk', demonym: 'Belarusian' }, 
+      { id: 'BE', name: 'Belgium', currency_code: 'EUR', currency_name: 'Euro', internet: '.be', phone: '+32', drive: 'right', language_code: 'nl', language_name: 'Flemish', capital: 'Brussels', demonym: 'Belgian' }, 
+      { id: 'BZ', name: 'Belize', currency_code: 'BZD', currency_name: 'Dollar', internet: '.bz', phone: '+501', drive: 'right', language_code: 'en', language_name: 'English', capital: 'Belmopan', demonym: 'Belizean' }, 
+      { id: 'BJ', name: 'Benin', currency_code: 'XOF', currency_name: 'West Africa Franc', internet: '.bj', phone: '+229', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Porto-Novo', demonym: 'Beninois' }, 
+      { id: 'BT', name: 'Bhutan', currency_code: 'BTN', currency_name: 'Ngultrum', internet: '.bt', phone: '+975', drive: 'left', language_code: 'dz', language_name: 'Dzongkha', capital: 'Thimphu', demonym: 'Bhutanese' }, 
+      { id: 'BO', name: 'Bolivia', currency_code: 'BOB', currency_name: 'Boliviano', internet: '.bo', phone: '+591', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'La Paz', demonym: 'Bolivian' }, 
+      { id: 'BA', name: 'Bosnia and Herzegovina', currency_code: 'BAM', currency_name: 'Mark', internet: '.ba', phone: '+387', drive: 'right', language_code: 'bs', language_name: 'Bosanski', capital: 'Sarajevo', demonym: 'Bosnian' }, 
+      { id: 'BW', name: 'Botswana', currency_code: 'BWP', currency_name: 'Pula', internet: '.bw', phone: '+267', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Gaborone', demonym: 'Batswana' }, 
+      { id: 'BR', name: 'Brazil', currency_code: 'BRL', currency_name: 'Real', internet: '.br', phone: '+55', drive: 'right', language_code: 'pt', language_name: 'Português', capital: 'Brasília', demonym: 'Brazilian' }, 
+      { id: 'BN', name: 'Brunei', currency_code: 'BND', currency_name: 'Dollar', internet: '.bn', phone: '+673', drive: 'left', language_code: 'ms', language_name: 'Bahasa Melayu', capital: 'Bandar Seri', demonym: 'Bruneian' }, 
+      { id: 'BG', name: 'Bulgaria', currency_code: 'BGN', currency_name: 'Lev', internet: '.bg', phone: '+359', drive: 'right', language_code: 'bg', language_name: 'български език', capital: 'Sofia', demonym: 'Bulgarian' }, 
+      { id: 'BF', name: 'Burkina Faso', currency_code: 'XOF', currency_name: 'West Africa Franc', internet: '.bf', phone: '+226', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Ouagadougou', demonym: 'Burkinabe' }, 
+      /*{ id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }, 
+      { id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }, 
+      { id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }*/
+    ];
   }
 
   // methods v0.0.8
+  flagSelectBox() {
+    var selElmnt, flagChoose, flagItem, flagArr;
+    var flagCountry = this.countries();
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-countries'), function(elem){
+      var addCountry = '';
+      addCountry += '<option value="">Select country:</option>';
+      flagCountry.forEach(function(res){
+        addCountry += '<option data-value="'+res.id+'" value="'+res.id+'">'+res.name+'</option>';
+      })
+      elem.innerHTML = addCountry;
+    })
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-languages'), function(elem){
+      var addCountry = '';
+      addCountry += '<option value="">Select language:</option>';
+      flagCountry.forEach(function(res){
+        addCountry += '<option data-value="'+res.id+'" value="'+res.language_code+'-'+res.id+'">'+res.language_name+' ('+res.language_code+'-'+res.id+')</option>';
+      })
+      elem.innerHTML = addCountry;
+    })
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-currencies'), function(elem){
+      var addCountry = '';
+      addCountry += '<option value="">Select currencies:</option>';
+      flagCountry.forEach(function(res){
+        addCountry += '<option data-value="'+res.id+'" value="'+res.currency_code+'">'+res.demonym+' '+res.currency_name+' ('+res.currency_code+')</option>';
+      })
+      elem.innerHTML = addCountry;
+    })
+    var flagSelect = document.getElementsByClassName("pd-flag-select");
+    for (var i = 0; i < flagSelect.length; i++) {
+      selElmnt = flagSelect[i].getElementsByTagName("select")[0];
+      flagChoose = document.createElement("div");
+      flagChoose.setAttribute("class", "pd-flag-selected");
+      flagChoose.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+      flagSelect[i].appendChild(flagChoose);
+      flagItem = document.createElement("div");
+      flagItem.setAttribute("class", "pd-flag-items pd-flag-hide");
+      var flagHeight = flagSelect[i].getAttribute('data-height') || '300';
+      flagItem.style.height = flagHeight +'px';
+      for (var j = 1; j < selElmnt.length; j++) {
+        flagArr = document.createElement("div");
+        flagArr.style.display = 'flex';
+        flagArr.style.verticalAlign = 'middle';
+        flagArr.innerHTML = '<i class="flag flag-'+selElmnt.options[j].getAttribute('data-value').toLowerCase()+'"></i> <span class="pd-flag-items-item">'+selElmnt.options[j].innerHTML+'</span>';
+        flagArr.setAttribute('data-country', selElmnt.options[j].innerHTML);
+        flagArr.addEventListener("click", function(e) {
+            var flagSame = this.parentNode.parentNode.getElementsByTagName("select")[0];
+            var flagSibling = this.parentNode.previousSibling;
+            for (var i = 0; i < flagSame.length; i++) {
+              if (flagSame.options[i].innerHTML == this.getAttribute('data-country')) {
+                flagSame.selectedIndex = i;
+                flagSibling.innerHTML = this.getAttribute('data-country');
+                var flagSase = this.parentNode.getElementsByClassName("pd-flag-same-selected");
+                for (var k = 0; k < flagSase.length; k++) {
+                  flagSase[k].removeAttribute("class");
+                }
+                this.setAttribute("class", "pd-flag-same-selected");
+                break;
+              }
+            }
+            flagSibling.click();
+        });
+        flagItem.appendChild(flagArr);
+      }
+      flagSelect[i].appendChild(flagItem);
+      flagChoose.addEventListener("click", function(e) {
+          e.stopPropagation();
+          closeAllSelect(this);
+          this.nextSibling.classList.toggle("pd-flag-hide");
+          this.classList.toggle("pd-flag-arrow-active");
+      });
+    }
+    function closeAllSelect(elmnt) {
+      var arrNo = [];
+      var flagItems = document.getElementsByClassName("pd-flag-items");
+      var flagSelected = document.getElementsByClassName("pd-flag-selected");
+      for (var i = 0; i < flagSelected.length; i++) {
+        if (elmnt == flagSelected[i]) {
+          arrNo.push(i)
+        } else {
+          flagSelected[i].classList.remove("pd-flag-arrow-active");
+        }
+      }
+      for (var i = 0; i < flagItems.length; i++) {
+        if (arrNo.indexOf(i)) {
+          flagItems[i].classList.add("pd-flag-hide");
+        }
+      }
+    }
+    document.addEventListener("click", closeAllSelect); 
+  }
   toggleSwitch() {
     Array.prototype.forEach.call(document.querySelectorAll('.pd-toggle-switch'), function(elem){
       var switchSlider = document.createElement('span');

@@ -1,5 +1,5 @@
 /*
-* PidieUi 0.0.1-alpha-1
+* Pidie Ui 0.0.1-alpha-1
 * 2019
 * Tedir Ghazali
 * Apache License 2.0
@@ -14,16 +14,14 @@
   position: relative;
   display: -ms-flexbox;
   display: flex;
-  /*-ms-flex-wrap: wrap;*/
-  /*flex-wrap: wrap;*/
   -ms-flex-align: center;
   align-items: center;
-  /*-ms-flex-pack: justify;*/
-  /*justify-content: space-between;*/
   background-color: #ececec;
   border-bottom: 1px solid #dcdcdc;
   box-shadow: 1px 1px 5px #cccccc;
   padding: 0 1rem;
+  height: 59.4px;
+  font-family: ubuntu, helvetica;
 }
 
 .pd-nav-toggle{

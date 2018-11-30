@@ -1,5 +1,5 @@
 /*
-* PidieLayout 0.0.1-alpha-1
+* Pidie Layout 0.0.1-alpha-1
 * 2019
 * Tedir Ghazali
 * Apache License 2.0
@@ -12,6 +12,13 @@ html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}h1{font-size:2
 * Google Fonts
 */
 @font-face{font-family:'Material Icons';font-style:normal;font-weight:400;src:url("../fonts/MaterialIcons-Regular.eot");src:local('Material Icons'), local('MaterialIcons-Regular'), url("../fonts/MaterialIcons-Regular.woff2") format('woff2'), url("../fonts/MaterialIcons-Regular.woff") format('woff'), url("../fonts/MaterialIcons-Regular.ttf") format('truetype')}.pd-icon{font-family:'Material Icons';font-weight:normal;font-style:normal;font-size:24px;display:inline-block;text-transform:none;letter-spacing:normal;word-wrap:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:'liga'}
+
+/*
+* Basic
+*/
+html, body, * {
+    font-family: ubuntu, helvetica;
+}
 
 /*
 * Column
