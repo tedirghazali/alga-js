@@ -71,8 +71,27 @@ class Pidie {
       { id: 'EG', name: 'Egypt', currency_code: 'EGP', currency_name: 'Pound', internet: '.eg', phone: '+20', drive: 'right', language_code: 'ar', language_name: 'العربية', capital: 'Cairo', demonym: 'Egyptian' }, 
       { id: 'SV', name: 'El Salvador', currency_code: 'USD', currency_name: 'United States Dollar', internet: '.sv', phone: '+503', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'San Salvador', demonym: 'Salvadoran' }, 
       { id: 'GQ', name: 'Equatorial Guinea', currency_code: 'XAF', currency_name: 'Central African Franc', internet: '.gq', phone: '+240', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Malabo', demonym: 'Equatoguinean' }, 
-      /*{ id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }, 
-      { id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }*/
+      { id: 'ER', name: 'Eritrea', currency_code: 'ERN', currency_name: 'Nakfa', internet: '.er', phone: '+291', drive: 'right', language_code: 'en', language_name: 'English', capital: 'Asmara', demonym: 'Eritrean' }, 
+      { id: 'EE', name: 'Estonia', currency_code: 'EUR', currency_name: 'Euro', internet: '.ee', phone: '+372', drive: 'right', language_code: 'et', language_name: 'Eesti keel', capital: 'Tallinn', demonym: 'Estonian' }, 
+      { id: 'ET', name: 'Ethiopia', currency_code: 'ETB', currency_name: 'Birr', internet: '.et', phone: '+251', drive: 'right', language_code: 'am', language_name: 'አማርኛ', capital: 'Addis Ababa', demonym: 'Ethiopian' }, 
+      { id: 'FJ', name: 'Fiji', currency_code: 'FJD', currency_name: 'Dollar', internet: '.fj', phone: '+679', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Suva', demonym: 'Fijian' }, 
+      { id: 'FI', name: 'Finland', currency_code: 'EUR', currency_name: 'Euro', internet: '.fi', phone: '+358', drive: 'right', language_code: 'fi', language_name: 'Suomen kieli', capital: 'Helsinki', demonym: 'Finnish' }, 
+      { id: 'FR', name: 'France', currency_code: 'XPF', currency_name: 'Franc', internet: '.fr', phone: '+33', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Paris', demonym: 'French' }, 
+      { id: 'GA', name: 'Gabon', currency_code: 'XAF', currency_name: 'Central African Franc', internet: '.ga', phone: '+241', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Libreville', demonym: 'Gabonaise' }, 
+      { id: 'GM', name: 'The Gambia', currency_code: 'GMD', currency_name: 'Dalasi', internet: '.gm', phone: '+220', drive: 'right', language_code: 'en', language_name: 'English', capital: 'Banjul', demonym: 'Gambian' }, 
+      { id: 'GE', name: 'Georgia', currency_code: 'GEL', currency_name: 'Lari', internet: '.ge', phone: '+995', drive: 'right', language_code: 'ka', language_name: 'ქართული', capital: 'Tbilisi', demonym: 'Georgian' }, 
+      { id: 'DE', name: 'Germany', currency_code: 'EUR', currency_name: 'Euro', internet: '.de', phone: '+49', drive: 'right', language_code: 'de', language_name: 'Deutsch', capital: 'Berlin', demonym: 'German' }, 
+      { id: 'GH', name: 'Ghana', currency_code: 'GHS', currency_name: 'Cedi', internet: '.gh', phone: '+233', drive: 'right', language_code: 'en', language_name: 'English', capital: 'Accra', demonym: 'Ghanaian' }, 
+      { id: 'GR', name: 'Greece', currency_code: 'EUR', currency_name: 'Euro', internet: '.gr', phone: '+30', drive: 'right', language_code: 'el', language_name: 'ελληνικά', capital: 'Athens', demonym: 'Greek' }, 
+      { id: 'GD', name: 'Grenada', currency_code: 'XCD', currency_name: 'East Caribbean Dollar', internet: '.gd', phone: '+1-473', drive: 'left', language_code: 'en', language_name: 'English', capital: 'St. George', demonym: 'Grenadian' }, 
+      { id: 'GT', name: 'Guatemala', currency_code: 'GTQ', currency_name: 'Quetzal', internet: '.gt', phone: '+502', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Guatemala City', demonym: 'Guatemalan' }, 
+      { id: 'GN', name: 'Guinea', currency_code: 'GNF', currency_name: 'Franc', internet: '.gn', phone: '+224', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Conakry', demonym: 'Guinean' }, 
+      { id: 'GW', name: 'Guinea-Bissau', currency_code: 'XOF', currency_name: 'West African Franc', internet: '.gw', phone: '+245', drive: 'right', language_code: 'pt', language_name: 'Português', capital: 'Bissau', demonym: 'Bissau-Guinean' }, 
+      { id: 'GY', name: 'Guyana', currency_code: 'GYD', currency_name: 'Dollar', internet: '.gy', phone: '+592', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Georgetown', demonym: 'Guyanese' }, 
+      { id: 'HT', name: 'Haiti', currency_code: '', currency_name: 'Gourde', internet: '.ht', phone: '+509', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Port-au-Prince', demonym: 'Haitian' }, 
+      { id: 'HN', name: 'Honduras', currency_code: 'HNL', currency_name: 'Lempira', internet: '.hn', phone: '+504', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Tegucigalpa', demonym: 'Honduran' }, 
+      { id: 'HU', name: 'Hungary', currency_code: 'HUF', currency_name: 'Forint', internet: '.hu', phone: '+36', drive: 'right', language_code: 'hu', language_name: 'Magyar', capital: 'Budapest', demonym: 'Hungarian' }, 
+      /*{ id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }*/
     ];
   }
 
