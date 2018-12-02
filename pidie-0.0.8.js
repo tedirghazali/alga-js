@@ -13,6 +13,7 @@ class Pidie {
     this.rangeSlider();
     this.toggleSwitch();
     this.flagSelectBox();
+    this.telephoneInput();
   }
 
   countries() {
@@ -22,16 +23,16 @@ class Pidie {
       { id: 'DZ', name: 'Algeria', currency_code: 'DZD', currency_name: 'Dinar', internet: '.dz', phone: '+213', drive: 'right', language_code: 'ar', language_name: 'العربية', capital: 'Algiers', demonym: 'Algerian' }, 
       { id: 'AD', name: 'Andorra', currency_code: 'EUR', currency_name: 'Euro', internet: '.ad', phone: '+376', drive: 'right', language_code: 'ca', language_name: 'Català', capital: 'Andorra la Vella', demonym: 'Andorran' }, 
       { id: 'AO', name: 'Angola', currency_code: 'AOA', currency_name: 'Kwanza', internet: '.ao', phone: '+244', drive: 'right', language_code: 'pt', language_name: 'Português', capital: 'Luanda', demonym: 'Angolan' }, 
-      { id: 'AG', name: 'Antigua and Barbuda', currency_code: 'XCD', currency_name: '	East Caribbean Dollar', internet: '.ag', phone: '+1-268', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Saint John', demonym: 'Antiguan' },
+      { id: 'AG', name: 'Antigua and Barbuda', currency_code: 'XCD', currency_name: '	East Caribbean Dollar', internet: '.ag', phone: '+1268', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Saint John', demonym: 'Antiguan' },
       { id: 'AR', name: 'Argentina', currency_code: 'ARS', currency_name: 'Peso', internet: '.ar', phone: '+54', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Buenos Aires', demonym: 'Argentinian' }, 
       { id: 'AM', name: 'Armenia', currency_code: 'AMD', currency_name: 'Dram', internet: '.am', phone: '+374', drive: 'right', language_code: 'hy', language_name: 'Հայերեն', capital: 'Yerevan', demonym: 'Armenian' }, 
       { id: 'AU', name: 'Australia', currency_code: 'AUD', currency_name: 'Dollar', internet: '.au', phone: '	+61', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Canberra', demonym: 'Australian' }, 
       { id: 'AT', name: 'Austria', currency_code: 'EUR', currency_name: 'Euro', internet: '.at', phone: '+43', drive: 'right', language_code: 'de', language_name: 'Deutsch', capital: 'Vienna', demonym: 'Austrian' }, 
       { id: 'AZ', name: 'Azerbaijan', currency_code: 'AZN', currency_name: 'Manat', internet: '.az', phone: '+994', drive: 'right', language_code: 'az', language_name: 'Azərbaycan dili', capital: 'Baku', demonym: 'Azerbaijani' }, 
-      { id: 'BS', name: 'The Bahamas', currency_code: 'BSD', currency_name: 'Dollar', internet: '.bs', phone: '+1-242', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Nassau', demonym: 'Bahamian' }, 
+      { id: 'BS', name: 'The Bahamas', currency_code: 'BSD', currency_name: 'Dollar', internet: '.bs', phone: '+1242', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Nassau', demonym: 'Bahamian' }, 
       { id: 'BH', name: 'Bahrain', currency_code: 'BHD', currency_name: 'Dinar', internet: '.bh', phone: '+973', drive: 'Right', language_code: 'ar', language_name: 'العربية', capital: 'Manama', demonym: 'Bahraini' }, 
       { id: 'BD', name: 'Bangladesh', currency_code: 'BDT', currency_name: 'Taka', internet: '.bd', phone: '+880', drive: 'left', language_code: 'bn', language_name: 'বাংলা', capital: 'Dhaka', demonym: 'Bengali' }, 
-      { id: 'BB', name: 'Barbados', currency_code: 'BBD', currency_name: 'Dollar', internet: '.bb', phone: '+1-246', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Bridgetown', demonym: 'Barbadian' }, 
+      { id: 'BB', name: 'Barbados', currency_code: 'BBD', currency_name: 'Dollar', internet: '.bb', phone: '+1246', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Bridgetown', demonym: 'Barbadian' }, 
       { id: 'BY', name: 'Belarus', currency_code: 'BYR', currency_name: 'Ruble', internet: '.by', phone: '+375', drive: 'right', language_code: 'be', language_name: 'беларуская мова', capital: 'Minsk', demonym: 'Belarusian' }, 
       { id: 'BE', name: 'Belgium', currency_code: 'EUR', currency_name: 'Euro', internet: '.be', phone: '+32', drive: 'right', language_code: 'nl', language_name: 'Flemish', capital: 'Brussels', demonym: 'Belgian' }, 
       { id: 'BZ', name: 'Belize', currency_code: 'BZD', currency_name: 'Dollar', internet: '.bz', phone: '+501', drive: 'right', language_code: 'en', language_name: 'English', capital: 'Belmopan', demonym: 'Belizean' }, 
@@ -64,8 +65,8 @@ class Pidie {
       { id: 'CZ', name: 'Czech Republic', currency_code: 'CZK', currency_name: 'Koruna', internet: '.cz', phone: '+420', drive: 'right', language_code: 'cs', language_name: 'čeština', capital: 'Prague', demonym: 'Czech' }, 
       { id: 'DK', name: 'Denmark', currency_code: 'DKK', currency_name: 'Krone', internet: '.dk', phone: '+45', drive: 'right', language_code: 'da', language_name: 'Dansk', capital: 'Copenhagen', demonym: 'Danish' }, 
       { id: 'DJ', name: 'Djibouti', currency_code: 'DJF', currency_name: 'Franc', internet: '.dj', phone: '+253', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Djibouti', demonym: 'Djiboutian' }, 
-      { id: 'DM', name: 'Dominica', currency_code: 'XCD', currency_name: 'East Caribbean Dollar', internet: '	.dm', phone: '+1-767', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Roseau', demonym: 'Dominican' }, 
-      { id: 'DO', name: 'Dominican Republic', currency_code: 'DOP', currency_name: 'Peso', internet: '.do', phone: '+1-849', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Santo Domingo', demonym: 'Dominican' }, 
+      { id: 'DM', name: 'Dominica', currency_code: 'XCD', currency_name: 'East Caribbean Dollar', internet: '	.dm', phone: '+1767', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Roseau', demonym: 'Dominican' }, 
+      { id: 'DO', name: 'Dominican Republic', currency_code: 'DOP', currency_name: 'Peso', internet: '.do', phone: '+1849', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Santo Domingo', demonym: 'Dominican' }, 
       { id: 'TL', name: 'East Timor', currency_code: 'USD', currency_name: 'United States Dollar', internet: '.tl', phone: '+670', drive: 'left', language_code: 'pt', language_name: 'Português', capital: 'Dili', demonym: 'East Timorese' }, 
       { id: 'EC', name: 'Ecuador', currency_code: 'USD', currency_name: 'United States Dollar', internet: '.ec', phone: '+593', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Quito', demonym: 'Ecuadorian' }, 
       { id: 'EG', name: 'Egypt', currency_code: 'EGP', currency_name: 'Pound', internet: '.eg', phone: '+20', drive: 'right', language_code: 'ar', language_name: 'العربية', capital: 'Cairo', demonym: 'Egyptian' }, 
@@ -91,11 +92,50 @@ class Pidie {
       { id: 'HT', name: 'Haiti', currency_code: '', currency_name: 'Gourde', internet: '.ht', phone: '+509', drive: 'right', language_code: 'fr', language_name: 'Français', capital: 'Port-au-Prince', demonym: 'Haitian' }, 
       { id: 'HN', name: 'Honduras', currency_code: 'HNL', currency_name: 'Lempira', internet: '.hn', phone: '+504', drive: 'right', language_code: 'es', language_name: 'Español', capital: 'Tegucigalpa', demonym: 'Honduran' }, 
       { id: 'HU', name: 'Hungary', currency_code: 'HUF', currency_name: 'Forint', internet: '.hu', phone: '+36', drive: 'right', language_code: 'hu', language_name: 'Magyar', capital: 'Budapest', demonym: 'Hungarian' }, 
-      /*{ id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }*/
+      { id: 'IS', name: 'Iceland', currency_code: 'ISK', currency_name: 'Króna', internet: '.is', phone: '+354', drive: 'right', language_code: 'is', language_name: 'íslenska', capital: 'Reykjavík', demonym: 'Icelandic' }, 
+      { id: 'IN', name: 'India', currency_code: 'INR', currency_name: 'Rupee', internet: '.in', phone: '+91', drive: 'left', language_code: 'hi', language_name: 'हिन्दी', capital: 'New Delhi', demonym: 'Indian' }, 
+      { id: 'ID', name: 'Indonesia', currency_code: 'IDR', currency_name: 'Rupiah', internet: '.id', phone: '+62', drive: 'left', language_code: 'id', language_name: 'Bahasa Indonesia', capital: 'Jakarta', demonym: 'Indonesian' }, 
+      { id: 'IR', name: 'Iran', currency_code: 'IRR', currency_name: 'Rial', internet: '.ir', phone: '+98', drive: '	right', language_code: 'fa', language_name: 'فارسی', capital: 'Tehran', demonym: 'Iranian' }, 
+      { id: 'IQ', name: 'Iraq', currency_code: 'IQD', currency_name: 'Dinar', internet: '.iq', phone: '+964', drive: 'right', language_code: 'ar', language_name: 'العربية', capital: 'Baghdad', demonym: 'Iraqi' }, 
+      { id: 'IE', name: 'Ireland', currency_code: 'EUR', currency_name: 'Euro', internet: '.ie', phone: '+353', drive: 'left', language_code: 'en', language_name: 'English', capital: 'Dublin', demonym: '	Irish' }, 
+      /*{ id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }, 
+      { id: '', name: '', currency_code: '', currency_name: '', internet: '', phone: '', drive: '', language_code: '', language_name: '', capital: '', demonym: '' }*/
     ];
   }
 
   // methods v0.0.8
+  telephoneInput() {
+    var flagTelephone = this.countries();
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-telephone-input'), function(elem){
+      var dropdownTelephone = document.createElement('div');
+      dropdownTelephone.classList.add('pd-telephone-dropdown');
+      var dropdownContent = '';
+      dropdownContent += '<div class="pd-telephone-flag"><div class="flag flag-us"></div></div><ul class="pd-telephone-list"></ul>';
+      dropdownTelephone.innerHTML = dropdownContent;
+      elem.insertBefore(dropdownTelephone, elem.childNodes[0]);
+      var listTelephone = elem.querySelector('.pd-telephone-list');
+      var itemTelephone = '';
+      flagTelephone.forEach(function(res){
+        itemTelephone += '<li class="pd-telephone-item" data-dial-code="'+res.phone+'" data-country-code="'+res.id.toLowerCase()+'"><span class="flag flag-'+res.id.toLowerCase()+'"></span> <span class="pd-telephone-name">'+res.name+'</span> <span class="pd-telephone-code">'+res.phone+'</span></li>';
+      })
+      listTelephone.innerHTML = itemTelephone;
+      var toggleTelephone = elem.querySelector('.pd-telephone-flag');
+      toggleTelephone.onclick = function(e){
+        e.preventDefault();
+        listTelephone.classList.toggle('pd-telephone-show');
+      }
+      var numberTelephone = elem.querySelector('input');
+      numberTelephone.value = '+1';
+      Array.prototype.forEach.call(listTelephone.querySelectorAll('.pd-telephone-item'), function(element){
+        element.onclick = function(e){
+          e.preventDefault();
+          toggleTelephone.querySelector('.flag').setAttribute('class', 'flag flag-'+this.getAttribute('data-country-code'));
+          listTelephone.classList.remove('pd-telephone-show');
+          numberTelephone.value = this.getAttribute('data-dial-code');
+        }
+      });
+    })
+  }
   flagSelectBox() {
     var selElmnt, flagChoose, flagItem, flagArr;
     var flagCountry = this.countries();
