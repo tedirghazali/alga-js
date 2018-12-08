@@ -102,6 +102,16 @@ class Pidie {
       { id: 'IL', name: 'Israel', currency_code: 'ILS', currency_name: 'New Shekel', phone: '	+972', language_code: 'he', language_name: 'עִבְרִית', demonym: 'Israeli' }, 
       { id: 'IT', name: 'Italy', currency_code: 'EUR', currency_name: 'Euro', phone: '+39', language_code: 'it', language_name: 'Italiano', demonym: 'Italian' }, 
       { id: 'CI', name: 'Ivory Coast', currency_code: 'XOF', currency_name: 'West African Franc', phone: '+225', language_code: 'fr', language_name: 'Français', demonym: 'Ivorian' },
+      { id: 'JM', name: 'Jamaica', currency_code: 'JMD', currency_name: 'Dollar', phone: '+1658', language_code: 'en', language_name: 'English', demonym: 'Jamaican' },
+      { id: 'JP', name: 'Japan', currency_code: 'JPY', currency_name: 'Yen', phone: '', language_code: 'ja', language_name: '日本語', demonym: 'Japanese' },
+      { id: 'JO', name: 'Jordan', currency_code: 'JOD', currency_name: 'Dinar', phone: '+962', language_code: 'ar', language_name: 'العربية', demonym: 'Jordanian' },
+      { id: 'KZ', name: 'Kazakhstan', currency_code: 'KZT', currency_name: 'Tenge', phone: '+76', language_code: 'kk', language_name: 'Kazakh', demonym: 'Kazakhstani' },
+      { id: 'KE', name: 'Kenya', currency_code: 'KES', currency_name: 'Shilling', phone: '+254', language_code: 'en', language_name: 'English', demonym: 'Kenyan' },
+      { id: 'KI', name: 'Kiribati', currency_code: 'AUD', currency_name: 'Australian Dollar', phone: '+686', language_code: 'en', language_name: 'English', demonym: 'Kiribati' },
+      { id: 'KP', name: 'North Korea', currency_code: 'KPW', currency_name: 'Won', phone: '+850', language_code: 'ko', language_name: '조선어', demonym: 'North Korean' },
+      { id: 'KR', name: 'South Korea', currency_code: 'KRW', currency_name: 'Won', phone: '+82', language_code: 'ko', language_name: '한국어', demonym: 'South Korean' },
+      { id: 'KW', name: 'Kuwait', currency_code: 'KWD', currency_name: 'Dinar', phone: '+965', language_code: 'ar', language_name: 'العربية', demonym: 'Kuwaiti' },
+      { id: 'KG', name: 'Kyrgyzstan', currency_code: 'KGS', currency_name: 'Som', phone: '+996', language_code: '	ky', language_name: 'Kyrgyz', demonym: 'Kyrgyz' }
       /*{ id: '', name: '', currency_code: '', currency_name: '', phone: '', language_code: '', language_name: '', demonym: '' }*/
     ];
   }
