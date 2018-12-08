@@ -14,6 +14,7 @@ class Pidie {
     this.toggleSwitch();
     this.flagSelectBox();
     this.telephoneInput();
+    this.searchSelectBox();
   }
 
   countries() {
@@ -106,6 +107,31 @@ class Pidie {
   }
 
   // methods v0.0.8
+  searchSelectBox() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-search-select'), function(elem){
+      var cariSelectBox = elem;
+      var itemSelectBox = cariSelectBox.querySelector('.pd-flag-items');
+      var selectCari = document.createElement('input');
+      selectCari.type = 'search';
+      selectCari.placeholder = 'Search this select item'
+      selectCari.classList.add('pd-flag-search');
+      itemSelectBox.insertBefore(selectCari, itemSelectBox.childNodes[0]);
+      var cariItem = itemSelectBox.querySelector('input[type=search]');
+      cariItem.onkeyup = function(){
+        var filterItem = cariItem.value.toLowerCase();
+        var listItem = itemSelectBox.getElementsByTagName('div');
+        for (var i = 0; i < listItem.length; i++) {
+          var valueItem = listItem[i].textContent ||listItem[i].innerText;
+          if(valueItem.toLowerCase().indexOf(filterItem) > -1){
+            listItem[i].style.display = "flex";
+          } else{
+            listItem[i].style.display = "none";
+          }
+          console.log('Item: '+listItem[i].innerText);
+        }
+      }
+    })
+  }
   telephoneInput() {
     var flagTelephone = this.countries();
     Array.prototype.forEach.call(document.querySelectorAll('.pd-telephone-input'), function(elem){
@@ -226,7 +252,7 @@ class Pidie {
         }
       }
     }
-    document.addEventListener("click", closeAllSelect); 
+    //document.addEventListener("click", closeAllSelect); 
   }
   toggleSwitch() {
     Array.prototype.forEach.call(document.querySelectorAll('.pd-toggle-switch'), function(elem){

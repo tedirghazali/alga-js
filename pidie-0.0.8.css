@@ -971,6 +971,13 @@ input:checked + .pd-switch-slider:before {
   background: rgb(35, 39, 43);
   color: #ffffff;
 }
+.pd-flag-search {
+  width: 100%;
+  padding: 5px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  color: #333333;
+}
 
 /*!
  * Generated with CSS Flag Sprite generator (https://www.flag-sprites.com/)
