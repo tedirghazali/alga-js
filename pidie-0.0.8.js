@@ -1,8 +1,7 @@
-/*
-* PidieJS 0.0.8
-* 2018
-* Tedir Ghazali
-* Apache License 2.0
+/*!
+* Pidie v0.0.8
+* (c) 2018 Tedir Ghazali
+* Released under the Apache License 2.0
 */
 
 class Pidie {
@@ -15,6 +14,7 @@ class Pidie {
     this.flagSelectBox();
     this.telephoneInput();
     this.searchSelectBox();
+    this.tooltip();
   }
 
   countries() {
@@ -111,12 +111,37 @@ class Pidie {
       { id: 'KP', name: 'North Korea', currency_code: 'KPW', currency_name: 'Won', phone: '+850', language_code: 'ko', language_name: '조선어', demonym: 'North Korean' },
       { id: 'KR', name: 'South Korea', currency_code: 'KRW', currency_name: 'Won', phone: '+82', language_code: 'ko', language_name: '한국어', demonym: 'South Korean' },
       { id: 'KW', name: 'Kuwait', currency_code: 'KWD', currency_name: 'Dinar', phone: '+965', language_code: 'ar', language_name: 'العربية', demonym: 'Kuwaiti' },
-      { id: 'KG', name: 'Kyrgyzstan', currency_code: 'KGS', currency_name: 'Som', phone: '+996', language_code: '	ky', language_name: 'Kyrgyz', demonym: 'Kyrgyz' }
+      { id: 'KG', name: 'Kyrgyzstan', currency_code: 'KGS', currency_name: 'Som', phone: '+996', language_code: '	ky', language_name: 'Kyrgyz', demonym: 'Kyrgyz' },
+      { id: 'LA', name: 'Laos', currency_code: 'LAK', currency_name: 'Kip', phone: '+856', language_code: 'lo', language_name: 'ພາສາລາວ', demonym: 'Laotian' },
+      { id: 'LV', name: 'Latvia', currency_code: 'EUR', currency_name: 'Euro', phone: '+371', language_code: 'lv', language_name: 'Latviešu Valoda', demonym: 'Latvian' },
+      { id: 'LB', name: 'Lebanon', currency_code: 'LBP', currency_name: 'Pound', phone: '+961', language_code: 'ar', language_name: 'العربية', demonym: 'Lebanese' },
+      { id: 'LS', name: 'Lesotho', currency_code: 'LSL', currency_name: 'Loti', phone: '+266', language_code: 'en', language_name: 'English', demonym: 'Lesotho' },
+      { id: 'LR', name: 'Liberia', currency_code: 'LRD', currency_name: 'Dollar', phone: '+231', language_code: 'en', language_name: 'English', demonym: 'Liberian' },
+      { id: 'LY', name: 'Libya', currency_code: 'LYD', currency_name: 'Dinar', phone: '+	218', language_code: 'ar', language_name: 'العربية', demonym: 'Libyan' },
+      { id: 'LI', name: 'Liechtenstein', currency_code: 'CHF', currency_name: 'Swiss Franc', phone: '+423', language_code: 'de', language_name: 'Deutsch', demonym: 'Liechtenstein' },
+      { id: 'LT', name: 'Lithuania', currency_code: 'EUR', currency_name: 'Euro', phone: '+370', language_code: 'lt', language_name: 'Lietuvių kalba', demonym: 'Lithuanian' },
+      { id: 'LU', name: 'Luxembourg', currency_code: 'EUR', currency_name: 'Euro', phone: '+352', language_code: 'lb', language_name: 'Lëtzebuergesch', demonym: 'Luxembourg' },
       /*{ id: '', name: '', currency_code: '', currency_name: '', phone: '', language_code: '', language_name: '', demonym: '' }*/
     ];
   }
 
   // methods v0.0.8
+
+  tooltip() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-tooltip'), function(elem){
+      var tooltipText = elem.getAttribute('data-tooltip-text');
+      var tooltipAlign = elem.getAttribute('data-tooltip-align');
+      var tooltipElem = document.createElement('div');
+      tooltipElem.classList.add('pd-tooltip-text');
+      tooltipElem.innerHTML = tooltipText;
+      if(tooltipAlign == ''){
+        tooltipElem.classList.add('pd-tooltip-bottom');
+      } else{
+        tooltipElem.classList.add('pd-tooltip-'+tooltipAlign);
+      }
+      elem.appendChild(tooltipElem);
+    })
+  }
   searchSelectBox() {
     Array.prototype.forEach.call(document.querySelectorAll('.pd-search-select'), function(elem){
       var cariSelectBox = elem;

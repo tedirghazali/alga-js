@@ -2,9 +2,9 @@
   "name": "pidie",
   "version": "0.0.1-alpha-1",
   "description": "PidieUi is Web Component",
-  "main": "src/main.js",
+  "main": "src/pidie-ui-0.0.1-alpha-1.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start --auto-watch"
   },
   "repository": {
     "type": "git",
