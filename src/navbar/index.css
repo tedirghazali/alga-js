@@ -1,0 +1,9 @@
+dg-wrapper {
+    position: static;
+    width: 0;
+    height : 0;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+}
