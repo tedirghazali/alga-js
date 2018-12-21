@@ -3,21 +3,12 @@ const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
-function recursiveIssuer(m) {
-  if (m.issuer) {
-    return recursiveIssuer(m.issuer);
-  } else if (m.name) {
-    return m.name;
-  } else {
-    return false;
-  }
-}
-
 module.exports = {
-    entry: {
-        navbar: path.resolve(__dirname, 'src/navbar'),
-    },
+    entry: './src/index.js',
     output: {
+        library: 'pidie',
+        libraryTarget: 'window',
+        libraryExport: 'default',
         filename: "pidie.js",
         path: path.resolve(__dirname, 'dist')
     },
@@ -53,16 +44,6 @@ module.exports = {
         })
     ],
     optimization: {
-        splitChunks: {
-          cacheGroups: {
-            navbarStyles: {
-              name: 'navbar',
-              test: (m,c,entry = 'navbar') => m.constructor.name === 'CssModule' && recursiveIssuer(m) === entry,
-              chunks: 'all',
-              enforce: true
-            },
-          }
-        },
         minimizer: [
             new UglifyJsPlugin({
                 cache: true,
