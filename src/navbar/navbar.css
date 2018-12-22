@@ -1,16 +1,22 @@
 .pd-nav {
+    position: relative;
     display: -ms-flexbox;
     display: flex;
-    flex-wrap: nowrap;
     background-color:#ececec;
     border-bottom: 1px solid #dcdcdc;
     box-shadow: 1px 1px 5px #cccccc;
     padding: 0 1rem;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
 }
 .pd-nav-brand {
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
-    margin: 8px 1rem 0 0;
+    margin: 0 1rem 0 0;
     font-size: 1.25rem;
     line-height: inherit;
     white-space: nowrap;
@@ -24,12 +30,12 @@
     text-decoration: none;
     display: flex;
 }
-.pd-nav-brand a img{
+.pd-nav-brand a img, .pd-nav-brand img{
     width: 32px;
     height: 32px;
     margin-right: 5px;
 }
-.pd-nav-brand a h1{
+.pd-nav-brand a h1, .pd-nav-brand h1{
     margin: 4px 0;
     padding: 0;
     font-size: 1.25rem;
@@ -38,8 +44,7 @@
     flex: 1;
 }
 .pd-nav-right {
-    flex: 0 0 auto;
-    margin:0 0 0 auto;
+    margin-left: auto;
 }
 .pd-nav-left ul, .pd-nav-right ul {
     display: -ms-flexbox;
@@ -91,4 +96,49 @@
 }
 .pd-nav-dropdown ul li ul li:hover > ul{
     display: block;
+}
+.pd-nav-collapse{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.pd-nav-toggle{
+    display: none;
+    margin-left: auto;
+    cursor: pointer;
+    color: rgba(0,0,0,.5);
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 5px;
+    padding: .25rem .75rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    margin-top: 8.7px;
+    margin-bottom: 8.7px;
+}
+@media (max-width: 992px) {
+    .pd-nav-toggle{
+        display: block;
+    }
+    .pd-nav-collapse{
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        display: block;
+    }
+    .pd-nav-collapse:not(.pd-show){
+        display: none;
+    }
+    .pd-nav-dropdown > ul, .pd-nav-left ul, .pd-nav-right ul,
+    .pd-nav-dropdown ul li:hover > ul, 
+    .pd-nav-dropdown ul li ul li:hover > ul{
+        position: relative;
+        padding-left: 0;
+        display: block;
+        margin: 0;
+        left: 0;
+        top: 0;
+    }
 }

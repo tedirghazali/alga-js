@@ -4,6 +4,7 @@
 * Released under the Apache License 2.0
 */
 
+import './basic/normalize.css';
 import './basic/icon.css';
 import './basic/layout.css';
 import './navbar/navbar.css';
@@ -17,7 +18,7 @@ class Pidie {
   }
 
   init() {
-
+    navbar.navbar();
   }
 
 }
@@ -25,3 +26,5 @@ class Pidie {
 export default function pidie() {
   return new Pidie();
 }
+
+pidie();
