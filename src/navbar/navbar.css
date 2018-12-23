@@ -58,8 +58,6 @@
     background-color:#ececec;
 }
 .pd-nav-left ul li a, .pd-nav-right ul li a{
-    padding-right: 0;
-    padding-left: 0;
     display: block;
     padding: 1.25rem 0.7rem;
     color:#333333;
@@ -119,6 +117,45 @@
     margin-top: 8.7px;
     margin-bottom: 8.7px;
 }
+.pd-nav-search form{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-top: 12px;
+    padding: 3px 0 3px 0.7rem;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 50px;
+}
+.pd-nav-search form input,
+.pd-nav-search form button{
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+}
+.pd-nav-search form input{
+    width: 30px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+    color: #333333;
+}
+.pd-nav-search form input:focus{
+    width: 220px;
+}
+.pd-nav-search form button{
+    cursor: pointer;
+    margin: 0 3px 0 3px;
+    padding: 5px 3px 3px 3px;
+    background-color: #dcdcdc;
+    border-radius: 50px;
+}
+.pd-nav-search form button:hover{
+    background-color: #cdcdcd;
+}
+.pd-nav-search form button:active{
+    background-color: #555555;
+}
 @media (max-width: 992px) {
     .pd-nav-toggle{
         display: block;
@@ -140,5 +177,16 @@
         margin: 0;
         left: 0;
         top: 0;
+    }
+    .pd-nav-search form{
+        -ms-flex-preferred-size: 100%;
+        flex-basis: 100%;
+        margin-bottom: 12px;
+    }
+    .pd-nav-search form input{
+        flex: 1;
+    }
+    .pd-nav-search form button{
+        margin-left: auto;
     }
 }

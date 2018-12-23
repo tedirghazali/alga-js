@@ -9,3 +9,32 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+.pd-nav-caret > a::after{
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='11px' height='7px' viewBox='0 0 11 7' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='Memweb-Header' transform='translate(-987.000000, -32.000000)' fill='%23333333'%3e%3cg id='Group-32'%3e%3cg transform='translate(859.000000, 15.687500)'%3e%3cpolygon id='navigatedown' points='133.177885 23 138.355769 17.8221154 137.540865 17 133.177885 21.3629808 128.814904 17 128 17.8221154'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-top: -4px;
+    vertical-align: middle;
+    content: "";
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 0.255em;
+}
+.pd-nav-caret-right > a::after{
+    -ms-transform: rotate(-90deg);
+    -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.pd-icon-search{
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3e%3cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3e%3cpath d='M0 0h24v24H0z' fill='none'/%3e%3c/svg%3e");
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-top: -4px;
+    vertical-align: middle;
+    content: "";
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-left: 0.255em;
+}
