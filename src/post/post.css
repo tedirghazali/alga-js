@@ -1,0 +1,50 @@
+.pd-main{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+.pd-main-grid .post{
+
+}
+.pd-main-list .post{
+
+}
+.pd-main-card .post{
+    width: 100%;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    padding: 15px 0;
+}
+.pd-main-card .post .entry-header{
+    margin-bottom: 7.5px;
+    padding: 0 15px;
+}
+.pd-main-card .post .post-thumbnail{
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+}
+.pd-main-card .post .entry-content,
+.pd-main-card .post .entry-summary{
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+    padding: 0 15px;
+}
+.pd-main-card .post .entry-footer{
+    margin-top: 7.5px;
+    padding: 0 15px;
+    font-size: 10pt;
+}
+.pd-main-card .post h2, .pd-main-card .post .entry-title {
+    margin-top: 0;
+    margin-bottom: 3px;
+}
+.pd-main-card .post .entry-meta {
+    font-size: 10pt;
+}
+.pd-main-card .post a.post-thumbnail img,
+.pd-main-card .post div.post-thumbnail img{
+    width: 100%;
+    height: 250px;
+}

@@ -8,6 +8,11 @@ body {
     font-family: Ubuntu, Arial, Helvetica, sans-serif
 }
 
+a {
+    color: #3d3d3d;
+    text-decoration: none;
+}
+
 .pd-container {
     width: 100%;
     padding-right: 15px;
@@ -48,16 +53,58 @@ body {
     margin-left: auto;
 }
 
+.pd-content{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.pd-content-main{
+    -ms-flex: 0 0 75%;
+    flex: 0 0 75%;
+    max-width: 75%;
+}
+.pd-content-main > main, .pd-content-main .pd-main{
+    margin-right: 15px;
+}
+.pd-content-sidebar{
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+}
+
 .pd-center{
-    text-align: center;
+    text-align: center !important;
 }
-
 .pd-left{
-    text-align: left;
+    text-align: left !important;
 }
-
 .pd-right{
-    text-align: right;
+    text-align: right !important;
+}
+.pd-monospace {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.pd-justify {
+  text-align: justify !important;
+}
+.pd-wrap {
+  white-space: normal !important;
+}
+.pd-nowrap {
+  white-space: nowrap !important;
+}
+.pd-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .pd-show{
     display: block;
@@ -65,3 +112,16 @@ body {
 .pd-hide{
     display: none;
 }
+.pd-shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}
+.pd-shadow {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+.pd-shadow-lg {
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+}
+.pd-shadow-none {
+  box-shadow: none !important;
+}
+

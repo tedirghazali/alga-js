@@ -7,9 +7,14 @@
 import './basic/normalize.css';
 import './basic/icon.css';
 import './basic/layout.css';
+import './basic/grid.css';
+import './basic/utility.css';
+
 import './navbar/navbar.css';
+import './post/post.css';
 
 import * as navbar from './navbar/navbar';
+import * as post from './post/post';
 
 class Pidie {
 
