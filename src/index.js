@@ -9,6 +9,8 @@ import './basic/icon.css';
 import './basic/layout.css';
 import './basic/grid.css';
 import './basic/utility.css';
+import './basic/list-group.css';
+import './basic/card.css';
 
 import './navbar/navbar.css';
 import './post/post.css';
