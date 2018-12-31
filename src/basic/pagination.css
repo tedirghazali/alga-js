@@ -1,0 +1,108 @@
+
+/* pager */
+.posts-navigation {
+    width: 100%;
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
+}
+.post-navigation {
+    width: 100%;
+}
+.posts-navigation .screen-reader-text,
+.post-navigation .screen-reader-text {
+    display: none;
+}
+.nav-links {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.nav-links .nav-previous {
+    flex: 1;
+}
+.nav-links .nav-next {
+    margin-left: auto;
+}
+.nav-links .nav-previous a, 
+.nav-links .nav-next a {
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    text-align: center;
+    text-decoration: none;
+}
+.nav-links .nav-previous a:hover, 
+.nav-links .nav-next a:hover,
+.nav-links .nav-previous a:focus, 
+.nav-links .nav-next a:focus {
+    background-color: #eeeeee;
+}
+
+.nav-links div.disabled > a,
+.nav-links div.disabled > a:hover,
+.nav-links div.disabled > a:focus,
+.nav-links div.disabled > span {
+  color: #777777;
+  cursor: not-allowed;
+  background-color: #fff;
+}
+.post-navigation .nav-links .nav-previous a::before{
+    content: '\2770';
+    width: 37px;
+    height: 37px;
+    display: inline-block;
+    border-right: 1px solid #ddd;
+    margin-right: 10px;
+    vertical-align: middle;
+    padding-top: 7px;
+    background-color: #eee;
+    text-align: center;
+}
+.post-navigation .nav-links .nav-previous a{
+    border-radius: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 10px;
+    vertical-align: middle;
+    text-align: left;
+}
+.post-navigation .nav-links .nav-next a{
+    border-radius: 5px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 10px;
+    padding-right: 0;
+    vertical-align: middle;
+    text-align: right;
+}
+.post-navigation .nav-links .nav-next a::after{
+    content: '\2771';
+    width: 37px;
+    height: 37px;
+    display: inline-block;
+    border-left: 1px solid #ddd;
+    margin-left: 10px;
+    vertical-align: middle;
+    padding-top: 7px;
+    background-color: #eee;
+    text-align: center;
+}
+@media (max-width: 992px) {
+    .post-navigation .nav-links {
+        display: block;
+    }
+    .post-navigation .nav-links .nav-previous{
+        margin-bottom: 15px;
+    }
+    .post-navigation .nav-links .nav-previous,
+    .post-navigation .nav-links .nav-next,
+    .post-navigation .nav-links .nav-previous a,
+    .post-navigation .nav-links .nav-next a {
+        width: 100%;
+    }
+}

@@ -10,37 +10,44 @@
 .pd-main-list .post{
 
 }
-.pd-main-card .post{
+.pd-main-card .post,
+.pd-main-card .page {
     width: 100%;
     border: 1px solid #dcdcdc;
     border-radius: 3px;
     margin-bottom: 15px;
     padding: 15px 0;
 }
-.pd-main-card .post .entry-header{
+.pd-main-card .post .entry-header,
+.pd-main-card .page .entry-header{
     margin-bottom: 7.5px;
     padding: 0 15px;
 }
-.pd-main-card .post .post-thumbnail{
+.pd-main-card .post .post-thumbnail {
     margin-top: 7.5px;
     margin-bottom: 7.5px;
 }
 .pd-main-card .post .entry-content,
-.pd-main-card .post .entry-summary{
+.pd-main-card .post .entry-summary,
+.pd-main-card .page .entry-content {
     margin-top: 7.5px;
     margin-bottom: 7.5px;
     padding: 0 15px;
 }
-.pd-main-card .post .entry-footer{
+.pd-main-card .post .entry-footer,
+.pd-main-card .page .entry-footer {
     margin-top: 7.5px;
     padding: 0 15px;
     font-size: 10pt;
 }
-.pd-main-card .post h2, .pd-main-card .post .entry-title {
+.pd-main-card .post h2, 
+.pd-main-card .post .entry-title,
+.pd-main-card .page .entry-title {
     margin-top: 0;
     margin-bottom: 3px;
 }
-.pd-main-card .post .entry-meta {
+.pd-main-card .post .entry-meta,
+.pd-main-card .page .entry-meta {
     font-size: 10pt;
 }
 .pd-main-card .post a.post-thumbnail img,
