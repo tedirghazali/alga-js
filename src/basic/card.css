@@ -348,3 +348,9 @@ h1.pd-card-header {
   background-color: #4c4c4c;
   color: #ffffff;
 }
+
+@media (max-width: 576px) {
+  .pd-card .search-form .search-submit{
+    margin-left: auto;
+  }
+}
