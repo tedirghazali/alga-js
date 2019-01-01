@@ -27,6 +27,7 @@ class Pidie {
 
   init() {
     navbar.navbar();
+    post.backToTop();
   }
 
 }

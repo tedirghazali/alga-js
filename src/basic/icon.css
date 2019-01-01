@@ -38,3 +38,18 @@
     background-position: center;
     margin-left: 0.255em;
 }
+.pd-icon-backtop {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='11px' height='7px' viewBox='0 0 11 7' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3cg id='Symbols' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='Memweb-Header' transform='translate(-987.000000, -32.000000)' fill='%23333333'%3e%3cg id='Group-32'%3e%3cg transform='translate(859.000000, 15.687500)'%3e%3cpolygon id='navigatedown' points='133.177885 23 138.355769 17.8221154 137.540865 17 133.177885 21.3629808 128.814904 17 128 17.8221154'%3e%3c/polygon%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+    display: inline-block;
+    width: 1.5em;
+    height: 1.5em;
+    vertical-align: middle;
+    content: "";
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -ms-transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg);
+    color: white;
+}
