@@ -5,16 +5,21 @@ export function post() {
 export function backToTop() {
     const scrollContainerIsBody = document.body
     const scrollDocumentElement = scrollContainerIsBody && document.documentElement
-
     const backtop = document.querySelector('.pd-back-to-top') || ''
-    if(backtop.classList.contains('hidden')){ } else {
-        backtop.classList.add('hidden')
-    }
-    let hidden = true
-
     const scrollEmitter = scrollContainerIsBody ? window : document.body
-    scrollEmitter.addEventListener('scroll', adapt)
-    adapt()
+    let hidden = true
+    
+    if(backtop != ''){
+        if(backtop.classList.contains('hidden')){ } else {
+            backtop.classList.add('hidden')
+        }
+        scrollEmitter.addEventListener('scroll', adapt)
+        adapt()
+        backtop.addEventListener('click', event => {
+            event.preventDefault()
+            scrollUp()
+        })
+    }
 
     function adapt () {
       if(getScrollTop() >= 1){
@@ -28,13 +33,6 @@ export function backToTop() {
         backtop.classList.add('hidden')
         hidden = true
       }
-    }
-
-    if(backtop != ''){
-        backtop.addEventListener('click', event => {
-            event.preventDefault()
-            scrollUp()
-        })
     }
 
     function scrollUp () {
