@@ -90,3 +90,16 @@
     z-index: 100;
     padding: 15px;
 }
+
+.pd-footer {
+    border-top: 2px solid #dcdcdc;
+    background-color: #eeeeee;
+    padding-top: 30px;
+    padding-bottom: 0;
+}
+.pd-footer-info {
+    border-top: 1px solid #cccccc;
+    background-color: #dddddd;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
