@@ -21,7 +21,7 @@
 .pd-main-card .post .entry-header,
 .pd-main-card .page .entry-header{
     margin-bottom: 7.5px;
-    padding: 0 15px;
+    padding: 0 1.25rem;
 }
 .pd-main-card .post .post-thumbnail {
     margin-top: 7.5px;
@@ -32,12 +32,12 @@
 .pd-main-card .page .entry-content {
     margin-top: 7.5px;
     margin-bottom: 7.5px;
-    padding: 0 15px;
+    padding: 0 1.25rem;
 }
 .pd-main-card .post .entry-footer,
 .pd-main-card .page .entry-footer {
     margin-top: 7.5px;
-    padding: 0 15px;
+    padding: 0 1.25rem;
     font-size: 10pt;
 }
 .pd-main-card .post h2, 
@@ -102,4 +102,110 @@
     background-color: #dddddd;
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.error-404 .page-header {
+    width: 100%;
+    padding: 100px 0;
+}
+.error-404 .page-title {
+    text-align: center;
+    color: #444444;
+    margin-bottom: 0;
+    font-size: 45pt;
+}
+.error-404 .page-description {
+    text-align: center;
+    color: #666666;
+    font-size: 18pt;
+    margin-top: 5px;
+}
+
+.entry-content blockquote{
+    border-left: 3px solid #dcdcdc;
+    margin-left: 0;
+    margin-right: 0;
+}
+.entry-content blockquote p::before{
+    content: '\275D'; /* 275B */
+    font-size: 18pt;
+    display: inline-block;
+    margin-right: 3px;
+    vertical-align: middle;
+    padding-top: 7px;
+    text-align: center;
+    color: #444444;
+}
+.entry-content blockquote p::after{
+    content: '\275E'; /* 275C */
+    font-size: 18pt;
+    display: inline-block;
+    margin-left: 3px;
+    vertical-align: middle;
+    padding-top: 7px;
+    text-align: center;
+    color: #444444;
+}
+.entry-content blockquote p{
+    display: inline-block;
+    margin: 0 1.25rem 0 1.25rem;
+    color: #333333;
+    line-height: 1;
+}
+.entry-content blockquote cite{
+    margin: 15px 1.25rem 0 1.25rem;
+    color: #444444;
+}
+.entry-content blockquote cite::before {
+    content: "\2014\00A0";
+    color: #444444;
+}
+
+.entry-content :not(pre) {
+    line-height: 1.7;
+}
+.entry-content ul,
+.entry-content ol {
+    padding-left: 1.25rem;
+}
+
+.entry-content h1,
+.entry-content h2,
+.entry-content h3,
+.entry-content h4,
+.entry-content h5,
+.entry-content h6 {
+    margin: 0 0 .5rem 0;
+    line-height: 1.2;
+}
+
+.entry-content table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.entry-content table td, .entry-content table th {
+    border: 1px solid rgba(0,0,0,.125);
+    padding: 8px;
+}
+.entry-content table tr:nth-child(odd){background-color: rgba(0,0,0,.03);}
+.entry-content table tr:hover {background-color: rgba(0,0,0,.1);}
+.entry-content table th,
+.entry-content table tr:first-child td {
+    text-align: left;
+    background-color: rgba(0,0,0,.03);
+    color: #333333;
+    font-weight: bold;
+}
+.entry-content table tr:first-child:hover {
+    background-color: rgba(0,0,0,.03);
+}
+
+.entry-content pre {
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 3px;
+    background-color: rgba(0,0,0,.03);
+    padding: 1.25rem;
+}
+.entry-content pre code {
+    line-height: 1;
 }

@@ -12,6 +12,7 @@ import './basic/utility.css';
 import './basic/list-group.css';
 import './basic/card.css';
 import './basic/pagination.css';
+import './basic/form.css';
 
 import './navbar/navbar.css';
 import './post/post.css';

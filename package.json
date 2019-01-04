@@ -1,6 +1,6 @@
 {
   "name": "pidie",
-  "version": "0.0.8-alpha-1",
+  "version": "0.0.9-alpha-1",
   "description": "PidieUi is Web Component",
   "main": "src/navbar/index.js",
   "scripts": {
