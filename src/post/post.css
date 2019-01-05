@@ -104,17 +104,20 @@
     padding-bottom: 15px;
 }
 
-.error-404 .page-header {
+.error-404 .page-header,
+.no-results .page-header {
     width: 100%;
     padding: 100px 0;
 }
-.error-404 .page-title {
+.error-404 .page-title,
+.no-results .page-title {
     text-align: center;
     color: #444444;
     margin-bottom: 0;
     font-size: 45pt;
 }
-.error-404 .page-description {
+.error-404 .page-description,
+.no-results .page-description {
     text-align: center;
     color: #666666;
     font-size: 18pt;
