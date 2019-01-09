@@ -4,11 +4,101 @@
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
-.pd-main-grid .post{
-
+.pd-main-2 .post{
+    max-width: 48%;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
 }
-.pd-main-list .post{
-
+.pd-main-3 .post{
+    max-width: 31.3%;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
+}
+.pd-main-4 .post{
+    max-width: 23.25%;
+    margin-left: 7.5px;
+    margin-right: 7.5px;
+}
+@media (max-width: 1200px) {
+    .pd-main-2 .post{
+        max-width: 47%;
+        margin-left: 7.5px;
+        margin-right: 7.5px;
+    }
+    .pd-main-3 .post,
+    .pd-main-4 .post {
+        max-width: 31%;
+        margin-left: 7.5px;
+        margin-right: 7.5px;
+    }
+}
+@media (max-width: 728px) {
+    .pd-main-2 .post{
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .pd-main-3 .post{
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .pd-main-4 .post{
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+.pd-main-2 .post .post-thumb,
+.pd-main-3 .post .post-thumb,
+.pd-main-4 .post .post-thumb {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+.pd-main-2 .post .post-thumbnail img {
+    max-height: 200px;
+}
+.pd-main-3 .post .post-thumbnail img {
+    max-height: 180px;
+}
+.pd-main-4 .post .post-thumbnail img {
+    max-height: 150px;
+}
+.pd-main-2 .post .post-thumb .cat-links,
+.pd-main-3 .post .post-thumb .cat-links,
+.pd-main-4 .post .post-thumb .cat-links {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-left: 6px;
+}
+.pd-main-2 .post .post-thumb .cat-links a,
+.pd-main-3 .post .post-thumb .cat-links a,
+.pd-main-4 .post .post-thumb .cat-links a {
+    background-color: #ececec;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    padding: 3px 1rem;
+    margin-right: 3px;
+}
+.pd-main-2 .post .post-thumb .tags-links,
+.pd-main-3 .post .post-thumb .tags-links,
+.pd-main-4 .post .post-thumb .tags-links {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: 6px;
+}
+.pd-main-2 .post .post-thumb .tags-links a,
+.pd-main-3 .post .post-thumb .tags-links a,
+.pd-main-4 .post .post-thumb .tags-links a {
+    background-color: #ececec;
+    border: 1px solid #dcdcdc;
+    border-radius: 3px;
+    padding: 2px 3px;
+    margin-right: 2px;
+    font-size: 10pt;
 }
 .pd-main-card .post,
 .pd-main-card .page {
@@ -16,11 +106,18 @@
     border: 1px solid #dcdcdc;
     border-radius: 3px;
     margin-bottom: 15px;
-    padding: 15px 0;
+    padding-bottom: 15px;
+    background-color: #ffffff;
+}
+.pd-main-card .post *:first-child img,
+.pd-main-card .page *:first-child img {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
 .pd-main-card .post .entry-header,
 .pd-main-card .page .entry-header{
     margin-bottom: 7.5px;
+    margin-top: 7.5px;
     padding: 0 1.25rem;
 }
 .pd-main-card .post .post-thumbnail {
@@ -37,8 +134,9 @@
 .pd-main-card .post .entry-footer,
 .pd-main-card .page .entry-footer {
     margin-top: 7.5px;
+    /*margin-bottom: 1.25rem;*/
     padding: 0 1.25rem;
-    font-size: 10pt;
+    font-size: 9pt;
 }
 .pd-main-card .post h2, 
 .pd-main-card .post .entry-title,
@@ -48,7 +146,7 @@
 }
 .pd-main-card .post .entry-meta,
 .pd-main-card .page .entry-meta {
-    font-size: 10pt;
+    font-size: 9pt;
 }
 .pd-main-card .post a.post-thumbnail img,
 .pd-main-card .post div.post-thumbnail img{

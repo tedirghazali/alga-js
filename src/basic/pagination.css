@@ -2,6 +2,11 @@
     display: none;
 }
 
+.pagination,
+.pd-pagination {
+    width: 100%;
+}
+
 .pagination .nav-links,
 .pd-pagination {
     display: -ms-flexbox;
