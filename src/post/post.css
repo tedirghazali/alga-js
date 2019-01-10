@@ -4,6 +4,16 @@
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
 }
+.pd-main-featured .post:first-child {
+    max-width: 100%;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.pd-main-featured .post:first-child .post-thumbnail img {
+    max-height: 400px;
+    height: 400px;
+}
 .pd-main-2 .post{
     max-width: 48%;
     margin-left: 7.5px;
