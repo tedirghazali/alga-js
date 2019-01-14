@@ -2,6 +2,28 @@ export function post() {
     
 }
 
+export function collapseWidgets() {
+    Array.prototype.forEach.call(document.querySelectorAll('.pd-collapse'), function(elem) {
+        var firstCollapse = elem.querySelector('*:first-child');
+        var lastCollapse = elem.querySelector('*:nth-child(2)');
+        firstCollapse.onclick = function(e) {
+            e.preventDefault();
+            firstCollapse.classList.toggle('border-bottom-0');
+            lastCollapse.classList.toggle('pd-hide');
+            if(elem.querySelector('.calendar_wrap #wp-calendar caption')){
+                elem.querySelector('.calendar_wrap #wp-calendar caption').classList.toggle('border-bottom-0');
+                elem.querySelector('.calendar_wrap #wp-calendar caption').classList.toggle('mb-0');
+            }
+            if(elem.querySelector('.calendar_wrap #wp-calendar tfoot')){
+                elem.querySelector('.calendar_wrap #wp-calendar tfoot').classList.toggle('pd-hide');
+            }
+            if(elem.querySelector('.calendar_wrap #wp-calendar tbody')){
+                elem.querySelector('.calendar_wrap #wp-calendar tbody').classList.toggle('pd-hide');
+            }
+        }
+    });
+}
+
 export function backToTop() {
     const scrollContainerIsBody = document.body
     const scrollDocumentElement = scrollContainerIsBody && document.documentElement

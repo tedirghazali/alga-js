@@ -1,4 +1,4 @@
-.pd-list-group ul {
+.pd-list-group ul:not(.pd-hide) {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-direction: column;
