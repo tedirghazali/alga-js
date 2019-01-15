@@ -13,12 +13,15 @@ import './basic/list-group.css';
 import './basic/card.css';
 import './basic/pagination.css';
 import './basic/form.css';
+import './basic/color.css';
 
 import './navbar/navbar.css';
 import './post/post.css';
+import './modal/modal.css';
 
 import * as navbar from './navbar/navbar';
 import * as post from './post/post';
+import * as modal from './modal/modal';
 
 class Pidie {
 
@@ -30,6 +33,7 @@ class Pidie {
     navbar.navbar();
     post.backToTop();
     post.collapseWidgets();
+    modal.socialBar();
   }
 
 }
