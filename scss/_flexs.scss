@@ -1,0 +1,37 @@
+// Flexs
+.flex {
+    display: flex;
+}
+.flex-inline {
+    display: inline-flex;
+}
+
+@each $fkey, $fvalues in $flexs {
+    @each $fprop, $fvalue in $fvalues {
+        @if $fkey == "flex-direction" {
+            .flex-#{$fvalue} {
+                #{$fprop}: $fvalue;
+            }
+        }
+        @if $fkey == "flex-wrap" {
+            .flex-#{$fvalue} {
+                #{$fprop}: $fvalue;
+            }
+        }
+    }
+}
+
+@each $forder in $full-numbers {
+    .flex-order-#{$forder} {
+        order: $forder;
+    }
+}
+
+@each $ffnumber in $first-numbers {
+    .flex-grow-#{$ffnumber} {
+        flex-grow: $ffnumber;
+    }
+    .flex-shrink-#{$ffnumber} {
+        flex-shrink: $ffnumber;
+    }
+}
