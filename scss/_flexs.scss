@@ -10,12 +10,15 @@
     @each $fprop, $fvalue in $fvalues {
         @if $fkey == "flex-direction" {
             .flex-#{$fvalue} {
-                #{$fprop}: $fvalue;
+                #{$fkey}: $fvalue;
             }
-        }
-        @if $fkey == "flex-wrap" {
+        } @else if $fkey == "flex-wrap" {
             .flex-#{$fvalue} {
-                #{$fprop}: $fvalue;
+                #{$fkey}: $fvalue;
+            }
+        } @else {
+            .flex-#{$fprop} {
+                #{$fkey}: $fvalue;
             }
         }
     }
@@ -35,3 +38,20 @@
         flex-shrink: $ffnumber;
     }
 }
+
+.flex-basis-auto {
+    flex-basis: auto;
+}
+
+@each $fbasiskey, $fbasisval in $pixels {
+    .flex-basis-#{$fbasiskey} {
+        flex-basis: $fbasisval;
+    }
+}
+
+@each $fbasiskey2, $fbasisval2 in $persens {
+    .flex-basis-#{$fbasiskey2} {
+        flex-basis: $fbasisval2;
+    }
+}
+

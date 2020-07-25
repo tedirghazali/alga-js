@@ -1,0 +1,30 @@
+// Sizes
+@each $wkey1, $wvalue1 in $persens {
+    .w-#{$wkey1} {
+        width: $wvalue1;
+    }
+}
+
+@each $wkey2, $wvalue2 in $pixels {
+    .w-#{$wkey2} {
+        width: $wvalue2;
+    }
+}
+
+@each $hfnumber in $full-numbers {
+    .vh-#{$hfnumber} {
+        height: calc(100vh - #{$hfnumber}px);
+    }
+}
+
+@each $wkey3, $wvalue3 in $persens {
+    .h-#{$wkey3} {
+        height: $wvalue3;
+    }
+}
+
+@each $wkey4, $wvalue4 in $pixels {
+    .h-#{$wkey4} {
+        height: $wvalue4;
+    }
+}
