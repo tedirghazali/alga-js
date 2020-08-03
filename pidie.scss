@@ -1,6 +1,14 @@
 // Variables and mixins
 @import 'scss/variables';
+@import 'scss/utilities';
+
+// Basics
+@import 'scss/cores';
+
+// Layouts
+@import 'scss/layouts';
 
 // Utilities
-@import 'scss/sizes';
-@import 'scss/flexs';
+//@import 'scss/sizes';
+//@import 'scss/flexs';
+//@import 'scss/grids';

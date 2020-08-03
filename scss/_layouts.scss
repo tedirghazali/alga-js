@@ -1,0 +1,41 @@
+// All layouts
+@each $lkey, $lvalue in $layouts {
+    @if $lkey == 12 {
+        .#{$layout},
+        .#{$layout}-12 {
+            display: $d-grid;
+            width: $hundred-number + unquote("%");
+            grid-template: $lvalue;
+        }
+    } @else {
+        .#{$layout}-#{$lkey} {
+            display: $d-grid;
+            width: $hundred-number + unquote("%");
+            grid-template: $lvalue;
+        }
+    }
+}
+
+.#{$layout}-nav {
+    grid-area: nav;
+}
+
+.#{$layout}-side {
+    grid-area: side;
+}
+
+.#{$layout}-head {
+    grid-area: head;
+}
+
+.#{$layout}-main {
+    grid-area: main;
+}
+
+.#{$layout}-half {
+    grid-area: half;
+}
+
+.#{$layout}-foot {
+    grid-area: foot;
+}

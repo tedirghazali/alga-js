@@ -10,15 +10,15 @@
     @each $fprop, $fvalue in $fvalues {
         @if $fkey == "flex-direction" {
             .flex-#{$fvalue} {
-                #{$fkey}: $fvalue;
+                #{$fprop}: $fvalue;
             }
         } @else if $fkey == "flex-wrap" {
             .flex-#{$fvalue} {
-                #{$fkey}: $fvalue;
+                #{$fprop}: $fvalue;
             }
         } @else {
             .flex-#{$fprop} {
-                #{$fkey}: $fvalue;
+                #{$fprop}: $fvalue;
             }
         }
     }

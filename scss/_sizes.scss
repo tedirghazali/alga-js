@@ -13,7 +13,7 @@
 
 @each $hfnumber in $full-numbers {
     .vh-#{$hfnumber} {
-        height: calc(100vh - #{$hfnumber}px);
+        height: calc(100vh - ($hfnumber  + unquote("px")));
     }
 }
 

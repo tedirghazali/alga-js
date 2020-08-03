@@ -1,82 +1,133 @@
-// Basic
-$first-numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9;
-$second-numbers: 1, 2, 3, 4, 5, 6;
-$third-numbers: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12;
-$full-numbers: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100;
+// Core layouts
+$layout: 'layout' !default;
 
-// Core widths
-$persens: (1: 1%, 5: 5%, 10: 10%, 15: 15%, 20: 20%, 25: 25%, 30: 30%, 35: 35%, 40: 40%, 45: 45%, 50: 50%, 55: 55%, 60: 60%, 65: 65%, 70: 70%, 75: 75%, 80: 80%, 85: 85%, 90: 90%, 95: 95%, 100: 100%);
-$pixels: (2: 2px, 4: 4px, 8: 8px, 16: 16px, 24: 24px, 32: 32px, 48: 48px, 64: 64px, 96: 96px, 128: 128px, 160: 160px, 200: 200px, 250: 250px, 256: 256px, 300: 300px, 320: 320px, 336: 336px, 360: 360px, 512: 512px, 600: 600px, 640: 640px, 720: 720px, 728: 728px, 768: 768px, 800: 800px, 1024: 1024px);
+// Core displays
+$d-block: block;
+$d-run-in: run-in;
+$d-flow: flow;
+$d-flow-root: flow-root;
+$d-flex: flex;
+$d-grid: grid;
+$d-list-item: list-item;
+$d-contents: contents;
+$d-none: none;
+$d-inline: inline;
+$d-inline-block: inline-block;
+$d-inline-flex: inline-flex;
+$d-inline-table: inline-table;
+$d-inline-grid: inline-grid;
+$d-table: table;
+$d-table-row-group: table-row-group;
+$d-table-header-group: table-header-group;
+$d-table-footer-group: table-footer-group;
+$d-table-row: table-row;
+$d-table-cell: table-cell;
+$d-table-column-group: table-column-group;
+$d-table-column: table-column;
+$d-table-caption: table-caption;
+$d-ruby: ruby;
+$d-ruby-base: ruby-base;
+$d-ruby-text: ruby-text;
+$d-ruby-base-container: ruby-base-container;
+$d-ruby-text-container: ruby-text-container;
 
-// Core flexs
-$flexs: (
-    "flex-direction": "row" "row-reverse" "column" "column-reverse",
-    "flex-wrap": "nowrap" "wrap" "wrap-reverse",
-    "flex-flow": (
-        "row-nowrap": "row nowrap",
-        "row-wrap": "row wrap",
-        "row-rewrap": "row wrap-reverse",
-        "row-reverse-nowrap": "row-reverse nowrap",
-        "row-reverse-wrap": "row-reverse wrap",
-        "row-reverse-rewrap": "row-reverse wrap-reverse",
-        "column-nowrap": "column nowrap",
-        "column-wrap": "column wrap",
-        "column-rewrap": "column wrap-reverse",
-        "column-reverse-nowrap": "column-reverse nowrap",
-        "column-reverse-wrap": "column-reverse wrap",
-        "column-reverse-rewrap": "column-reverse wrap-reverse"
-    ),
-    "justify-content": (
-        "justify-start": "flex-start",
-        "justify-end": "flex-end",
-        "justify-center": "center",
-        "justify-between": "space-between",
-        "justify-around": "space-around",
-        "justify-evenly": "space-evenly", 
-        "justify-start-base": "start",
-        "justify-end-base": "end",
-        "justify-left": "left",
-        "justify-right": "right",
-        "justify-safe": "safe",
-        "justify-unsafe": "unsafe"
-    ),
-    "align-items": (
-        "align-stretch": "stretch",
-        "align-start": "flex-start",
-        "align-end": "flex-end",
-        "align-center": "center",
-        "align-baseline": "baseline",
-        "align-baseline-1": "first baseline",
-        "align-baseline-2": "last baseline",
-        "align-start-2": "start",
-        "align-end-2": "end",
-        "align-start-3": "self-start",
-        "align-end-3": "self-end",
-        "align-safe": "safe",
-        "align-unsafe": "unsafe"
-    ),
-    "align-content": (
-        "content-start": "flex-start",
-        "content-end": "flex-end",
-        "content-center": "center",
-        "content-between": "space-between",
-        "content-around": "space-around",
-        "content-evenly": "space-evenly",
-        "content-stretch": "stretch",
-        "content-start-2": "start",
-        "content-end-2": "end",
-        "content-baseline": "baseline",
-        "content-baseline-1": "first baseline",
-        "content-baseline-2": "last baseline",
-        "content-safe": "safe",
-        "content-unsafe": "unsafe"
-    ),
-    "align-self": (
-        "self-auto": "auto",
-        "self-start": "flex-start",
-        "self-end": "flex-end",
-        "self-center": "center",
-        "self-baseline": "baseline",
-        "self-stretch": "stretch"
-    )
-);
+
+// Core colors
+$primary-color: #5755d9 !default;
+$primary-color-dark: darken($primary-color, 3%) !default;
+$primary-color-light: lighten($primary-color, 3%) !default;
+$secondary-color: lighten($primary-color, 37.5%) !default;
+$secondary-color-dark: darken($secondary-color, 3%) !default;
+$secondary-color-light: lighten($secondary-color, 3%) !default;
+
+// Gray colors
+$dark-color: #303742 !default;
+$light-color: #fff !default;
+$gray-color: lighten($dark-color, 55%) !default;
+$gray-color-dark: darken($gray-color, 30%) !default;
+$gray-color-light: lighten($gray-color, 20%) !default;
+
+$border-color: lighten($dark-color, 65%) !default;
+$border-color-dark: darken($border-color, 10%) !default;
+$bg-color: lighten($dark-color, 75%) !default;
+$bg-color-dark: darken($bg-color, 3%) !default;
+$bg-color-light: $light-color !default;
+
+// Control colors
+$success-color: #32b643 !default;
+$warning-color: #ffb700 !default;
+$error-color: #e85600 !default;
+
+// Other colors
+$code-color: #d73e48 !default;
+$highlight-color: #ffe9b3 !default;
+$body-bg: $bg-color-light !default;
+$body-font-color: lighten($dark-color, 5%) !default;
+$link-color: $primary-color !default;
+$link-color-dark: darken($link-color, 10%) !default;
+$link-color-light: lighten($link-color, 10%) !default;
+
+// Unit sizes
+$unit-o: .05rem !default;
+$unit-h: .1rem !default;
+$unit-1: .2rem !default;
+$unit-2: .4rem !default;
+$unit-3: .6rem !default;
+$unit-4: .8rem !default;
+$unit-5: 1rem !default;
+$unit-6: 1.2rem !default;
+$unit-7: 1.4rem !default;
+$unit-8: 1.6rem !default;
+$unit-9: 1.8rem !default;
+$unit-10: 2rem !default;
+$unit-12: 2.4rem !default;
+$unit-16: 3.2rem !default;
+
+// Font sizes
+$html-font-size: 20px !default;
+$html-line-height: 1.5 !default;
+$font-size: .8rem !default;
+$font-size-sm: .7rem !default;
+$font-size-lg: .9rem !default;
+$line-height: 1.2rem !default;
+
+// Sizes
+$layout-spacing: $unit-2 !default;
+$layout-spacing-sm: $unit-1 !default;
+$layout-spacing-lg: $unit-4 !default;
+$border-radius: $unit-h !default;
+$border-width: $unit-o !default;
+$border-width-lg: $unit-h !default;
+$control-size: $unit-9 !default;
+$control-size-sm: $unit-7 !default;
+$control-size-lg: $unit-10 !default;
+$control-padding-x: $unit-2 !default;
+$control-padding-x-sm: $unit-2 * .75 !default;
+$control-padding-x-lg: $unit-2 * 1.5 !default;
+$control-padding-y: ($control-size - $line-height) / 2 - $border-width !default;
+$control-padding-y-sm: ($control-size-sm - $line-height) / 2 - $border-width !default;
+$control-padding-y-lg: ($control-size-lg - $line-height) / 2 - $border-width !default;
+$control-icon-size: .8rem !default;
+
+$control-width-xs: 180px !default;
+$control-width-sm: 320px !default;
+$control-width-md: 640px !default;
+$control-width-lg: 960px !default;
+$control-width-xl: 1280px !default;
+
+// Responsive breakpoints
+$size-xs: 480px !default;
+$size-sm: 600px !default;
+$size-md: 840px !default;
+$size-lg: 960px !default;
+$size-xl: 1280px !default;
+$size-2x: 1440px !default;
+
+$responsive-breakpoint: $size-xs !default;
+
+// Z-index
+$zindex-0: 1 !default;
+$zindex-1: 100 !default;
+$zindex-2: 200 !default;
+$zindex-3: 300 !default;
+$zindex-4: 400 !default;
