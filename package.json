@@ -1,8 +1,8 @@
 {
-  "name": "pidie",
-  "version": "0.0.16-alpha-1",
-  "description": "Pidie is web utilities for any web font-end framework",
-  "main": "pidie.scss",
+  "name": "alga-js",
+  "version": "0.0.1-development1",
+  "description": "Alga.js is a javascript utility for any web font-end framework",
+  "main": "js/app.js",
   "scripts": {
     "build": "node compile.js",
     "docs": "node compile-docs.js"
@@ -12,19 +12,15 @@
     "url": "git+https://github.com/tedirghazali/pidie.git"
   },
   "keywords": [
-    "pidieui",
+    "alga-js",
     "framework",
     "front-end",
     "utilities"
   ],
   "author": "Tedir Ghazali",
-  "license": "Apache-2.0",
+  "license": "SEE LICENSE IN license.txt",
   "bugs": {
     "url": "https://github.com/tedirghazali/pidie/issues"
   },
-  "homepage": "https://github.com/tedirghazali/pidie#readme",
-  "devDependencies": {
-    "pug": "^3.0.0",
-    "sass": "^1.26.10"
-  }
+  "homepage": "https://github.com/tedirghazali/pidie#readme"
 }

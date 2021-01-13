@@ -1,0 +1,26 @@
+Tedir License
+Version 1.0, October 11, 2020
+The permissive open source software license
+
+Copyright holders
+
+Copyright (c) <year> <current copyright holder>
+Copyright (c) <startyear><endyear> <original copyright holder>
+
+Contributors
+
+<year> <third contributor>
+<startyear>-<endyear> <second contributor>
+<startyear>-<endyear> <first contributor>
+
+Everyone has permission to use, merge, copy, modify, publish, compile, sell, or distribute this software, either in source code, text, file (document, image, video, audio or font) or as a compiled binary form without any exception, restriction or limitation whatsoever, for any purpose, commercial or non-commercial, free and/or open source, and by any means and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+1. The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+2. The copyright holders of this software shall be included in one of the author's copies, or on the sublicense.
+3. The copyright holders are excluded if the software has been totally changed or more than 80 percent changed.
+4. The contributors are counted if they contribute to the Software more than 5 percent in total.
+5. The distribution name should be different from the Software name, for example: [YourBrand] [OriginalName] or [Original Name] [Your Version].
+6. If the name is the same or not at all different, you shall be counted as one of the contributors.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, STRICT LIABILITY, OR TORT(INCLUDING NEGLIGENCE) OR OTHERWISE, ARISING FROM, OUT OF THE USE OF THIS SOFTWARE OR IN CONNECTION WITH THE SOFTWARE OR OTHER DEALINGS IN THE SOFTWARE.
