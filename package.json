@@ -4,8 +4,7 @@
   "description": "Alga.js is a javascript utility for any web font-end framework",
   "main": "js/app.js",
   "scripts": {
-    "build": "node compile.js",
-    "docs": "node compile-docs.js"
+    "build": "rollup --config"
   },
   "repository": {
     "type": "git",
@@ -22,5 +21,13 @@
   "bugs": {
     "url": "https://github.com/tedirghazali/pidie/issues"
   },
-  "homepage": "https://github.com/tedirghazali/pidie#readme"
+  "homepage": "https://github.com/tedirghazali/pidie#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "rollup": "^2.36.1",
+    "rollup-plugin-terser": "^7.0.2"
+  }
 }
