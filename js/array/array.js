@@ -1,5 +1,9 @@
-import * as insert from './InsertArray.js'
+import { insert, insertArray, insertObject } from './insertArray.js'
+import { toggle } from './toggleArray.js'
 
 export default {
-  insert
+  insert,
+  insertArray,
+  //insertObject,
+  toggle
 }

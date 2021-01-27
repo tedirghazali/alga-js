@@ -1,40 +1,3 @@
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -68,92 +31,79 @@ function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-var InsertArray = /*#__PURE__*/function () {
-  function InsertArray(value) {
-    var array = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+var errorMsg = 'You have to enter the value before using this insert array utility';
 
-    _classCallCheck(this, InsertArray);
+var insert = function insert(value) {
+  var to = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var at = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'last';
+  var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : NaN;
+  if (!value) return function (e) {
+    throw e;
+  }(Error(errorMsg));
+  var toArr = Array.from(to);
 
-    _defineProperty(this, "errormsg", 'You have to enter the data in array type');
-
-    this.value = value;
-    this.array = array;
+  if (at === 'first') {
+    toArr.unshift(value);
+  } else if (at === 'last') {
+    toArr.push(value);
+  } else if (at === 'before') {
+    var indBe = isNaN(index) ? 1 : index;
+    toArr.splice(Number(indBe) - 1, 0, value);
+  } else if (at === 'after') {
+    var indAf = isNaN(index) ? 0 : index;
+    toArr.splice(Number(indAf) + 1, 0, value);
   }
 
-  _createClass(InsertArray, [{
-    key: "first",
-    value: function first() {
-      if (Array.isArray(this.array)) {
-        return this.array.unshift(this.value);
-      } else {
-        throw this.errormsg;
-      }
-    }
-  }, {
-    key: "last",
-    value: function last() {
-      if (Array.isArray(this.array)) {
-        return this.array.push(this.value);
-      } else {
-        throw this.errormsg;
-      }
-    }
-  }, {
-    key: "before",
-    value: function before() {
-      var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+  return toArr;
+};
 
-      if (Array.isArray(this.array)) {
-        return this.array.splice(index - 1, 0, this.value);
-      } else {
-        throw this.errormsg;
-      }
-    }
-  }, {
-    key: "after",
-    value: function after() {
-      var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+var insertArray = function insertArray(from) {
+  var to = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var at = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'last';
+  var index = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : NaN;
+  if (!from) return function (e) {
+    throw e;
+  }(Error(errorMsg));
+  var toArr = Array.from(to);
 
-      if (Array.isArray(this.array)) {
-        return this.array.splice(index + 1, 0, this.value);
-      } else {
-        throw this.errormsg;
-      }
-    }
-  }, {
-    key: "multiple",
-    value: function multiple() {
-      var position = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'last';
-      var index = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  if (at === 'first') {
+    toArr = [].concat(_toConsumableArray(from), _toConsumableArray(toArr));
+  } else if (at === 'last') {
+    toArr = [].concat(_toConsumableArray(toArr), _toConsumableArray(from));
+  } else if (at === 'before') {
+    var indBe = isNaN(index) ? 1 : index;
+    toArr.splice(Number(indBe) - 1, 0, from);
+    toArr = toArr.flat();
+  } else if (at === 'after') {
+    var indAf = isNaN(index) ? 0 : index;
+    toArr.splice(Number(indAf) + 1, 0, from);
+    toArr = toArr.flat();
+  }
 
-      if (Array.isArray(this.value) && Array.isArray(this.array)) {
-        if (position === 'first') {
-          return [].concat(_toConsumableArray(this.value), _toConsumableArray(this.array));
-        } else if (position === 'last') {
-          return [].concat(_toConsumableArray(this.array), _toConsumableArray(this.value));
-        } else if (position === 'before') {
-          var multiBefore = this.array.splice(index - 1, 0, this.value);
-          return multiBefore.flat();
-        } else if (position === 'after') {
-          var multiAfter = this.array.splice(index + 1, 0, this.value);
-          return multiAfter.flat();
-        }
-      } else {
-        throw this.errormsg;
-      }
-    }
-  }]);
+  return toArr;
+};
 
-  return InsertArray;
-}();
+var toggle = function toggle(val) {
+  var arr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var toggleArr = Array.from(arr);
 
-var insert = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  'default': InsertArray
-});
+  if (toggleArr.includes(val)) {
+    var index = toggleArr.findIndex(function (el) {
+      return el === val;
+    });
+    toggleArr.splice(index, 1);
+  } else {
+    toggleArr.push(val);
+  }
+
+  return toggleArr;
+};
 
 var array = {
-  insert: insert
+  insert: insert,
+  insertArray: insertArray,
+  //insertObject,
+  toggle: toggle
 };
 
 var getFileSize = function getFileSize(bytes, decimalPoint) {

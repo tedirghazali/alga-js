@@ -10,13 +10,25 @@ export default {
       format: 'es'
     },
     {
-      file: 'dist/alga-common.js',
-      format: 'cjs'
+      file: 'dist/alga.min.js',
+      format: 'es',
+      plugins: [terser()]
     },
     {
-      file: 'dist/alga.min.js',
+      file: 'dist/alga-common.js',
+      format: 'cjs',
+      plugins: [terser()]
+    },
+    {
+      file: 'dist/alga-iife.js',
       format: 'iife',
-      name: 'alga',
+      name: '_',
+      plugins: [terser()]
+    },
+    {
+      file: 'dist/alga-umd.js',
+      format: 'umd',
+      name: '_',
       plugins: [terser()]
     }
   ],
