@@ -1,3 +1,19 @@
+var random = function random() {
+  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
+  var outputChar = '';
+  var basicChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+  for (var i = 0; i < size; i++) {
+    outputChar += basicChar.charAt(Math.floor(Math.random() * basicChar.length));
+  }
+
+  return outputChar;
+};
+
+var char = {
+  random: random
+};
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -84,19 +100,22 @@ var insertArray = function insertArray(from) {
 };
 
 var toggle = function toggle(val) {
-  var arr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
-  var toggleArr = Array.from(arr);
+  var toggleFrom = function toggleFrom(arr) {
+    var toggleArr = Array.from(arr);
 
-  if (toggleArr.includes(val)) {
-    var index = toggleArr.findIndex(function (el) {
-      return el === val;
-    });
-    toggleArr.splice(index, 1);
-  } else {
-    toggleArr.push(val);
-  }
+    if (toggleArr.includes(val)) {
+      var index = toggleArr.findIndex(function (el) {
+        return el === val;
+      });
+      toggleArr.splice(index, 1);
+    } else {
+      toggleArr.push(val);
+    }
 
-  return toggleArr;
+    return toggleArr;
+  };
+
+  return toggleFrom;
 };
 
 var array = {
@@ -204,4 +223,4 @@ function $file() {
   };
 }
 
-export { array as $array, $file };
+export { array as $array, char as $char, $file };

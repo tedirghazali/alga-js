@@ -1,6 +1,6 @@
 {
   "name": "alga-js",
-  "version": "0.0.1-development1",
+  "version": "0.0.1-alpha1",
   "description": "Alga.js is a javascript utility for any web font-end framework",
   "main": "js/app.js",
   "scripts": {
