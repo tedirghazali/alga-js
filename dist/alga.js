@@ -125,7 +125,7 @@ var array = {
   toggle: toggle
 };
 
-var getFileSize = function getFileSize(bytes, decimalPoint) {
+var size = function size(bytes, decimalPoint) {
   if (bytes === 0) return '0 Bytes';
   var k = 1000;
   var dm = decimalPoint || 1;
@@ -134,7 +134,7 @@ var getFileSize = function getFileSize(bytes, decimalPoint) {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 };
 
-var getFileName = function getFileName(val) {
+var name = function name(val) {
   if (typeof val === 'string') {
     if (val.indexOf('', 41) > 40) {
       return val.slice(0, 41) + "...";
@@ -144,7 +144,7 @@ var getFileName = function getFileName(val) {
   }
 };
 
-var getFileType = function getFileType(val) {
+var type = function type(val) {
   var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'type';
   var arrFile = val.split('/');
 
@@ -157,13 +157,13 @@ var getFileType = function getFileType(val) {
   return arrFile.join("");
 };
 
-var getFileImage = function getFileImage(image) {
-  if ('name' in image && typeof image.name === 'string') {
-    return URL.createObjectURL(image);
+var image = function image(_image) {
+  if ('name' in _image && typeof _image.name === 'string') {
+    return URL.createObjectURL(_image);
   }
 };
 
-var loadFileImage = function loadFileImage(image) {
+var loadImage = function loadImage(image) {
   if ('name' in image && typeof image.name === 'string') {
     URL.revokeObjectURL(image);
   }
@@ -171,7 +171,7 @@ var loadFileImage = function loadFileImage(image) {
 /* Alternative */
 
 
-var formatFileSize = function formatFileSize(file) {
+var formatSize = function formatSize(file) {
   var nBytes = 0,
       oFiles = file,
       nFiles = oFiles.length;
@@ -190,7 +190,7 @@ var formatFileSize = function formatFileSize(file) {
   return sOutput;
 };
 
-var humanFileSize = function humanFileSize(bytes) {
+var humanSize = function humanSize(bytes) {
   var si = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var dp = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var thresh = si ? 1000 : 1024;
@@ -211,16 +211,14 @@ var humanFileSize = function humanFileSize(bytes) {
   return bytes.toFixed(dp) + ' ' + units[u];
 };
 
-function $file() {
-  return {
-    getFileSize: getFileSize,
-    getFileName: getFileName,
-    getFileType: getFileType,
-    getFileImage: getFileImage,
-    loadFileImage: loadFileImage,
-    formatFileSize: formatFileSize,
-    humanFileSize: humanFileSize
-  };
-}
+var file = {
+  size: size,
+  name: name,
+  type: type,
+  image: image,
+  loadImage: loadImage,
+  formatSize: formatSize,
+  humanSize: humanSize
+};
 
-export { array as $array, char as $char, $file };
+export { array as $array, char as $char, file as $file };

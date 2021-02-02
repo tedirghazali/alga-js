@@ -1,4 +1,4 @@
-const getFileSize = (bytes, decimalPoint) => {
+const size = (bytes, decimalPoint) => {
   if(bytes === 0) return '0 Bytes'
   let k = 1000
   let dm = decimalPoint || 1
@@ -7,7 +7,7 @@ const getFileSize = (bytes, decimalPoint) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
 
-const getFileName = (val) => {
+const name = (val) => {
   if(typeof val === 'string') {
     if(val.indexOf('', 41) > 40) {
       return val.slice(0, 41) +"..."
@@ -17,7 +17,7 @@ const getFileName = (val) => {
   }
 }
       
-const getFileType = (val, type = 'type') => {
+const type = (val, type = 'type') => {
   const arrFile = val.split('/')
   if(type == 'format') {
     arrFile.shift()
@@ -27,17 +27,17 @@ const getFileType = (val, type = 'type') => {
   return arrFile.join("")
 }
       
-const getFileDate = (val) => {
+const date = (val) => {
   return new Date(val).toDateString()
 }
       
-const getFileImage = (image) => {
+const image = (image) => {
   if('name' in image && typeof image.name === 'string') {
     return URL.createObjectURL(image)
   }
 }
 
-const loadFileImage = (image) => {
+const loadImage = (image) => {
   if('name' in image && typeof image.name === 'string') {
     URL.revokeObjectURL(image)
   }
@@ -45,7 +45,7 @@ const loadFileImage = (image) => {
 
 /* Alternative */
 
-const formatFileSize = (file) => {
+const formatSize = (file) => {
   let nBytes = 0, oFiles = file, nFiles = oFiles.length;
   for (let nFileId = 0; nFileId < nFiles; nFileId++) {
     nBytes += oFiles[nFileId].size;
@@ -58,7 +58,7 @@ const formatFileSize = (file) => {
   return sOutput;
 }
 
-const humanFileSize = (bytes, si = false, dp = 1) => {
+const humanSize = (bytes, si = false, dp = 1) => {
   const thresh = si ? 1000 : 1024;
   if (Math.abs(bytes) < thresh) {
     return bytes + ' B';
@@ -73,14 +73,12 @@ const humanFileSize = (bytes, si = false, dp = 1) => {
   return bytes.toFixed(dp) + ' ' + units[u];
 }
 
-export default function $file() {
-  return {
-    getFileSize,
-    getFileName,
-    getFileType,
-    getFileImage,
-    loadFileImage,
-    formatFileSize,
-    humanFileSize
-  }
+export default {
+  size,
+  name,
+  type,
+  image,
+  loadImage,
+  formatSize,
+  humanSize
 }

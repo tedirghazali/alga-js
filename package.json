@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tedirghazali/pidie.git"
+    "url": "git+https://github.com/tedirghazali/alga-js.git"
   },
   "keywords": [
     "alga-js",
@@ -20,9 +20,9 @@
   "author": "Tedir Ghazali",
   "license": "SEE LICENSE IN license.txt",
   "bugs": {
-    "url": "https://github.com/tedirghazali/pidie/issues"
+    "url": "https://github.com/tedirghazali/alga-js/issues"
   },
-  "homepage": "https://github.com/tedirghazali/pidie#readme",
+  "homepage": "https://github.com/tedirghazali/alga-js#readme",
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-proposal-class-properties": "^7.12.1",
