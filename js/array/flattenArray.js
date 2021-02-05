@@ -1,16 +1,22 @@
-const flatten = (nestArr, options = {id: 'id', parent: 'parent', children: 'children'}) => {
+const flatten = (nestArr, options = {}) => {
   const flattenArray = []
+  const flattenOptions = {}
+  flattenOptions.id = options.id || 'id'
+  flattenOptions.parent = options.parent || 'parent'
+  flattenOptions.children = options.children || 'children'
   
   const parentArray = () => {
     const nestedArray = Array.from(nestArr)
     nestedArray.forEach(item => {
-      const newObject = item
-      newObject[options.parent] = '0'
-      if(typeof newObject[options.children] === 'object' && Array.isArray(newObject[options.children])) {
-        childrenArray(newObject[options.children], item)
-        delete newObject[options.children]
+      if(typeof item === 'object' && item !== null) {
+        const newObject = item
+        newObject[flattenOptions.parent] = '0'
+        if(typeof newObject[flattenOptions.children] === 'object' && Array.isArray(newObject[flattenOptions.children])) {
+          childrenArray(newObject[flattenOptions.children], item)
+          delete newObject[flattenOptions.children]
+        }
+        flattenArray.push(newObject)
       }
-      flattenArray.push(newObject)
     })
   }
   
@@ -18,13 +24,15 @@ const flatten = (nestArr, options = {id: 'id', parent: 'parent', children: 'chil
     if(childArr.length >= 1) {
       const nestedArray = Array.from(childArr)
       nestedArray.forEach(item => {
-        const newObject = item
-        newObject[options.parent] = parentObj[options.id]
-        if(typeof newObject[options.children] === 'object' && Array.isArray(newObject[options.children])) {
-          childrenArray(options.children, item)
-          delete newObject[options.children]
+        if(typeof item === 'object' && item !== null) {
+          const newObject = item
+          newObject[flattenOptions.parent] = parentObj[flattenOptions.id]
+          if(typeof newObject[flattenOptions.children] === 'object' && Array.isArray(newObject[flattenOptions.children])) {
+            childrenArray(newObject[flattenOptions.children], item)
+            delete newObject[flattenOptions.children]
+          }
+          flattenArray.push(newObject)
         }
-        flattenArray.push(newObject)
       })
     }
   }
