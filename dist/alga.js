@@ -26,20 +26,15 @@ var number = {
 
 var random$2 = function random() {
   var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'basic';
   var outputChar = '';
   var basicChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_';
 
-  for (var i = 0; i < size; i++) {
-    outputChar += basicChar.charAt(Math.floor(Math.random() * basicChar.length));
+  if (type === 'hex') {
+    basicChar = '0123456789abcdef';
+  } else if (type === 'password') {
+    basicChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_~!@#$%^&*()+={}[]|:;<>,./?';
   }
-
-  return outputChar;
-};
-
-var randomHex = function randomHex() {
-  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 6;
-  var outputChar = '';
-  var basicChar = '0123456789abcdef';
 
   for (var i = 0; i < size; i++) {
     outputChar += basicChar.charAt(Math.floor(Math.random() * basicChar.length));
@@ -49,8 +44,7 @@ var randomHex = function randomHex() {
 };
 
 var char = {
-  random: random$2,
-  randomHex: randomHex
+  random: random$2
 };
 
 var split = function split(str) {
@@ -97,6 +91,10 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _slicedToArray(arr, i) {
+  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+}
+
 function _toConsumableArray(arr) {
   return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
 }
@@ -105,8 +103,39 @@ function _arrayWithoutHoles(arr) {
   if (Array.isArray(arr)) return _arrayLikeToArray(arr);
 }
 
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
 function _iterableToArray(iter) {
   if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
 }
 
 function _unsupportedIterableToArray(o, minLen) {
@@ -128,6 +157,10 @@ function _arrayLikeToArray(arr, len) {
 
 function _nonIterableSpread() {
   throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 var insert = function insert() {
@@ -310,12 +343,68 @@ var index = function index(indexArr) {
   }) : 0;
 };
 
+var search = function search(searchStr) {
+  if (typeof searchStr !== 'string') return function (e) {
+    throw e;
+  }(new TypeError());
+  return function (fromArr) {
+    if (_typeof(fromArr) !== 'object') return function (e) {
+      throw e;
+    }(new TypeError());
+    var filteredArray = Array.from(fromArr).filter(function (obj) {
+      for (var _i = 0, _Object$entries = Object.entries(obj); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2);
+            _Object$entries$_i[0];
+            var val = _Object$entries$_i[1];
+
+        if (typeof val === 'string' && val.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1) {
+          return true;
+        } else if (typeof val === 'number' && val === Number(searchStr)) {
+          return true;
+        }
+      }
+
+      return false;
+    });
+    return filteredArray;
+  };
+};
+
+var filter = function filter(filterStr) {
+  if (typeof filterStr !== 'string') return function (e) {
+    throw e;
+  }(new TypeError());
+  return function (fromArr, whereArr) {
+    if (_typeof(fromArr) !== 'object') return function (e) {
+      throw e;
+    }(new TypeError());
+    var filteredArray = Array.from(fromArr).filter(function (obj) {
+      for (var _i = 0, _Array$from = Array.from(whereArr); _i < _Array$from.length; _i++) {
+        var val = _Array$from[_i];
+
+        if (val in obj) {
+          if (typeof obj[val] === 'string' && obj[val].toLowerCase().indexOf(filterStr.toLowerCase()) !== -1) {
+            return true;
+          } else if (typeof obj[val] === 'number' && obj[val] === Number(filterStr)) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    });
+    return filteredArray;
+  };
+};
+
 var array = {
   insert: insert,
   toggle: toggle,
   flatten: flatten,
   nested: nested,
-  index: index
+  index: index,
+  search: search,
+  filter: filter
 };
 
 var size = function size(bytes, decimalPoint) {
