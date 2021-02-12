@@ -4,7 +4,8 @@ import { flatten } from './flattenArray.js'
 import { nested } from './nestedArray.js'
 import { index } from './indexArray.js'
 import { search } from './searchArray.js'
-import { filter } from './filterArray.js'
+import { filtered } from './filteredArray.js'
+import { sort, sorted } from './sortedArray.js'
 
 export default {
   insert,
@@ -13,5 +14,7 @@ export default {
   nested,
   index,
   search,
-  filter
+  filtered,
+  sort,
+  sorted
 }

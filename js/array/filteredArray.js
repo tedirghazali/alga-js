@@ -1,4 +1,4 @@
-const filter = (filterStr) => {
+const filtered = (filterStr) => {
   if(typeof filterStr !== 'string') return throw new TypeError()
   return (fromArr, whereArr) => {
     if(typeof fromArr !== 'object') return throw new TypeError()
@@ -21,5 +21,5 @@ const filter = (filterStr) => {
 }
 
 export {
-  filter
+  filtered
 }

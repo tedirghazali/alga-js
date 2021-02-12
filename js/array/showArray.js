@@ -1,7 +1,0 @@
-const show = () => {
-
-}
-
-export {
-
-}
