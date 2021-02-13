@@ -1,6 +1,6 @@
 const sort = (oriArr, sortStr) => {
-  if(typeof oriArr !== 'object') return throw new TypeError()
-  if(typeof sortStr !== 'string') return throw new TypeError()
+  if(typeof oriArr !== 'object') return
+  if(typeof sortStr !== 'string') return
   
   const newArray = Array.from(oriArr)
   if(sortStr === 'asc') {
@@ -42,11 +42,11 @@ const sort = (oriArr, sortStr) => {
 }
 
 const sorted = (oriArr) => {
-  if(typeof oriArr !== 'object') return throw new TypeError()
+  if(typeof oriArr !== 'object') return
   
   return (propStr, sortStr) => {
-    if(typeof propStr !== 'string') return throw new TypeError()
-    if(typeof sortStr !== 'string') return throw new TypeError()
+    if(typeof propStr !== 'string') return
+    if(typeof sortStr !== 'string') return
     
     const newArray = Array.from(oriArr)
     if(sortStr === 'asc') {

@@ -1,7 +1,7 @@
 const filtered = (filterStr) => {
-  if(typeof filterStr !== 'string') return throw new TypeError()
+  if(typeof filterStr !== 'string') return
   return (fromArr, whereArr) => {
-    if(typeof fromArr !== 'object') return throw new TypeError()
+    if(typeof fromArr !== 'object') return
     
     const filteredArray = Array.from(fromArr).filter(obj => {
       for(const val of Array.from(whereArr)) {

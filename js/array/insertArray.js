@@ -1,28 +1,38 @@
-const insert = (...value) => {
-  if(!value) return throw new Error('Please insert value at least one value')
+class Insert {
+	constructor(valArr, toArr) {
+    this.valArr = valArr
+    this.toArr = toArr
+  }
   
-  const to = (toArr = []) => {
-    if(!toArr) return throw new Error('to be able to insert value, you have to add array here')
+  first() {
+    return [...this.valArr, ...this.toArr]  // unshift(value)
+  }
+  
+  last() {
+    return [...this.toArr, ...this.valArr] // push(value)
+  }
+    
+  before(index) {
+    const indexBefore = (isNaN(index)) ? 1 : index;
+    this.toArr.splice(Number(indexBefore) - 1, 0, this.valArr);
+    return this.toArr.flat()
+  }
+  
+  after(index) {
+    const indexAfter = (isNaN(index)) ? 0 : index;
+    this.toArr.splice(Number(indexAfter) + 1, 0, this.valArr);
+    return this.toArr.flat()
+  }
+}
+
+const insert = (...value) => {
+  if(!value) return
+  
+  const to = (toArr) => {
+    if(typeof toArr !== 'object') return
     const arrVal = Array.from(toArr)
     
-    return {
-      first: () => {
-        return [...value, ...arrVal] // unshift(value)
-      },
-      last: () => {
-        return [...arrVal, ...value] // push(value)
-      },
-      before: (index) => {
-        const indexBefore = (isNaN(index)) ? 1 : index;
-        arrVal.splice(Number(indexBefore) - 1, 0, value);
-        return arrVal.flat()
-      },
-      after: (index) => {
-        const indexAfter = (isNaN(index)) ? 0 : index;
-        arrVal.splice(Number(indexAfter) + 1, 0, value);
-        return arrVal.flat()
-      }
-    }
+    return new Insert(value, arrVal)
   }
   
   return to
