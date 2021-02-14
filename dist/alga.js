@@ -91,6 +91,28 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
+function _classCallCheck(instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+}
+
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
 function _slicedToArray(arr, i) {
   return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
 }
@@ -163,39 +185,54 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+var Insert = /*#__PURE__*/function () {
+  function Insert(valArr, toArr) {
+    _classCallCheck(this, Insert);
+
+    this.valArr = valArr;
+    this.toArr = toArr;
+  }
+
+  _createClass(Insert, [{
+    key: "first",
+    value: function first() {
+      return [].concat(_toConsumableArray(this.valArr), _toConsumableArray(this.toArr)); // unshift(value)
+    }
+  }, {
+    key: "last",
+    value: function last() {
+      return [].concat(_toConsumableArray(this.toArr), _toConsumableArray(this.valArr)); // push(value)
+    }
+  }, {
+    key: "before",
+    value: function before(index) {
+      var indexBefore = isNaN(index) ? 1 : index;
+      this.toArr.splice(Number(indexBefore) - 1, 0, this.valArr);
+      return this.toArr.flat();
+    }
+  }, {
+    key: "after",
+    value: function after(index) {
+      var indexAfter = isNaN(index) ? 0 : index;
+      this.toArr.splice(Number(indexAfter) + 1, 0, this.valArr);
+      return this.toArr.flat();
+    }
+  }]);
+
+  return Insert;
+}();
+
 var insert = function insert() {
   for (var _len = arguments.length, value = new Array(_len), _key = 0; _key < _len; _key++) {
     value[_key] = arguments[_key];
   }
 
-  if (!value) return function (e) {
-    throw e;
-  }(new Error('Please insert value at least one value'));
+  if (!value) return;
 
-  var to = function to() {
-    var toArr = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    if (!toArr) return function (e) {
-      throw e;
-    }(new Error('to be able to insert value, you have to add array here'));
+  var to = function to(toArr) {
+    if (_typeof(toArr) !== 'object') return;
     var arrVal = Array.from(toArr);
-    return {
-      first: function first() {
-        return [].concat(value, _toConsumableArray(arrVal)); // unshift(value)
-      },
-      last: function last() {
-        return [].concat(_toConsumableArray(arrVal), value); // push(value)
-      },
-      before: function before(index) {
-        var indexBefore = isNaN(index) ? 1 : index;
-        arrVal.splice(Number(indexBefore) - 1, 0, value);
-        return arrVal.flat();
-      },
-      after: function after(index) {
-        var indexAfter = isNaN(index) ? 0 : index;
-        arrVal.splice(Number(indexAfter) + 1, 0, value);
-        return arrVal.flat();
-      }
-    };
+    return new Insert(value, arrVal);
   };
 
   return to;
@@ -344,22 +381,18 @@ var index = function index(indexArr) {
 };
 
 var search = function search(searchStr) {
-  if (typeof searchStr !== 'string') return function (e) {
-    throw e;
-  }(new TypeError());
+  if (typeof searchStr !== 'string') return;
   return function (fromArr) {
-    if (_typeof(fromArr) !== 'object') return function (e) {
-      throw e;
-    }(new TypeError());
+    if (_typeof(fromArr) !== 'object') return;
     var filteredArray = Array.from(fromArr).filter(function (obj) {
       for (var _i = 0, _Object$entries = Object.entries(obj); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2);
-            _Object$entries$_i[0];
-            var val = _Object$entries$_i[1];
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+            key = _Object$entries$_i[0],
+            val = _Object$entries$_i[1];
 
-        if (typeof val === 'string' && val.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1) {
+        if (typeof obj[key] === 'string' && val.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1) {
           return true;
-        } else if (typeof val === 'number' && val === Number(searchStr)) {
+        } else if (typeof obj[key] === 'number' && val === Number(searchStr)) {
           return true;
         }
       }
@@ -370,14 +403,10 @@ var search = function search(searchStr) {
   };
 };
 
-var filter = function filter(filterStr) {
-  if (typeof filterStr !== 'string') return function (e) {
-    throw e;
-  }(new TypeError());
+var filtered = function filtered(filterStr) {
+  if (typeof filterStr !== 'string') return;
   return function (fromArr, whereArr) {
-    if (_typeof(fromArr) !== 'object') return function (e) {
-      throw e;
-    }(new TypeError());
+    if (_typeof(fromArr) !== 'object') return;
     var filteredArray = Array.from(fromArr).filter(function (obj) {
       for (var _i = 0, _Array$from = Array.from(whereArr); _i < _Array$from.length; _i++) {
         var val = _Array$from[_i];
@@ -397,6 +426,101 @@ var filter = function filter(filterStr) {
   };
 };
 
+var sort = function sort(oriArr, sortStr) {
+  if (_typeof(oriArr) !== 'object') return;
+  if (typeof sortStr !== 'string') return;
+  var newArray = Array.from(oriArr);
+
+  if (sortStr === 'asc') {
+    newArray.sort(function (a, b) {
+      if (typeof a === 'number' && typeof b === 'number') {
+        return a - b;
+      } else if (typeof a === 'string' && typeof b === 'string') {
+        var propA = a.toLowerCase();
+        var propB = b.toLowerCase();
+        var propRes = 0;
+
+        if (propA < propB) {
+          propRes = -1;
+        } else if (propA > propB) {
+          propRes = 1;
+        }
+
+        return propRes;
+      }
+    });
+  } else if (sortStr === 'desc') {
+    newArray.sort(function (a, b) {
+      if (typeof a === 'number' && typeof b === 'number') {
+        return b - a;
+      } else if (typeof a === 'string' && typeof b === 'string') {
+        var propA = a.toLowerCase();
+        var propB = b.toLowerCase();
+        var propRes = 0;
+
+        if (propB < propA) {
+          propRes = -1;
+        } else if (propB > propA) {
+          propRes = 1;
+        }
+
+        return propRes;
+      }
+    });
+  }
+
+  return newArray;
+};
+
+var sorted = function sorted(oriArr) {
+  if (_typeof(oriArr) !== 'object') return;
+  return function (propStr, sortStr) {
+    if (typeof propStr !== 'string') return;
+    if (typeof sortStr !== 'string') return;
+    var newArray = Array.from(oriArr);
+
+    if (sortStr === 'asc') {
+      newArray.sort(function (a, b) {
+        if (propStr in a && propStr in b && typeof a[propStr] === 'number' && typeof b[propStr] === 'number') {
+          return a[propStr] - b[propStr];
+        } else if (propStr in a && propStr in b && typeof a[propStr] === 'string' && typeof b[propStr] === 'string') {
+          var propA = a[propStr].toLowerCase();
+          var propB = b[propStr].toLowerCase();
+          var propRes = 0;
+
+          if (propA < propB) {
+            propRes = -1;
+          } else if (propA > propB) {
+            propRes = 1;
+          }
+
+          return propRes;
+        }
+      });
+    } else if (sortStr === 'desc') {
+      newArray.sort(function (a, b) {
+        if (propStr in a && propStr in b && typeof a[propStr] === 'number' && typeof b[propStr] === 'number') {
+          return b[propStr] - a[propStr];
+        } else if (propStr in a && propStr in b && typeof a[propStr] === 'string' && typeof b[propStr] === 'string') {
+          var propA = a[propStr].toLowerCase();
+          var propB = b[propStr].toLowerCase();
+          var propRes = 0;
+
+          if (propB < propA) {
+            propRes = -1;
+          } else if (propB > propA) {
+            propRes = 1;
+          }
+
+          return propRes;
+        }
+      });
+    }
+
+    return newArray;
+  };
+};
+
 var array = {
   insert: insert,
   toggle: toggle,
@@ -404,7 +528,9 @@ var array = {
   nested: nested,
   index: index,
   search: search,
-  filter: filter
+  filtered: filtered,
+  sort: sort,
+  sorted: sorted
 };
 
 var size = function size(bytes, decimalPoint) {
@@ -437,6 +563,10 @@ var type = function type(val) {
   }
 
   return arrFile.join("");
+};
+
+var date = function date(val) {
+  return new Date(val).toDateString();
 };
 
 var image = function image(_image) {
@@ -498,6 +628,7 @@ var file = {
   name: name,
   type: type,
   image: image,
+  date: date,
   loadImage: loadImage,
   formatSize: formatSize,
   humanSize: humanSize
