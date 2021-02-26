@@ -521,6 +521,94 @@ var sorted = function sorted(oriArr) {
   };
 };
 
+var paginate = function paginate(oriArr) {
+  if (_typeof(oriArr) !== 'object') return;
+  return function (pageNum, showNum) {
+    if (typeof pageNum !== 'number') return;
+    if (typeof showNum !== 'number') return;
+    var oriArray = Array.from(oriArr);
+    var startPaginate = Number(showNum) * Number(pageNum) - (Number(showNum) - 1);
+    var endPaginate = Number(showNum) * Number(pageNum);
+    return oriArray.slice(startPaginate - 1, endPaginate <= oriArray.length ? endPaginate : oriArray.length);
+  };
+};
+
+var pages = function pages(oriArr, showNum) {
+  if (_typeof(oriArr) !== 'object') return;
+  if (typeof showNum !== 'number') return;
+  var oriArray = Array.from(oriArr);
+  var divideLength = oriArray.length / Number(showNum);
+  var pageNumber = 0;
+
+  if (Number.isInteger(divideLength)) {
+    pageNumber = divideLength;
+  } else {
+    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + 1;
+  }
+
+  return pageNumber;
+};
+
+var show = function show(oriArr) {
+  if (_typeof(oriArr) !== 'object') return;
+  return function (pageNum, showNum) {
+    if (typeof pageNum !== 'number') return;
+    if (typeof showNum !== 'number') return;
+    var oriArray = Array.from(oriArr);
+    var startPaginate = Number(showNum) * Number(pageNum) - (Number(showNum) - 1);
+    var endPaginate = Number(showNum) * Number(pageNum);
+    return {
+      from: startPaginate,
+      to: endPaginate <= oriArray.length ? endPaginate : oriArray.length,
+      of: oriArray.length
+    };
+  };
+};
+
+var pagination = function pagination(allPages) {
+  var pageActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var pageLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  if (typeof allPages !== 'number') return;
+  var newArray = [];
+  var maxPages = Number(allPages) < Number(pageActive) ? Number(allPages) : Number(pageActive);
+  var minPages = Number(pageActive) < 1 ? 1 : Number(pageActive);
+  var pageAddition = maxPages + Number(pageLimit);
+  var pageSubtraction = minPages - Number(pageLimit);
+
+  if (Number(pageLimit) === 0) {
+    for (var i = 1; i <= Number(allPages); i++) {
+      newArray.push(i);
+    }
+  } else {
+    if (minPages > 1) {
+      for (var _i = pageSubtraction; _i < minPages; _i++) {
+        newArray.push(_i);
+      }
+    }
+
+    for (var _i2 = maxPages; _i2 <= pageAddition; _i2++) {
+      newArray.push(_i2);
+    }
+  }
+
+  var filterNegative = newArray.filter(function (num) {
+    return num > 0;
+  });
+  var filterMax = filterNegative.filter(function (num) {
+    return num <= Number(allPages);
+  });
+
+  if (pageAddition < Number(allPages) && Number(pageLimit) !== 0) {
+    filterMax.push('...');
+  }
+
+  if (pageSubtraction > 1 && Number(pageLimit) !== 0) {
+    filterMax.unshift('...');
+  }
+
+  return filterMax;
+};
+
 var array = {
   insert: insert,
   toggle: toggle,
@@ -530,7 +618,11 @@ var array = {
   search: search,
   filtered: filtered,
   sort: sort,
-  sorted: sorted
+  sorted: sorted,
+  paginate: paginate,
+  pages: pages,
+  show: show,
+  pagination: pagination
 };
 
 var size = function size(bytes, decimalPoint) {

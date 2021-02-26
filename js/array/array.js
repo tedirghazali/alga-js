@@ -11,7 +11,8 @@ import {
   paginate, 
   pages, 
   show, 
-  pagination
+  pagination,
+  sum
 } from './arrayLib.js'
 
 export default {
@@ -27,5 +28,6 @@ export default {
   paginate, 
   pages, 
   show, 
-  pagination
+  pagination,
+  sum
 }

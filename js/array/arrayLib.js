@@ -7,6 +7,7 @@ import { search } from './searchArray.js'
 import { filtered } from './filteredArray.js'
 import { sort, sorted } from './sortedArray.js'
 import { paginate, pages, show, pagination } from './paginateArray.js'
+import { sum } from './sumArray.js'
 
 export {
   insert,
@@ -21,5 +22,6 @@ export {
   paginate, 
   pages, 
   show, 
-  pagination
+  pagination,
+  sum
 }
