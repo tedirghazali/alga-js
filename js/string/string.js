@@ -1,5 +1,9 @@
-import { split } from './splitString.js'
+import { 
+  split,
+  capitalize
+} from './stringLib.js'
 
 export default {
-  split
+  split,
+  capitalize
 }
