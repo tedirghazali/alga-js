@@ -8,7 +8,7 @@ const exported = (oriArr, toFile) => {
   if(toFile.toLowerCase() === 'json') {
     toStringFile = 'data:application/json;charset=utf-8,' + JSON.stringify(oriArray, null, 2)
   } else if(toFile.toLowerCase() === 'csv') {
-    const csvStr = ''
+    let csvStr = ''
     for(const csvObj of oriArray) {
       for(const csvKey in csvObj) {
         csvStr += csvObj[csvKey] + ','
@@ -37,7 +37,7 @@ const exported = (oriArr, toFile) => {
     sqlStr += ';'
     toStringFile = 'data:application/sql;charset=utf-8,' + sqlStr
   } else if(toFile.toLowerCase() === 'xml') {
-    const xmlStr = '<?xml version="1.0" encoding="UTF-8"?>\n<data>'
+    let xmlStr = '<?xml version="1.0" encoding="UTF-8"?>\n<data>'
     for(const xmlObj in oriArray) {
       xmlStr += '\n  <entry>'
       for(const xmlKey in xmlObj) {
@@ -48,10 +48,10 @@ const exported = (oriArr, toFile) => {
     xmlStr += '\n</data>'
     toStringFile = 'data:application/xml;charset=utf-8,' + xmlStr
   } else if(toFile.toLowerCase() === 'ths') {
-    let thsStr = '("table", ['
+    let thsStr = '("data", ['
     for(const thsObj of oriArray) {
-      thsStr += '\n  ("tr", ['
-      for(const thsKey in sqlObj) {
+      thsStr += '\n  ("entry", ['
+      for(const thsKey in thsObj) {
         thsStr += '\n    ("'+ thsKey +'", '
         thsStr += thsObj[thsKey] +'),'
       }
@@ -72,47 +72,48 @@ const download = (strFile, asFile = 'txt', nameFile = 'export-to') => {
   const fileName = nameFile + '.' + asFile.toLowerCase()
   const fileStr = encodeURI(strFile)
   
-  const fileLink = document.createElement("a");
-  fileLink.href = fileStr;
-  fileLink.download = fileName;
+  const fileLink = document.createElement("a")
+  fileLink.href = fileStr
+  fileLink.download = fileName
 
-  document.body.appendChild(fileLink);
-  fileLink.click();
-  document.body.removeChild(fileLink);
+  document.body.appendChild(fileLink)
+  fileLink.click()
+  document.body.removeChild(fileLink)
 }
 
 const printed = (oriArr) => {
   if(typeof oriArr !== 'object') return
   
-  const table = document.createElement("table"),
-  const thead = document.createElement("thead"),
-  const tbody = document.createElement("tbody");
+  const oriArray = Array.from(oriArr)
+  const table = document.createElement("table")
+  const thead = document.createElement("thead")
+  const tbody = document.createElement("tbody")
 
   table.appendChild(thead);
   table.appendChild(tbody);
   
-  const trow = document.createElement("tr");
+  const trow = document.createElement("tr")
   for(const tableKey in oriArray[0]) {
-    const tcol = document.createElement("th");
+    const tcol = document.createElement("th")
     tcol.textContent = tableKey.replace(/^\w/, (c) => c.toUpperCase())
     trow.appendChild(tcol)
   }
   thead.appendChild(trow)
   
   for(const tableObj of oriArray) {
-    const tr = document.createElement("tr");
+    const tr = document.createElement("tr")
     for(const tableKey in tableObj) {
-      const td = document.createElement("td");
+      const td = document.createElement("td")
       td.textContent = tableObj[tableKey]
       tr.appendChild(td)
     }
     tbody.appendChild(tr)
   }
   
-  const w = window.open();
-  w.document.body.appendChild(table);
-  w.focus();
-  w.print();
+  const w = window.open()
+  w.document.body.appendChild(table)
+  w.focus()
+  w.print()
 }
 
 export {
