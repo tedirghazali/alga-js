@@ -19,12 +19,15 @@ const pages = (oriArr, showNum) => {
   
   const oriArray = Array.from(oriArr)
   const divideLength = oriArray.length / Number(showNum)
+  const splitFloatNum = divideLength.toString().split('.')
+  const checkFloatNum = (Number(splitFloatNum[1]) >= 5) ? 0 : 1
   let pageNumber = 0
   if(Number.isInteger(divideLength)) {
     pageNumber = divideLength
   } else {
-    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + 1
+    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum
   }
+  pageNumber = (pageNumber === Number(showNum)) ? 1 : pageNumber
   return pageNumber
 }
 

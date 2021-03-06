@@ -48,7 +48,7 @@ const exported = (oriArr, toFile) => {
     xmlStr += '\n</data>'
     toStringFile = 'data:application/xml;charset=utf-8,' + xmlStr
   } else if(toFile.toLowerCase() === 'ths') {
-    let thsStr = '("data", ['
+    let thsStr = '//visit official site: http://ths.glitch.me \n("data", ['
     for(const thsObj of oriArray) {
       thsStr += '\n  ("entry", ['
       for(const thsKey in thsObj) {

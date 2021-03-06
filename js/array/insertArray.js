@@ -28,11 +28,22 @@ class Insert {
 const insert = (...value) => {
   if(!value) return
   
-  const to = (toArr) => {
+  const to = (toArr, toPosition = null, atIndex = null) => {
     if(typeof toArr !== 'object') return
     const arrVal = Array.from(toArr)
+    let resArr = new Insert(value, arrVal)
     
-    return new Insert(value, arrVal)
+    if(toPosition === 'first') {
+      resArr = resArr.first()
+    } else if(toPosition === 'last') {
+      resArr = resArr.last()
+    } else if(toPosition === 'before') {
+      resArr = resArr.before(atIndex)
+    } else if(toPosition === 'after') {
+      resArr = resArr.after(atIndex)
+    }
+    
+    return resArr
   }
   
   return to

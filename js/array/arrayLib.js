@@ -8,6 +8,7 @@ import { filtered } from './filteredArray.js'
 import { sort, sorted } from './sortedArray.js'
 import { paginate, pages, show, pagination } from './paginateArray.js'
 import { sum } from './sumArray.js'
+import { unique } from './uniqueArray.js'
 
 export {
   insert,
@@ -23,5 +24,6 @@ export {
   pages, 
   show, 
   pagination,
-  sum
+  sum,
+  unique
 }

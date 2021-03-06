@@ -73,7 +73,7 @@ const humanSize = (bytes, si = false, dp = 1) => {
   return bytes.toFixed(dp) + ' ' + units[u];
 }
 
-export default {
+export {
   size,
   name,
   type,

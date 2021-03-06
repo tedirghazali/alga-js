@@ -71,8 +71,29 @@ var split = function split(str) {
   return splitString;
 };
 
+var capitalize = function capitalize(str) {
+  var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'single';
+  if (typeof str !== 'string') return;
+  var capStr = str;
+
+  if (opt === 'multiple') {
+    capStr = capStr.toLowerCase().replace(/\w\S*/g, function (w) {
+      return w.replace(/^\w/, function (c) {
+        return c.toUpperCase();
+      });
+    });
+  } else {
+    capStr = capStr.trimStart().replace(/^\w/, function (c) {
+      return c.toUpperCase();
+    });
+  }
+
+  return capStr;
+};
+
 var string = {
-  split: split
+  split: split,
+  capitalize: capitalize
 };
 
 function _typeof(obj) {
@@ -185,6 +206,63 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
+function _createForOfIteratorHelper(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+
+      var F = function () {};
+
+      return {
+        s: F,
+        n: function () {
+          if (i >= o.length) return {
+            done: true
+          };
+          return {
+            done: false,
+            value: o[i++]
+          };
+        },
+        e: function (e) {
+          throw e;
+        },
+        f: F
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  var normalCompletion = true,
+      didErr = false,
+      err;
+  return {
+    s: function () {
+      it = o[Symbol.iterator]();
+    },
+    n: function () {
+      var step = it.next();
+      normalCompletion = step.done;
+      return step;
+    },
+    e: function (e) {
+      didErr = true;
+      err = e;
+    },
+    f: function () {
+      try {
+        if (!normalCompletion && it.return != null) it.return();
+      } finally {
+        if (didErr) throw err;
+      }
+    }
+  };
+}
+
 var Insert = /*#__PURE__*/function () {
   function Insert(valArr, toArr) {
     _classCallCheck(this, Insert);
@@ -230,9 +308,23 @@ var insert = function insert() {
   if (!value) return;
 
   var to = function to(toArr) {
+    var toPosition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var atIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
     if (_typeof(toArr) !== 'object') return;
     var arrVal = Array.from(toArr);
-    return new Insert(value, arrVal);
+    var resArr = new Insert(value, arrVal);
+
+    if (toPosition === 'first') {
+      resArr = resArr.first();
+    } else if (toPosition === 'last') {
+      resArr = resArr.last();
+    } else if (toPosition === 'before') {
+      resArr = resArr.before(atIndex);
+    } else if (toPosition === 'after') {
+      resArr = resArr.after(atIndex);
+    }
+
+    return resArr;
   };
 
   return to;
@@ -426,30 +518,13 @@ var filtered = function filtered(filterStr) {
   };
 };
 
-var sort = function sort(oriArr, sortStr) {
+var sort = function sort(oriArr) {
+  var sortStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
   if (_typeof(oriArr) !== 'object') return;
   if (typeof sortStr !== 'string') return;
   var newArray = Array.from(oriArr);
 
-  if (sortStr === 'asc') {
-    newArray.sort(function (a, b) {
-      if (typeof a === 'number' && typeof b === 'number') {
-        return a - b;
-      } else if (typeof a === 'string' && typeof b === 'string') {
-        var propA = a.toLowerCase();
-        var propB = b.toLowerCase();
-        var propRes = 0;
-
-        if (propA < propB) {
-          propRes = -1;
-        } else if (propA > propB) {
-          propRes = 1;
-        }
-
-        return propRes;
-      }
-    });
-  } else if (sortStr === 'desc') {
+  if (sortStr === 'desc') {
     newArray.sort(function (a, b) {
       if (typeof a === 'number' && typeof b === 'number') {
         return b - a;
@@ -467,6 +542,24 @@ var sort = function sort(oriArr, sortStr) {
         return propRes;
       }
     });
+  } else {
+    newArray.sort(function (a, b) {
+      if (typeof a === 'number' && typeof b === 'number') {
+        return a - b;
+      } else if (typeof a === 'string' && typeof b === 'string') {
+        var propA = a.toLowerCase();
+        var propB = b.toLowerCase();
+        var propRes = 0;
+
+        if (propA < propB) {
+          propRes = -1;
+        } else if (propA > propB) {
+          propRes = 1;
+        }
+
+        return propRes;
+      }
+    });
   }
 
   return newArray;
@@ -474,30 +567,13 @@ var sort = function sort(oriArr, sortStr) {
 
 var sorted = function sorted(oriArr) {
   if (_typeof(oriArr) !== 'object') return;
-  return function (propStr, sortStr) {
+  return function (propStr) {
+    var sortStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
     if (typeof propStr !== 'string') return;
     if (typeof sortStr !== 'string') return;
     var newArray = Array.from(oriArr);
 
-    if (sortStr === 'asc') {
-      newArray.sort(function (a, b) {
-        if (propStr in a && propStr in b && typeof a[propStr] === 'number' && typeof b[propStr] === 'number') {
-          return a[propStr] - b[propStr];
-        } else if (propStr in a && propStr in b && typeof a[propStr] === 'string' && typeof b[propStr] === 'string') {
-          var propA = a[propStr].toLowerCase();
-          var propB = b[propStr].toLowerCase();
-          var propRes = 0;
-
-          if (propA < propB) {
-            propRes = -1;
-          } else if (propA > propB) {
-            propRes = 1;
-          }
-
-          return propRes;
-        }
-      });
-    } else if (sortStr === 'desc') {
+    if (sortStr === 'desc') {
       newArray.sort(function (a, b) {
         if (propStr in a && propStr in b && typeof a[propStr] === 'number' && typeof b[propStr] === 'number') {
           return b[propStr] - a[propStr];
@@ -509,6 +585,24 @@ var sorted = function sorted(oriArr) {
           if (propB < propA) {
             propRes = -1;
           } else if (propB > propA) {
+            propRes = 1;
+          }
+
+          return propRes;
+        }
+      });
+    } else {
+      newArray.sort(function (a, b) {
+        if (propStr in a && propStr in b && typeof a[propStr] === 'number' && typeof b[propStr] === 'number') {
+          return a[propStr] - b[propStr];
+        } else if (propStr in a && propStr in b && typeof a[propStr] === 'string' && typeof b[propStr] === 'string') {
+          var propA = a[propStr].toLowerCase();
+          var propB = b[propStr].toLowerCase();
+          var propRes = 0;
+
+          if (propA < propB) {
+            propRes = -1;
+          } else if (propA > propB) {
             propRes = 1;
           }
 
@@ -538,14 +632,17 @@ var pages = function pages(oriArr, showNum) {
   if (typeof showNum !== 'number') return;
   var oriArray = Array.from(oriArr);
   var divideLength = oriArray.length / Number(showNum);
+  var splitFloatNum = divideLength.toString().split('.');
+  var checkFloatNum = Number(splitFloatNum[1]) >= 5 ? 0 : 1;
   var pageNumber = 0;
 
   if (Number.isInteger(divideLength)) {
     pageNumber = divideLength;
   } else {
-    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + 1;
+    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum;
   }
 
+  pageNumber = pageNumber === Number(showNum) ? 1 : pageNumber;
   return pageNumber;
 };
 
@@ -609,6 +706,108 @@ var pagination = function pagination(allPages) {
   return filterMax;
 };
 
+var sum = function sum(oriArr) {
+  var byObj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  if (_typeof(oriArr) !== 'object') return;
+  var originalArray = Array.from(oriArr);
+  var sumNum = 0;
+
+  if (typeof byObj === 'string') {
+    var objArray = [];
+
+    var _iterator = _createForOfIteratorHelper(originalArray),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var oa = _step.value;
+
+        if (byObj in oa) {
+          objArray.push(oa[byObj]);
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    for (var _i = 0, _objArray = objArray; _i < _objArray.length; _i++) {
+      var ba = _objArray[_i];
+      sumNum += Number(ba);
+    }
+  } else {
+    var _iterator2 = _createForOfIteratorHelper(originalArray),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var oa2 = _step2.value;
+        sumNum += Number(oa2);
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+  }
+
+  return sumNum;
+};
+
+var unique = function unique(oriArr) {
+  var byProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  if (_typeof(oriArr) !== 'object') return;
+  var oriArray = Array.from(oriArr);
+  var newArray = [];
+
+  if (typeof byProp === 'string') {
+    var newSet = new Set();
+
+    var _iterator = _createForOfIteratorHelper(oriArray),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var oriItem = _step.value;
+
+        if (!newSet.has(oriItem[byProp])) {
+          newSet.add(oriItem[byProp]);
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    newArray = _toConsumableArray(newSet);
+  } else {
+    var _newSet = new Set();
+
+    var _iterator2 = _createForOfIteratorHelper(oriArray),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var _oriItem = _step2.value;
+
+        if (!_newSet.has(_oriItem)) {
+          _newSet.add(_oriItem);
+        }
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+
+    newArray = _toConsumableArray(_newSet);
+  }
+
+  return newArray;
+};
+
 var array = {
   insert: insert,
   toggle: toggle,
@@ -622,7 +821,9 @@ var array = {
   paginate: paginate,
   pages: pages,
   show: show,
-  pagination: pagination
+  pagination: pagination,
+  sum: sum,
+  unique: unique
 };
 
 var size = function size(bytes, decimalPoint) {
@@ -715,6 +916,174 @@ var humanSize = function humanSize(bytes) {
   return bytes.toFixed(dp) + ' ' + units[u];
 };
 
+var exported = function exported(oriArr, toFile) {
+  if (_typeof(oriArr) !== 'object') return;
+  if (typeof toFile !== 'string') return;
+  var oriArray = Array.from(oriArr);
+  var toStringFile = '';
+
+  if (toFile.toLowerCase() === 'json') {
+    toStringFile = 'data:application/json;charset=utf-8,' + JSON.stringify(oriArray, null, 2);
+  } else if (toFile.toLowerCase() === 'csv') {
+    var csvStr = '';
+
+    var _iterator = _createForOfIteratorHelper(oriArray),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var csvObj = _step.value;
+
+        for (var csvKey in csvObj) {
+          csvStr += csvObj[csvKey] + ',';
+        }
+
+        csvStr = csvStr.trim().substring(0, csvStr.length - 1);
+        csvStr += '\n';
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    csvStr = csvStr.trim().substring(0, csvStr.length - 1);
+    toStringFile = 'data:text/csv;charset=utf-8,' + csvStr;
+  } else if (toFile.toLowerCase() === 'sql') {
+    var sqlStr = 'INSERT INTO `export_table` (';
+
+    for (var sqlKey in oriArray[0]) {
+      sqlStr += '`' + sqlKey + '`,';
+    }
+
+    sqlStr = sqlStr.trim().substring(0, sqlStr.length - 1);
+    sqlStr += ') VALUES ';
+
+    var _iterator2 = _createForOfIteratorHelper(oriArray),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var sqlObj = _step2.value;
+        sqlStr += '(';
+
+        for (var _sqlKey in sqlObj) {
+          sqlStr += '`' + sqlObj[_sqlKey] + '`,';
+        }
+
+        sqlStr = sqlStr.trim().substring(0, sqlStr.length - 1);
+        sqlStr += '),';
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+
+    sqlStr = sqlStr.trim().substring(0, sqlStr.length - 1);
+    sqlStr += ';';
+    toStringFile = 'data:application/sql;charset=utf-8,' + sqlStr;
+  } else if (toFile.toLowerCase() === 'xml') {
+    var xmlStr = '<?xml version="1.0" encoding="UTF-8"?>\n<data>';
+
+    for (var xmlObj in oriArray) {
+      xmlStr += '\n  <entry>';
+
+      for (var xmlKey in xmlObj) {
+        xmlStr += '\n    <' + xmlKey + '`>' + xmlObj[xmlKey] + '</' + xmlKey + '`>';
+      }
+
+      xmlStr += '\n  </entry>';
+    }
+
+    xmlStr += '\n</data>';
+    toStringFile = 'data:application/xml;charset=utf-8,' + xmlStr;
+  } else if (toFile.toLowerCase() === 'ths') {
+    var thsStr = '//visit official site: http://ths.glitch.me \n("data", [';
+
+    var _iterator3 = _createForOfIteratorHelper(oriArray),
+        _step3;
+
+    try {
+      for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+        var thsObj = _step3.value;
+        thsStr += '\n  ("entry", [';
+
+        for (var thsKey in thsObj) {
+          thsStr += '\n    ("' + thsKey + '", ';
+          thsStr += thsObj[thsKey] + '),';
+        }
+
+        thsStr = thsStr.trim().substring(0, thsStr.length - 1);
+        thsStr += ']),';
+      }
+    } catch (err) {
+      _iterator3.e(err);
+    } finally {
+      _iterator3.f();
+    }
+
+    thsStr = thsStr.trim().substring(0, thsStr.length - 1);
+    thsStr = '])';
+    toStringFile = 'data:application/ths;charset=utf-8,' + thsStr;
+  }
+
+  return toStringFile;
+};
+
+var download = function download(strFile) {
+  var asFile = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'txt';
+  var nameFile = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'export-to';
+  if (typeof strFile !== 'string') return;
+  var fileName = nameFile + '.' + asFile.toLowerCase();
+  var fileStr = encodeURI(strFile);
+  var fileLink = document.createElement("a");
+  fileLink.href = fileStr;
+  fileLink.download = fileName;
+  document.body.appendChild(fileLink);
+  fileLink.click();
+  document.body.removeChild(fileLink);
+};
+
+var printed = function printed(oriArr) {
+  if (_typeof(oriArr) !== 'object') return;
+  var oriArray = Array.from(oriArr);
+  var table = document.createElement("table");
+  var thead = document.createElement("thead");
+  var tbody = document.createElement("tbody");
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  var trow = document.createElement("tr");
+
+  for (var tableKey in oriArray[0]) {
+    var tcol = document.createElement("th");
+    tcol.textContent = tableKey.replace(/^\w/, function (c) {
+      return c.toUpperCase();
+    });
+    trow.appendChild(tcol);
+  }
+
+  thead.appendChild(trow);
+
+  for (var _i = 0, _oriArray = oriArray; _i < _oriArray.length; _i++) {
+    var tableObj = _oriArray[_i];
+    var tr = document.createElement("tr");
+
+    for (var _tableKey in tableObj) {
+      var td = document.createElement("td");
+      td.textContent = tableObj[_tableKey];
+      tr.appendChild(td);
+    }
+
+    tbody.appendChild(tr);
+  }
+
+  var w = window.open();
+  w.document.body.appendChild(table);
+  w.focus();
+  w.print();
+};
+
 var file = {
   size: size,
   name: name,
@@ -723,7 +1092,10 @@ var file = {
   date: date,
   loadImage: loadImage,
   formatSize: formatSize,
-  humanSize: humanSize
+  humanSize: humanSize,
+  exported: exported,
+  download: download,
+  printed: printed
 };
 
 export { array as $array, char as $char, file as $file, int as $int, number as $number, string as $string };

@@ -4,16 +4,32 @@ test('insert data into the first element in array', () => {
   expect(insert('a')(['b', 'c']).first()).toEqual(['a', 'b', 'c'])
 })
 
+test('insert data into the first element in array 2', () => {
+  expect(insert('a')(['b', 'c'], 'first')).toEqual(['a', 'b', 'c'])
+})
+
 test('insert data into the last element in array', () => {
   expect(insert('a')(['b', 'c']).last()).toEqual(['b', 'c', 'a'])
+})
+
+test('insert data into the last element in array 2', () => {
+  expect(insert('a')(['b', 'c'], 'last')).toEqual(['b', 'c', 'a'])
 })
 
 test('insert data before or in between the elements in array', () => {
   expect(insert('a')(['b', 'c']).before(2)).toEqual(['b', 'a', 'c'])
 })
 
+test('insert data before or in between the elements in array 2', () => {
+  expect(insert('a')(['b', 'c'], 'before', 2)).toEqual(['b', 'a', 'c'])
+})
+
 test('insert data after or in between the elements in array', () => {
   expect(insert('a')(['b', 'c']).after(0)).toEqual(['b', 'a', 'c'])
+})
+
+test('insert data after or in between the elements in array 2', () => {
+  expect(insert('a')(['b', 'c'], 'after', 0)).toEqual(['b', 'a', 'c'])
 })
 
 test('insert multiple data into the last element in array', () => {
