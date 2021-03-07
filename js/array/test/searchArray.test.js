@@ -1,4 +1,4 @@
-import { search } from '../searchArray.js'
+import { search, searchBy } from '../searchArray.js'
 
 const values = [
   { id: '1', name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
@@ -23,5 +23,10 @@ const results = [
 ]
 
 test('Searching in array of objects', () => {
+  //console.log(search('ba', 'la')(values))
   expect(search('ba')(values)).toEqual(results)
+})
+
+test('Searching by property in array of objects', () => {
+  expect(searchBy('ba')(values, ['name', 'office'])).toEqual(results)
 })

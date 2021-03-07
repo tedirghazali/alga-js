@@ -17,9 +17,7 @@ const values = [
 
 const results = [
   { id: '1', name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
-  { id: '4', name: 'Tedir Ghazali', office: 'Banda Aceh', age: 29 },
-  { id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 },
-  { id: '8', name: 'Ghazali Usman', office: 'Balikpapan', age: 45 }
+  { id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 }
 ]
 
 test('Filtering by property in array of objects', () => {

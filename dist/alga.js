@@ -472,47 +472,147 @@ var index = function index(indexArr) {
   }) : 0;
 };
 
-var search = function search(searchStr) {
-  if (typeof searchStr !== 'string') return;
-  return function (fromArr) {
-    if (_typeof(fromArr) !== 'object') return;
-    var filteredArray = Array.from(fromArr).filter(function (obj) {
-      for (var _i = 0, _Object$entries = Object.entries(obj); _i < _Object$entries.length; _i++) {
-        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-            key = _Object$entries$_i[0],
-            val = _Object$entries$_i[1];
+var unique = function unique(oriArr) {
+  var byProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  if (_typeof(oriArr) !== 'object') return;
+  var oriArray = Array.from(oriArr);
+  var newArray = [];
 
-        if (typeof obj[key] === 'string' && val.toLowerCase().indexOf(searchStr.toLowerCase()) !== -1) {
-          return true;
-        } else if (typeof obj[key] === 'number' && val === Number(searchStr)) {
-          return true;
+  if (typeof byProp === 'string') {
+    var newSet = new Set();
+
+    var _iterator = _createForOfIteratorHelper(oriArray),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var oriItem = _step.value;
+
+        if (!newSet.has(oriItem[byProp])) {
+          newSet.add(oriItem[byProp]);
         }
       }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
 
-      return false;
+    newArray = _toConsumableArray(newSet);
+  } else {
+    var _newSet = new Set();
+
+    var _iterator2 = _createForOfIteratorHelper(oriArray),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var _oriItem = _step2.value;
+
+        if (!_newSet.has(_oriItem)) {
+          _newSet.add(_oriItem);
+        }
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+
+    newArray = _toConsumableArray(_newSet);
+  }
+
+  return newArray;
+};
+
+var search = function search() {
+  for (var _len = arguments.length, searchStr = new Array(_len), _key = 0; _key < _len; _key++) {
+    searchStr[_key] = arguments[_key];
+  }
+
+  if (!searchStr) return;
+  return function (fromArr) {
+    if (_typeof(fromArr) !== 'object') return;
+    var filteredArray = [];
+    searchStr.forEach(function (searchString) {
+      var filterFromArr = Array.from(fromArr).filter(function (obj) {
+        for (var _i = 0, _Object$entries = Object.entries(obj); _i < _Object$entries.length; _i++) {
+          var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+              key = _Object$entries$_i[0],
+              val = _Object$entries$_i[1];
+
+          if (Number(obj[key]) !== 'NaN' && Number(val) === Number(searchString)) {
+            return true;
+          } else if (typeof obj[key] === 'string' && val.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+            return true;
+          }
+        }
+
+        return false;
+      });
+      filteredArray = unique(filteredArray.concat(filterFromArr));
     });
     return filteredArray;
   };
 };
 
-var filtered = function filtered(filterStr) {
-  if (typeof filterStr !== 'string') return;
+var searchBy = function searchBy() {
+  for (var _len2 = arguments.length, filterStr = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    filterStr[_key2] = arguments[_key2];
+  }
+
+  if (!filterStr) return;
   return function (fromArr, whereArr) {
     if (_typeof(fromArr) !== 'object') return;
-    var filteredArray = Array.from(fromArr).filter(function (obj) {
-      for (var _i = 0, _Array$from = Array.from(whereArr); _i < _Array$from.length; _i++) {
-        var val = _Array$from[_i];
+    var filteredArray = [];
+    filterStr.forEach(function (filterString) {
+      var filterFromArr = Array.from(fromArr).filter(function (obj) {
+        for (var _i2 = 0, _Array$from = Array.from(whereArr); _i2 < _Array$from.length; _i2++) {
+          var val = _Array$from[_i2];
 
-        if (val in obj) {
-          if (typeof obj[val] === 'string' && obj[val].toLowerCase().indexOf(filterStr.toLowerCase()) !== -1) {
-            return true;
-          } else if (typeof obj[val] === 'number' && obj[val] === Number(filterStr)) {
-            return true;
+          if (val in obj) {
+            if (Number(obj[val]) !== 'NaN' && Number(obj[val]) === Number(filterString)) {
+              return true;
+            } else if (typeof obj[val] === 'string' && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
+              return true;
+            }
           }
         }
-      }
 
-      return false;
+        return false;
+      });
+      filteredArray = unique(filteredArray.concat(filterFromArr));
+    });
+    return filteredArray;
+  };
+};
+
+var filtered = function filtered() {
+  for (var _len = arguments.length, filterStr = new Array(_len), _key = 0; _key < _len; _key++) {
+    filterStr[_key] = arguments[_key];
+  }
+
+  if (!filterStr) return;
+  return function (fromArr, whereArr) {
+    if (_typeof(fromArr) !== 'object') return;
+    var filteredArray = Array.from(fromArr);
+    filterStr.forEach(function (filterString, index) {
+      var filterFromArr = filteredArray.filter(function (obj) {
+        if (whereArr[index] !== undefined || whereArr[index] !== null) {
+          var val = whereArr[index];
+
+          if (val in obj) {
+            if (Number(obj[val]) !== 'NaN' && Number(obj[val]) === Number(filterString)) {
+              return true;
+            } else if (typeof obj[val] === 'string' && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
+              return true;
+            }
+          }
+        }
+
+        return false;
+      });
+      filteredArray = filterFromArr;
     });
     return filteredArray;
   };
@@ -755,59 +855,6 @@ var sum = function sum(oriArr) {
   return sumNum;
 };
 
-var unique = function unique(oriArr) {
-  var byProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  if (_typeof(oriArr) !== 'object') return;
-  var oriArray = Array.from(oriArr);
-  var newArray = [];
-
-  if (typeof byProp === 'string') {
-    var newSet = new Set();
-
-    var _iterator = _createForOfIteratorHelper(oriArray),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var oriItem = _step.value;
-
-        if (!newSet.has(oriItem[byProp])) {
-          newSet.add(oriItem[byProp]);
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    newArray = _toConsumableArray(newSet);
-  } else {
-    var _newSet = new Set();
-
-    var _iterator2 = _createForOfIteratorHelper(oriArray),
-        _step2;
-
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var _oriItem = _step2.value;
-
-        if (!_newSet.has(_oriItem)) {
-          _newSet.add(_oriItem);
-        }
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
-
-    newArray = _toConsumableArray(_newSet);
-  }
-
-  return newArray;
-};
-
 var array = {
   insert: insert,
   toggle: toggle,
@@ -815,6 +862,7 @@ var array = {
   nested: nested,
   index: index,
   search: search,
+  searchBy: searchBy,
   filtered: filtered,
   sort: sort,
   sorted: sorted,
