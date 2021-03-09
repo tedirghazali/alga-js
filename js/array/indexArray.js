@@ -1,9 +1,21 @@
-const index = (indexArr, options = {}) => {
+const index = (indexArr, options = { key: 'id', value: 0}) => {
   const indexedArray = Array.from(indexArr)
-  const indexedOptions = {}
-  indexedOptions.key = options.key || 'id'
-  indexedOptions.value = options.value || 0
-  return (indexedArray.length >= 1) ? indexedArray.findIndex(obj => obj[indexedOptions.key] === indexedOptions.value) : 0
+  let resultNum = -1
+  if('key' in options && 'value' in options) {
+    resultNum = (indexedArray.length >= 1) ? indexedArray.findIndex(obj => obj[options.key] === options.value) : -1
+  } else {
+    if(indexedArray.length >= 1) {
+      resultNum = indexedArray.findIndex(obj => {
+        for(const [key, val] of Object.entries(options)) {
+          if(key in obj && obj[key] === val) {
+            return true
+          }
+        }
+      })
+    }
+  }
+  
+  return resultNum
 }
 
 export {

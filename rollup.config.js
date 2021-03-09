@@ -43,5 +43,23 @@ export default [
       plugins: [terser()]
     },
     plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+  },
+  {
+    input: 'js/object/objectLib.js',
+    output: {
+      file: 'lib/object.js',
+      format: 'es',
+      plugins: [terser()]
+    },
+    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+  },
+  {
+    input: 'js/string/stringLib.js',
+    output: {
+      file: 'lib/string.js',
+      format: 'es',
+      plugins: [terser()]
+    },
+    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
   }
 ];

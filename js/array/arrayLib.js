@@ -1,4 +1,5 @@
 import { insert } from './insertArray.js'
+import { update } from './updateArray.js'
 import { toggle } from './toggleArray.js'
 import { flatten } from './flattenArray.js'
 import { nested } from './nestedArray.js'
@@ -12,6 +13,7 @@ import { unique } from './uniqueArray.js'
 
 export {
   insert,
+  update,
   toggle,
   flatten,
   nested,

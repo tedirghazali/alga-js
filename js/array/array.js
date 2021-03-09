@@ -1,5 +1,6 @@
 import { 
-  insert, 
+  insert,
+  update,
   toggle, 
   flatten, 
   nested, 
@@ -19,6 +20,7 @@ import {
 
 export default {
   insert,
+  update,
   toggle,
   flatten,
   nested,

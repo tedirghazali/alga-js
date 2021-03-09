@@ -1,11 +1,10 @@
+import data from './arrayData.js'
 import { index } from '../indexArray.js'
 
-const values = [
-  { id: '1', value: 'Tedir' }, 
-  { id: '2', value: 'Ghazali' },
-  { id: '3', value: 'Usman' }
-]
-
 test('get index by using object id from array', () => {
-  expect(index(values, { key: 'id', value: '3' })).toEqual(2)
+  expect(index(data.third, { key: 'id', value: 161 })).toBe(2)
+})
+
+test('get index 2 by using object id from array', () => {
+  expect(index(data.third, { id: 162 })).toBe(3)
 })

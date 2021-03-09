@@ -330,6 +330,107 @@ var insert = function insert() {
   return to;
 };
 
+var index = function index(indexArr) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+    key: 'id',
+    value: 0
+  };
+  var indexedArray = Array.from(indexArr);
+  var resultNum = -1;
+
+  if ('key' in options && 'value' in options) {
+    resultNum = indexedArray.length >= 1 ? indexedArray.findIndex(function (obj) {
+      return obj[options.key] === options.value;
+    }) : -1;
+  } else {
+    if (indexedArray.length >= 1) {
+      resultNum = indexedArray.findIndex(function (obj) {
+        for (var _i = 0, _Object$entries = Object.entries(options); _i < _Object$entries.length; _i++) {
+          var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+              key = _Object$entries$_i[0],
+              val = _Object$entries$_i[1];
+
+          if (key in obj && obj[key] === val) {
+            return true;
+          }
+        }
+      });
+    }
+  }
+
+  return resultNum;
+};
+
+var merge = function merge() {
+  for (var _len = arguments.length, obj = new Array(_len), _key = 0; _key < _len; _key++) {
+    obj[_key] = arguments[_key];
+  }
+
+  if (!obj) return;
+  var newObj = {};
+  var newMap = new Map();
+
+  for (var _i = 0, _obj = obj; _i < _obj.length; _i++) {
+    var prop = _obj[_i];
+
+    for (var _i2 = 0, _Object$entries = Object.entries(prop); _i2 < _Object$entries.length; _i2++) {
+      var _Object$entries$_i = _slicedToArray(_Object$entries[_i2], 2),
+          key = _Object$entries$_i[0],
+          val = _Object$entries$_i[1];
+
+      if (!newMap.has(key)) {
+        newMap.set(key, val);
+        newObj[key] = val;
+      }
+    }
+  }
+
+  return newObj;
+};
+
+var replace = function replace() {
+  for (var _len2 = arguments.length, obj = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    obj[_key2] = arguments[_key2];
+  }
+
+  if (!obj) return;
+  var newObj = {};
+
+  for (var _i3 = 0, _obj2 = obj; _i3 < _obj2.length; _i3++) {
+    var prop = _obj2[_i3];
+
+    for (var _i4 = 0, _Object$entries2 = Object.entries(prop); _i4 < _Object$entries2.length; _i4++) {
+      var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i4], 2),
+          key = _Object$entries2$_i[0],
+          val = _Object$entries2$_i[1];
+
+      newObj[key] = val;
+    }
+  }
+
+  return newObj;
+};
+
+var update = function update(setObj) {
+  if (_typeof(setObj) !== 'object' && setObj !== null) return;
+  return function (oriArr, whereObj) {
+    if (_typeof(oriArr) !== 'object' && _typeof(whereObj) !== 'object') return;
+    var oriArray = Array.from(oriArr);
+    var newArray = [];
+    var indexNum = index(oriArray, whereObj);
+    newArray = oriArray.map(function (obj, ind) {
+      var resMap = obj;
+
+      if (ind === indexNum) {
+        resMap = replace(obj, setObj);
+      }
+
+      return resMap;
+    });
+    return newArray;
+  };
+};
+
 var toggle = function toggle(val) {
   var toggleFrom = function toggleFrom(arr) {
     var toggleArr = Array.from(arr);
@@ -459,17 +560,6 @@ var nested = function nested(flatArr) {
 
   parentArray(flattenArray);
   return nestedArray;
-};
-
-var index = function index(indexArr) {
-  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  var indexedArray = Array.from(indexArr);
-  var indexedOptions = {};
-  indexedOptions.key = options.key || 'id';
-  indexedOptions.value = options.value || 0;
-  return indexedArray.length >= 1 ? indexedArray.findIndex(function (obj) {
-    return obj[indexedOptions.key] === indexedOptions.value;
-  }) : 0;
 };
 
 var unique = function unique(oriArr) {
@@ -857,6 +947,7 @@ var sum = function sum(oriArr) {
 
 var array = {
   insert: insert,
+  update: update,
   toggle: toggle,
   flatten: flatten,
   nested: nested,
@@ -872,6 +963,75 @@ var array = {
   pagination: pagination,
   sum: sum,
   unique: unique
+};
+
+var remove = function remove() {
+  for (var _len = arguments.length, propKey = new Array(_len), _key = 0; _key < _len; _key++) {
+    propKey[_key] = arguments[_key];
+  }
+
+  if (!propKey) return;
+  return function (fromObj) {
+    if (_typeof(fromObj) !== 'object' || fromObj === null) return;
+    var newObj = {};
+
+    for (var _i = 0, _Object$entries = Object.entries(fromObj); _i < _Object$entries.length; _i++) {
+      var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 1),
+          name = _Object$entries$_i[0];
+
+      newObj[name] = fromObj[name];
+    }
+
+    var _iterator = _createForOfIteratorHelper(propKey),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var key = _step.value;
+
+        if (key in newObj) {
+          delete newObj[key];
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    return newObj;
+  };
+};
+
+var removeBy = function removeBy() {
+  for (var _len2 = arguments.length, propVal = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    propVal[_key2] = arguments[_key2];
+  }
+
+  if (!propVal) return;
+  return function (fromObj) {
+    if (_typeof(fromObj) !== 'object' || fromObj === null) return;
+    var newObj = {};
+    var newSet = new Set(propVal);
+
+    for (var _i2 = 0, _Object$entries2 = Object.entries(fromObj); _i2 < _Object$entries2.length; _i2++) {
+      var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 1),
+          key = _Object$entries2$_i[0];
+
+      if (!newSet.has(fromObj[key])) {
+        newObj[key] = fromObj[key];
+      }
+    }
+
+    return newObj;
+  };
+};
+
+var object = {
+  remove: remove,
+  removeBy: removeBy,
+  merge: merge,
+  replace: replace
 };
 
 var size = function size(bytes, decimalPoint) {
@@ -1146,4 +1306,4 @@ var file = {
   printed: printed
 };
 
-export { array as $array, char as $char, file as $file, int as $int, number as $number, string as $string };
+export { array as $array, char as $char, file as $file, int as $int, number as $number, object as $object, string as $string };

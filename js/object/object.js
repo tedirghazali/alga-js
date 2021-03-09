@@ -1,9 +1,13 @@
 import {
   remove,
-  removeBy
+  removeBy,
+  merge,
+  replace
 } from './objectLib.js'
 
 export default {
   remove,
-  removeBy
+  removeBy,
+  merge,
+  replace
 }
