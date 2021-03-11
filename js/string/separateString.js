@@ -1,0 +1,7 @@
+const separate = () => {
+
+}
+
+export {
+  separate
+}

@@ -431,6 +431,139 @@ var update = function update(setObj) {
   };
 };
 
+var destroy = function destroy() {
+  for (var _len = arguments.length, whereOpt = new Array(_len), _key = 0; _key < _len; _key++) {
+    whereOpt[_key] = arguments[_key];
+  }
+
+  if (!whereOpt) return;
+  return function (oriArr) {
+    if (_typeof(oriArr) !== 'object') return;
+    var oriArray = Array.from(oriArr);
+    var newArray = [];
+
+    var _iterator = _createForOfIteratorHelper(whereOpt),
+        _step;
+
+    try {
+      var _loop = function _loop() {
+        var opt = _step.value;
+
+        if (typeof opt === 'string' && opt === 'first') {
+          oriArray = oriArray.map(function (obj, ind) {
+            if (ind === 0) {
+              return null;
+            } else {
+              return obj;
+            }
+          });
+          newArray = oriArray;
+        } else if (typeof opt === 'string' && opt === 'last') {
+          oriArray = oriArray.map(function (obj, ind) {
+            if (ind === oriArray.length - 1) {
+              return null;
+            } else {
+              return obj;
+            }
+          });
+          newArray = oriArray;
+        } else if (typeof opt === 'number') {
+          oriArray = oriArray.map(function (obj, ind) {
+            if (ind === opt) {
+              return null;
+            } else {
+              return obj;
+            }
+          });
+          newArray = oriArray;
+        } else if (_typeof(opt) === 'object' && opt !== null) {
+          var indx = index(oriArray, opt);
+          oriArray = oriArray.map(function (obj, ind) {
+            if (ind === indx) {
+              return null;
+            } else {
+              return obj;
+            }
+          });
+          newArray = oriArray;
+        }
+      };
+
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        _loop();
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    return newArray.filter(function (obj) {
+      return obj !== null;
+    });
+  };
+};
+
+var select = function select() {
+  for (var _len = arguments.length, selProp = new Array(_len), _key = 0; _key < _len; _key++) {
+    selProp[_key] = arguments[_key];
+  }
+
+  if (!selProp) return;
+  return function (fromArr) {
+    if (_typeof(fromArr) !== 'object') return;
+    var fromArray = Array.from(fromArr);
+    var newArray = [];
+
+    var _loop = function _loop() {
+      var obj = _fromArray[_i];
+      var newObject = {};
+      selProp.forEach(function (sel) {
+        if (sel in obj) {
+          newObject[sel] = obj[sel];
+        }
+      });
+      newArray.push(newObject);
+    };
+
+    for (var _i = 0, _fromArray = fromArray; _i < _fromArray.length; _i++) {
+      _loop();
+    }
+
+    return newArray;
+  };
+};
+
+var hidden = function hidden() {
+  for (var _len2 = arguments.length, selProp = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    selProp[_key2] = arguments[_key2];
+  }
+
+  if (!selProp) return;
+  return function (fromArr) {
+    if (_typeof(fromArr) !== 'object') return;
+    var fromArray = Array.from(fromArr);
+    var newArray = [];
+
+    var _loop2 = function _loop2() {
+      var obj = _fromArray2[_i2];
+      var newObject = obj;
+      selProp.forEach(function (sel) {
+        if (sel in obj) {
+          delete newObject[sel];
+        }
+      });
+      newArray.push(newObject);
+    };
+
+    for (var _i2 = 0, _fromArray2 = fromArray; _i2 < _fromArray2.length; _i2++) {
+      _loop2();
+    }
+
+    return newArray;
+  };
+};
+
 var toggle = function toggle(val) {
   var toggleFrom = function toggleFrom(arr) {
     var toggleArr = Array.from(arr);
@@ -948,6 +1081,9 @@ var sum = function sum(oriArr) {
 var array = {
   insert: insert,
   update: update,
+  destroy: destroy,
+  select: select,
+  hidden: hidden,
   toggle: toggle,
   flatten: flatten,
   nested: nested,

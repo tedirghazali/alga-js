@@ -1,6 +1,9 @@
 import { 
   insert,
   update,
+  destroy,
+  select,
+  hidden,
   toggle, 
   flatten, 
   nested, 
@@ -21,6 +24,9 @@ import {
 export default {
   insert,
   update,
+  destroy,
+  select,
+  hidden,
   toggle,
   flatten,
   nested,

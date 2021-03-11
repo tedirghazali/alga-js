@@ -1,5 +1,7 @@
 import { insert } from './insertArray.js'
 import { update } from './updateArray.js'
+import { destroy } from './destroyArray.js'
+import { select, hidden } from './selectArray.js'
 import { toggle } from './toggleArray.js'
 import { flatten } from './flattenArray.js'
 import { nested } from './nestedArray.js'
@@ -14,6 +16,9 @@ import { unique } from './uniqueArray.js'
 export {
   insert,
   update,
+  destroy,
+  select,
+  hidden,
   toggle,
   flatten,
   nested,
