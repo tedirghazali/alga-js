@@ -1078,6 +1078,10 @@ var sum = function sum(oriArr) {
   return sumNum;
 };
 
+function isArray(arg) {
+  return _typeof(arg) === 'object' && arg !== null && Array.isArray(arg) ? true : false;
+}
+
 var array = {
   insert: insert,
   update: update,
@@ -1098,7 +1102,8 @@ var array = {
   show: show,
   pagination: pagination,
   sum: sum,
-  unique: unique
+  unique: unique,
+  isArray: isArray
 };
 
 var remove = function remove() {
@@ -1170,6 +1175,238 @@ var object = {
   replace: replace
 };
 
+var DEFAULT_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ssZ';
+var REGEX_PARSE_DATE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
+var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+var format = function format(dateStr) {
+  var formatStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+  if (typeof dateStr !== 'string') return; //const oriDate = new Date(dateStr)
+
+  var newDate = typeof formatStr === 'string' ? formatStr : DEFAULT_DATE_FORMAT;
+  /*const tokens = {
+    YY: () => {
+      const shortYear = oriDate.getFullYear().toString().slice(-2)
+      let dateYear = oriDate.getFullYear()
+      if(shortYear !== "00") {
+        dateYear = Number(shortYear)
+      }
+      return dateYear
+    },
+    YYYY: oriDate.getFullYear(),
+    M: Number(oriDate.getMonth() + 1),
+    MM: () => {
+      const dateMonth = Number(oriDate.getMonth() + 1).toString()
+      if(dateMonth.length === 1) {
+        const addZero = "0" + dateMonth
+        return addZero
+      } else {
+        return dateMonth
+      }
+    },
+    m: dateVar.MONTH_NAMES[oriDate.getMonth()].slice(0, 3),
+    mm: dateVar.MONTH_NAMES[oriDate.getMonth()],
+    D: oriDate.getDate(),
+    DD: () => {
+      const dateDay = oriDate.getDate.toString()
+      if(dateDay.length === 1) {
+        const addDayZero = "0" + dateDay
+        return addDayZero
+      } else {
+        return dateDay
+      }
+    },
+    d: dateVar.DAY_NAMES[oriDate.getDay()].slice(0, 3),
+    dd: dateVar.DAY_NAMES[oriDate.getDay()],
+    H: oriDate.getHours(),
+    HH: () => {
+      const dateHour = oriDate.getHours().toString()
+      if(dateHour.length === 1) {
+        const addHourZero = "0" + dateHour
+        return addHourZero
+      } else {
+        return dateHour
+      }
+    },
+    h: () => {
+      let dateHour2 = Number(oriDate.getHours() + 1)
+      let resetDateHour2 = dateHour2
+      if(dateHour2  > 12) {
+        resetDateHour2 = dateHour2 - (dateHour2 - 1)
+      }
+      return resetDateHour2
+    },
+    hh: () => {
+      let dateHour2 = Number(oriDate.getHours() + 1)
+      let resetDateHour2 = dateHour2
+      if(dateHour2  > 12) {
+        resetDateHour2 = dateHour2 - (dateHour2 - 1)
+      }
+      const dateHour3 = resetDateHour2.toString()
+      if(dateHour3.length === 1) {
+        const addHour3Zero = "0" + dateHour3
+        return addHour3Zero
+      } else {
+        return dateHour3
+      }
+    },
+    k: Number(oriDate.getHours() + 1),
+    kk: () => {
+      const dateHour4 = Number(oriDate.getHours() + 1).toString()
+      if(dateHour4.length === 1) {
+        const addHour4Zero = "0" + dateHour4
+        return addHour4Zero
+      } else {
+        return dateHour4
+      }
+    },
+    i: oriDate.getMinutes(),
+    ii: () => {
+      const dateMinute = oriDate.getMinutes().toString()
+      if(dateMinute.length === 1) {
+        const addMinuteZero = "0" + dateMinute
+        return addMinuteZero
+      } else {
+        return dateMinute
+      }
+    },
+    s: oriDate.getSeconds(),
+    ss: () => {
+      const dateSecond = oriDate.getSeconds().toString()
+      if(dateSecond.length === 1) {
+        const addSecondZero = "0" + dateSecond
+        return addSecondZero
+      } else {
+        return dateSecond
+      }
+    },
+    A: oriDate.getHours() < 12 ? 'AM' : 'PM',
+    a: oriDate.getHours() < 12 ? 'am' : 'pm',
+    Do: oriDate.getDate().toString() + 'st'
+  }*/
+
+  return newDate.replace(/Y{1,4}/g, 'saya');
+};
+
+var now = function now() {
+  var dateFormat = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
+  var newDate = new Date();
+
+  if (typeof dateFormat === 'string') {
+    newDate = format(newDate.toString(), dateFormat);
+  }
+
+  return newDate;
+};
+
+var parse = function parse(dateVal) {
+  var newDate = new Date(dateVal);
+
+  if (typeof dateVal === 'string' && !/Z$/i.test(dateVal)) {
+    var d = dateVal.match(REGEX_PARSE_DATE);
+
+    if (d) {
+      var m = d[2] - 1 || 0;
+      var ms = (d[7] || '0').substring(0, 3);
+      newDate = new Date(d[1], m, d[3] || 1, d[4] || 0, d[5] || 0, d[6] || 0, ms);
+    }
+  }
+
+  if (_typeof(dateVal) === 'object' && Array.isArray(dateVal)) {
+    newDate = new Date(Date.UTC.apply(Date, _toConsumableArray(dateVal)));
+  }
+
+  return newDate;
+};
+
+var utc = function utc() {
+  return new Date(Date.UTC.apply(Date, arguments));
+};
+
+var daysInMonth = function daysInMonth() {
+  for (var _len = arguments.length, dateArg = new Array(_len), _key = 0; _key < _len; _key++) {
+    dateArg[_key] = arguments[_key];
+  }
+
+  if (!dateArg) return;
+  var commonDays = [28, 29, 30, 31];
+  var numOfDays = new Date(dateArg[0], dateArg[1], 0).getDate();
+  var filterNumDays = commonDays.includes(numOfDays) ? numOfDays : 31;
+  var newObj = {
+    days: filterNumDays,
+    start: new Date([dateArg[0], dateArg[1], 1]).getDay(),
+    end: new Date([dateArg[0], dateArg[1], filterNumDays]).getDay(),
+    value: []
+  };
+
+  for (var i = 1; i <= filterNumDays; i++) {
+    var dateValue = new Date([dateArg[0], dateArg[1], i]).getDate();
+    newObj.value.push(dateArg[0] + '-' + dateArg[1] + '-' + dateValue);
+  }
+
+  return newObj;
+};
+
+var daysInUTCMonth = function daysInUTCMonth() {
+  for (var _len2 = arguments.length, dateArg = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    dateArg[_key2] = arguments[_key2];
+  }
+
+  if (!dateArg) return;
+  var commonDays = [28, 29, 30, 31];
+  var numOfDays = new Date(Date.UTC(dateArg[0], dateArg[1], 0)).getUTCDate();
+  var filterNumDays = commonDays.includes(numOfDays) ? numOfDays : 31;
+  var newObj = {
+    days: filterNumDays,
+    start: new Date(Date.UTC(dateArg[0], Number(dateArg[1]) - 1, 1)).getUTCDay(),
+    end: new Date(Date.UTC(dateArg[0], Number(dateArg[1]) - 1, filterNumDays)).getUTCDay(),
+    value: []
+  };
+
+  for (var i = 1; i <= filterNumDays; i++) {
+    var dateValue = new Date(Date.UTC(dateArg[0], Number(dateArg[1]) - 1, i)).getUTCDate();
+    newObj.value.push(dateArg[0] + '-' + dateArg[1] + '-' + dateValue);
+  }
+
+  return newObj;
+};
+
+var calendar = function calendar(dateArg1, dateArg2) {
+  var dayArr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  if (!dateArg1) return;
+  if (!dateArg2) return;
+  var dayNames = dayArr.length === 7 ? dayArr : DAY_NAMES;
+  var currentMonth = daysInMonth(dateArg1, dateArg2);
+  var beforeMonth = daysInMonth(dateArg1, Number(Number(dateArg2) - 1));
+  var sliceBeforeMonth = beforeMonth.value.slice(Number('-' + currentMonth.start));
+  var afterMonth = daysInMonth(dateArg1, Number(Number(dateArg2) + 1));
+  var sliceAfterMonth = afterMonth.value.slice(0, 6 - Number(currentMonth.end));
+  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
+};
+
+var calendarUTC = function calendarUTC(dateArg1, dateArg2) {
+  var dayArr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
+  if (!dateArg1) return;
+  if (!dateArg2) return;
+  var dayNames = dayArr.length === 7 ? dayArr : DAY_NAMES;
+  var currentMonth = daysInUTCMonth(dateArg1, dateArg2);
+  var beforeMonth = daysInUTCMonth(dateArg1, Number(Number(dateArg2) - 1));
+  var sliceBeforeMonth = beforeMonth.value.slice(Number('-' + currentMonth.start));
+  var afterMonth = daysInUTCMonth(dateArg1, Number(Number(dateArg2) + 1));
+  var sliceAfterMonth = afterMonth.value.slice(0, 6 - Number(currentMonth.end));
+  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
+};
+
+var date = {
+  now: now,
+  parse: parse,
+  utc: utc,
+  daysInMonth: daysInMonth,
+  daysInUTCMonth: daysInUTCMonth,
+  calendar: calendar,
+  calendarUTC: calendarUTC
+};
+
 var size = function size(bytes, decimalPoint) {
   if (bytes === 0) return '0 Bytes';
   var k = 1000;
@@ -1202,7 +1439,7 @@ var type = function type(val) {
   return arrFile.join("");
 };
 
-var date = function date(val) {
+var date$1 = function date(val) {
   return new Date(val).toDateString();
 };
 
@@ -1433,7 +1670,7 @@ var file = {
   name: name,
   type: type,
   image: image,
-  date: date,
+  date: date$1,
   loadImage: loadImage,
   formatSize: formatSize,
   humanSize: humanSize,
@@ -1442,4 +1679,4 @@ var file = {
   printed: printed
 };
 
-export { array as $array, char as $char, file as $file, int as $int, number as $number, object as $object, string as $string };
+export { array as $array, char as $char, date as $date, file as $file, int as $int, number as $number, object as $object, string as $string };

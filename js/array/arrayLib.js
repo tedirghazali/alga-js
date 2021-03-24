@@ -12,6 +12,7 @@ import { sort, sorted } from './sortedArray.js'
 import { paginate, pages, show, pagination } from './paginateArray.js'
 import { sum } from './sumArray.js'
 import { unique } from './uniqueArray.js'
+import isArray from './isArray.js'
 
 export {
   insert,
@@ -33,5 +34,6 @@ export {
   show, 
   pagination,
   sum,
-  unique
+  unique,
+  isArray
 }

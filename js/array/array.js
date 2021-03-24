@@ -18,7 +18,8 @@ import {
   show, 
   pagination,
   sum,
-  unique
+  unique,
+  isArray
 } from './arrayLib.js'
 
 export default {
@@ -41,5 +42,6 @@ export default {
   show, 
   pagination,
   sum,
-  unique
+  unique,
+  isArray
 }

@@ -61,5 +61,14 @@ export default [
       plugins: [terser()]
     },
     plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+  },
+  {
+    input: 'js/date/dateLib.js',
+    output: {
+      file: 'lib/date.js',
+      format: 'es',
+      plugins: [terser()]
+    },
+    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
   }
 ];
