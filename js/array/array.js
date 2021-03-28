@@ -1,5 +1,7 @@
 import { 
   insert,
+  insertBefore,
+  insertAfter,
   update,
   destroy,
   select,
@@ -24,6 +26,8 @@ import {
 
 export default {
   insert,
+  insertBefore,
+  insertAfter,
   update,
   destroy,
   select,

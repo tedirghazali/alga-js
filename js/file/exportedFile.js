@@ -47,20 +47,20 @@ const exported = (oriArr, toFile) => {
     }
     xmlStr += '\n</data>'
     toStringFile = 'data:application/xml;charset=utf-8,' + xmlStr
-  } else if(toFile.toLowerCase() === 'ths') {
-    let thsStr = '//visit official site: http://ths.glitch.me \n("data", ['
-    for(const thsObj of oriArray) {
-      thsStr += '\n  ("entry", ['
-      for(const thsKey in thsObj) {
-        thsStr += '\n    ("'+ thsKey +'", '
-        thsStr += thsObj[thsKey] +'),'
+  } else if(toFile.toLowerCase() === 'vhs') {
+    let vhsStr = '//visit official site: http://vhs-file-format.glitch.me \n("data", ['
+    for(const vhsObj of oriArray) {
+      vhsStr += '\n  ("entry", ['
+      for(const vhsKey in vhsObj) {
+        vhsStr += '\n    ("'+ vhsKey +'", '
+        vhsStr += vhsObj[vhsKey] +'),'
       }
-      thsStr = thsStr.trim().substring(0, thsStr.length - 1)
-      thsStr += ']),'
+      vhsStr = vhsStr.trim().substring(0, vhsStr.length - 1)
+      vhsStr += ']),'
     }
-    thsStr = thsStr.trim().substring(0, thsStr.length - 1)
-    thsStr = '])'
-    toStringFile = 'data:application/ths;charset=utf-8,' + thsStr
+    vhsStr = vhsStr.trim().substring(0, vhsStr.length - 1)
+    vhsStr = '])'
+    toStringFile = 'data:application/vhs;charset=utf-8,' + vhsStr
   }
   
   return toStringFile

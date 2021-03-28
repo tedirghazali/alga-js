@@ -1,11 +1,18 @@
 import * as dateVar from './dateVar.js'
 
-const format = (dateStr, formatStr = undefined) => {
-  if(typeof dateStr !== 'string') return
+const format = (dateStr, formatStr) => {
+  if(typeof dateStr !== 'string' && new RegExp(dateVar.REGEX_PARSE_DATE).test(dateStr) === false) {
+    throw new Error('You\'re entering the wrong date string, please use this statement "new Date(\'yourdatestr\').toString()" instead')
+  }
+  if(typeof formatStr !== 'string' && new RegExp(dateVar.REGEX_DATE_FORMAT).test(formatStr) === false) {
+    throw new Error('Please enter the correct date format')
+  }
   
-  //const oriDate = new Date(dateStr)
-  let newDate = (typeof formatStr === 'string') ? formatStr : dateVar.DEFAULT_DATE_FORMAT
-  /*const tokens = {
+  const oriDate = new Date(dateStr)
+  const formatDate = formatStr
+  let newDate = formatStr
+  
+  const tokens = {
     YY: () => {
       const shortYear = oriDate.getFullYear().toString().slice(-2)
       let dateYear = oriDate.getFullYear()
@@ -27,15 +34,15 @@ const format = (dateStr, formatStr = undefined) => {
     },
     m: dateVar.MONTH_NAMES[oriDate.getMonth()].slice(0, 3),
     mm: dateVar.MONTH_NAMES[oriDate.getMonth()],
-    D: oriDate.getDate(),
+    D: oriDate.getDate,
     DD: () => {
-      const dateDay = oriDate.getDate.toString()
+      const dateDay = oriDate.getDate().toString()
+      let resDay = dateDay
       if(dateDay.length === 1) {
         const addDayZero = "0" + dateDay
-        return addDayZero
-      } else {
-        return dateDay
+        resDay = addDayZero
       }
+      return resDay
     },
     d: dateVar.DAY_NAMES[oriDate.getDay()].slice(0, 3),
     dd: dateVar.DAY_NAMES[oriDate.getDay()],
@@ -104,9 +111,60 @@ const format = (dateStr, formatStr = undefined) => {
     A: oriDate.getHours() < 12 ? 'AM' : 'PM',
     a: oriDate.getHours() < 12 ? 'am' : 'pm',
     Do: oriDate.getDate().toString() + 'st'
-  }*/
+  }
   
-  return newDate.replace(/Y{1,4}/g, 'saya')
+  const splitFormat = formatDate.split(/-|\/|\.|:|\s/)
+  for(let sf of splitFormat) { 
+    if('YY' === sf) {
+      newDate = newDate.replace(sf, tokens.YY())
+    } else if('YYYY' === sf) {
+      newDate = newDate.replace(sf, tokens.YYYY)
+    } else if('M' === sf) {
+      newDate = newDate.replace(sf, tokens.M)
+    } else if('MM' === sf) {
+      newDate = newDate.replace(sf, tokens.MM())
+    } else if('m' === sf) {
+      newDate = newDate.replace(sf, tokens.m)
+    } else if('mm' === sf) {
+      newDate = newDate.replace(sf, tokens.mm)
+    } else if('D' === sf) {
+      newDate = newDate.replace(sf, tokens.D)
+    } else if('DD' === sf) {
+      newDate = newDate.replace(sf, tokens.DD())
+    } else if('d' === sf) {
+      newDate = newDate.replace(sf, tokens.d)
+    } else if('dd' === sf) {
+      newDate = newDate.replace(sf, tokens.dd)
+    } else if('H' === sf) {
+      newDate = newDate.replace(sf, tokens.H)
+    } else if('HH' === sf) {
+      newDate = newDate.replace(sf, tokens.HH())
+    } else if('h' === sf) {
+      newDate = newDate.replace(sf, tokens.h())
+    } else if('hh' === sf) {
+      newDate = newDate.replace(sf, tokens.hh())
+    } else if('k' === sf) {
+      newDate = newDate.replace(sf, tokens.k)
+    } else if('kk' === sf) {
+      newDate = newDate.replace(sf, tokens.kk())
+    } else if('i' === sf) {
+      newDate = newDate.replace(sf, tokens.i)
+    } else if('ii' === sf) {
+      newDate = newDate.replace(sf, tokens.ii())
+    } else if('s' === sf) {
+      newDate = newDate.replace(sf, tokens.s)
+    } else if('ss' === sf) {
+      newDate = newDate.replace(sf, tokens.ss())
+    } else if('A' === sf) {
+      newDate = newDate.replace(sf, tokens.A)
+    } else if('a' === sf) {
+      newDate = newDate.replace(sf, tokens.a)
+    } else if('Do' === sf) {
+      newDate = newDate.replace(sf, tokens.Do)
+    }
+  }
+  
+  return newDate
 }
 
 export {

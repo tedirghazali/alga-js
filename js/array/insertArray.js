@@ -49,6 +49,26 @@ const insert = (...value) => {
   return to
 }
 
+const insertBefore = (...value) => {
+  if(!value) return
+  
+  return (toArr, atIndex) => {
+    const arrVal = Array.from(toArr)
+    return new Insert(value, arrVal).before(atIndex)
+  }
+}
+
+const insertAfter = (...value) => {
+  if(!value) return
+  
+  return (toArr, atIndex) => {
+    const arrVal = Array.from(toArr)
+    return new Insert(value, arrVal).after(atIndex)
+  }
+}
+
 export {
-  insert
+  insert,
+  insertBefore,
+  insertAfter
 }

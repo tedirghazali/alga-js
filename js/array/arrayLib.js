@@ -1,4 +1,4 @@
-import { insert } from './insertArray.js'
+import { insert, insertBefore, insertAfter } from './insertArray.js'
 import { update } from './updateArray.js'
 import { destroy } from './destroyArray.js'
 import { select, hidden } from './selectArray.js'
@@ -16,6 +16,8 @@ import isArray from './isArray.js'
 
 export {
   insert,
+  insertBefore,
+  insertAfter,
   update,
   destroy,
   select,

@@ -330,6 +330,30 @@ var insert = function insert() {
   return to;
 };
 
+var insertBefore = function insertBefore() {
+  for (var _len2 = arguments.length, value = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    value[_key2] = arguments[_key2];
+  }
+
+  if (!value) return;
+  return function (toArr, atIndex) {
+    var arrVal = Array.from(toArr);
+    return new Insert(value, arrVal).before(atIndex);
+  };
+};
+
+var insertAfter = function insertAfter() {
+  for (var _len3 = arguments.length, value = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+    value[_key3] = arguments[_key3];
+  }
+
+  if (!value) return;
+  return function (toArr, atIndex) {
+    var arrVal = Array.from(toArr);
+    return new Insert(value, arrVal).after(atIndex);
+  };
+};
+
 var index = function index(indexArr) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
     key: 'id',
@@ -1084,6 +1108,8 @@ function isArray(arg) {
 
 var array = {
   insert: insert,
+  insertBefore: insertBefore,
+  insertAfter: insertAfter,
   update: update,
   destroy: destroy,
   select: select,
@@ -1579,24 +1605,24 @@ var exported = function exported(oriArr, toFile) {
 
     xmlStr += '\n</data>';
     toStringFile = 'data:application/xml;charset=utf-8,' + xmlStr;
-  } else if (toFile.toLowerCase() === 'ths') {
-    var thsStr = '//visit official site: http://ths.glitch.me \n("data", [';
+  } else if (toFile.toLowerCase() === 'vhs') {
+    var vhsStr = '//visit official site: http://vhs-file-format.glitch.me \n("data", [';
 
     var _iterator3 = _createForOfIteratorHelper(oriArray),
         _step3;
 
     try {
       for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var thsObj = _step3.value;
-        thsStr += '\n  ("entry", [';
+        var vhsObj = _step3.value;
+        vhsStr += '\n  ("entry", [';
 
-        for (var thsKey in thsObj) {
-          thsStr += '\n    ("' + thsKey + '", ';
-          thsStr += thsObj[thsKey] + '),';
+        for (var vhsKey in vhsObj) {
+          vhsStr += '\n    ("' + vhsKey + '", ';
+          vhsStr += vhsObj[vhsKey] + '),';
         }
 
-        thsStr = thsStr.trim().substring(0, thsStr.length - 1);
-        thsStr += ']),';
+        vhsStr = vhsStr.trim().substring(0, vhsStr.length - 1);
+        vhsStr += ']),';
       }
     } catch (err) {
       _iterator3.e(err);
@@ -1604,9 +1630,9 @@ var exported = function exported(oriArr, toFile) {
       _iterator3.f();
     }
 
-    thsStr = thsStr.trim().substring(0, thsStr.length - 1);
-    thsStr = '])';
-    toStringFile = 'data:application/ths;charset=utf-8,' + thsStr;
+    vhsStr = vhsStr.trim().substring(0, vhsStr.length - 1);
+    vhsStr = '])';
+    toStringFile = 'data:application/vhs;charset=utf-8,' + vhsStr;
   }
 
   return toStringFile;
