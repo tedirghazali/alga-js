@@ -78,14 +78,14 @@ const format = (dateStr, formatStr) => {
         return dateHour3
       }
     },
-    k: Number(oriDate.getHours() + 1),
+    k: () => (Number(oriDate.getHours()) === 0) ? 24 : oriDate.getHours(),
     kk: () => {
-      const dateHour4 = Number(oriDate.getHours() + 1).toString()
+      const dateHour4 = Number(oriDate.getHours()).toString()
       if(dateHour4.length === 1) {
         const addHour4Zero = "0" + dateHour4
-        return addHour4Zero
+        return (Number(addHour4Zero) === 0) ? 24 : addHour4Zero
       } else {
-        return dateHour4
+        return (Number(dateHour4) === 0) ? 24 : dateHour4
       }
     },
     i: oriDate.getMinutes(),
@@ -144,7 +144,7 @@ const format = (dateStr, formatStr) => {
     } else if('hh' === sf) {
       newDate = newDate.replace(sf, tokens.hh())
     } else if('k' === sf) {
-      newDate = newDate.replace(sf, tokens.k)
+      newDate = newDate.replace(sf, tokens.k())
     } else if('kk' === sf) {
       newDate = newDate.replace(sf, tokens.kk())
     } else if('i' === sf) {
