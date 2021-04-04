@@ -1,6 +1,6 @@
 import * as dateVar from './dateVar.js'
 
-const parse = (dateStr, formatStr) => {
+export const parse = (dateStr, formatStr) => {
   if(typeof dateStr !== 'string' && new RegExp(dateVar.REGEX_PARSE_DATE).test(dateStr) === false) {
     throw new Error('On the first argument, you have to input only the correct date')
   }
@@ -11,13 +11,13 @@ const parse = (dateStr, formatStr) => {
   const dateArr = dateStr.split(/-|\/|\.|:|\s/).filter(dt => dt.length >= 1 && dt !== " ").map(word => word.trim())
   const formatArr = formatStr.split(/-|\/|\.|:|\s/).filter(dt => dt.length >= 1 && dt !== " ").map(word => word.trim())
   let newDate = {
-    year: 0,
-    month: 0,
-    day: 0,
-    hour: 0,
-    minute: 0,
-    second: 0,
-    millisecond: 0
+    year: new Date().getFullYear(),
+    month: Number(new Date().getMonth()) + 1,
+    day: new Date().getDate(),
+    hour: new Date().getHours(),
+    minute: new Date().getMinutes(),
+    second: new Date().getSeconds(),
+    millisecond: new Date().getMilliseconds()
   }
   
   if(dateArr.length === formatArr.length) {
@@ -52,9 +52,5 @@ const parse = (dateStr, formatStr) => {
     throw new Error('The numbers and the formats must be in place, so when we check the length of both of these arguments then the result will be the same')
   }
   
-  return new Date(newDate.year, newDate.month, newDate.day, newDate.hour, newDate.minute, newDate.second, newDate.millisecond)
-}
-
-export {
-  parse
+  return new Date(newDate.year, newDate.month, newDate.day, newDate.hour, newDate.minute, newDate.second, newDate.millisecond).toString()
 }
