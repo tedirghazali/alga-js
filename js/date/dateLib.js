@@ -3,6 +3,7 @@ import { parse } from './parseDate.js'
 import { utc } from './utcDate.js'
 import { daysInMonth, daysInUTCMonth } from './daysInMonth.js'
 import { calendar, calendarUTC } from './calendarDate.js'
+import { monthName, dayName } from './nameDate.js'
 
 export {
   now,
@@ -11,5 +12,7 @@ export {
   daysInMonth,
   daysInUTCMonth,
   calendar,
-  calendarUTC
+  calendarUTC,
+  monthName,
+  dayName
 }

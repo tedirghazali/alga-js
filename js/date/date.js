@@ -5,7 +5,9 @@ import {
   daysInMonth,
   daysInUTCMonth,
   calendar,
-  calendarUTC
+  calendarUTC,
+  monthName,
+  dayName
 } from './dateLib.js'
 
 export default {
@@ -15,5 +17,7 @@ export default {
   daysInMonth,
   daysInUTCMonth,
   calendar,
-  calendarUTC
+  calendarUTC,
+  monthName,
+  dayName
 }

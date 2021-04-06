@@ -1,5 +1,7 @@
-const daysInMonth = (...dateArg) => {
-  if(!dateArg) return
+export const daysInMonth = (...dateArg) => {
+  if(!dateArg && dateArg.length <= 0) {
+    throw new Error('You need to input the year numbers on argument 1 and the month numbers on argument 2')
+  }
   
   const commonDays = [28, 29, 30, 31]
   const numOfDays = new Date(dateArg[0], dateArg[1], 0).getDate();
@@ -17,8 +19,10 @@ const daysInMonth = (...dateArg) => {
   return newObj;
 }
 
-const daysInUTCMonth = (...dateArg) => {
-  if(!dateArg) return
+export const daysInUTCMonth = (...dateArg) => {
+  if(!dateArg && dateArg.length <= 0) {
+    throw new Error('You need to input the year numbers on argument 1 and the month numbers on argument 2')
+  }
   
   const commonDays = [28, 29, 30, 31]
   const numOfDays = new Date(Date.UTC(dateArg[0], dateArg[1], 0)).getUTCDate()
@@ -34,9 +38,4 @@ const daysInUTCMonth = (...dateArg) => {
     newObj.value.push(dateArg[0] +'-'+ dateArg[1] +'-'+ dateValue)
   }
   return newObj;
-}
-
-export {
-  daysInMonth,
-  daysInUTCMonth
 }

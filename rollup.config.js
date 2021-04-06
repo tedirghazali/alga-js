@@ -15,7 +15,7 @@ export default [
         format: 'es',
         plugins: [terser()]
       },
-      {
+      /*{
         file: 'dist/alga-common.js',
         format: 'cjs',
         plugins: [terser()]
@@ -25,7 +25,7 @@ export default [
         format: 'iife',
         name: '_',
         plugins: [terser()]
-      },
+      },*/
       {
         file: 'dist/alga-umd.js',
         format: 'umd',
@@ -66,6 +66,15 @@ export default [
     input: 'js/date/dateLib.js',
     output: {
       file: 'lib/date.js',
+      format: 'es',
+      plugins: [terser()]
+    },
+    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+  },
+  {
+    input: 'js/number/numberLib.js',
+    output: {
+      file: 'lib/number.js',
       format: 'es',
       plugins: [terser()]
     },

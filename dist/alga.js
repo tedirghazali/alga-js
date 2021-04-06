@@ -10,6 +10,11 @@ var int = {
 
 var random$1 = function random() {
   var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
+
+  if (typeof size !== 'number' && size <= 0) {
+    throw new Error('You have to add a number at least 1');
+  }
+
   var outputNum = '';
   var basicNum = '0123456789';
 
@@ -20,8 +25,27 @@ var random$1 = function random() {
   return outputNum;
 };
 
+var loop = function loop(fromNum, toNum) {
+  if (typeof fromNum !== 'number' & fromNum <= -1) {
+    throw new Error('Only accept number here, start from 0');
+  }
+
+  if (typeof toNum !== 'number' & toNum <= 0) {
+    throw new Error('Only accept number here, start from 1');
+  }
+
+  var arrNum = [];
+
+  while (fromNum < toNum) {
+    arrNum.push(fromNum++);
+  }
+
+  return arrNum;
+};
+
 var number = {
-  random: random$1
+  random: random$1,
+  loop: loop
 };
 
 var random$2 = function random() {
@@ -1201,122 +1225,208 @@ var object = {
   replace: replace
 };
 
-var DEFAULT_DATE_FORMAT = 'YYYY-MM-DDTHH:mm:ssZ';
 var REGEX_PARSE_DATE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
+var REGEX_DATE_FORMAT = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
 var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-var format = function format(dateStr) {
-  var formatStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
-  if (typeof dateStr !== 'string') return; //const oriDate = new Date(dateStr)
+var format = function format(dateStr, formatStr) {
+  if (typeof dateStr !== 'string' && new RegExp(REGEX_PARSE_DATE).test(dateStr) === false) {
+    throw new Error('You\'re entering the wrong date string, please use this statement "new Date(\'yourdatestr\').toString()" instead');
+  }
 
-  var newDate = typeof formatStr === 'string' ? formatStr : DEFAULT_DATE_FORMAT;
-  /*const tokens = {
-    YY: () => {
-      const shortYear = oriDate.getFullYear().toString().slice(-2)
-      let dateYear = oriDate.getFullYear()
-      if(shortYear !== "00") {
-        dateYear = Number(shortYear)
+  if (typeof formatStr !== 'string' && new RegExp(REGEX_DATE_FORMAT).test(formatStr) === false) {
+    throw new Error('Please enter the correct date format');
+  }
+
+  var oriDate = new Date(dateStr);
+  var formatDate = formatStr;
+  var newDate = formatStr;
+  var tokens = {
+    YY: function YY() {
+      var shortYear = oriDate.getFullYear().toString().slice(-2);
+      var dateYear = oriDate.getFullYear();
+
+      if (shortYear !== "00") {
+        dateYear = Number(shortYear);
       }
-      return dateYear
+
+      return dateYear;
     },
     YYYY: oriDate.getFullYear(),
     M: Number(oriDate.getMonth() + 1),
-    MM: () => {
-      const dateMonth = Number(oriDate.getMonth() + 1).toString()
-      if(dateMonth.length === 1) {
-        const addZero = "0" + dateMonth
-        return addZero
+    MM: function MM() {
+      var dateMonth = Number(oriDate.getMonth() + 1).toString();
+
+      if (dateMonth.length === 1) {
+        var addZero = "0" + dateMonth;
+        return addZero;
       } else {
-        return dateMonth
+        return dateMonth;
       }
     },
-    m: dateVar.MONTH_NAMES[oriDate.getMonth()].slice(0, 3),
-    mm: dateVar.MONTH_NAMES[oriDate.getMonth()],
-    D: oriDate.getDate(),
-    DD: () => {
-      const dateDay = oriDate.getDate.toString()
-      if(dateDay.length === 1) {
-        const addDayZero = "0" + dateDay
-        return addDayZero
-      } else {
-        return dateDay
+    m: MONTH_NAMES[oriDate.getMonth()].slice(0, 3),
+    mm: MONTH_NAMES[oriDate.getMonth()],
+    D: oriDate.getDate,
+    DD: function DD() {
+      var dateDay = oriDate.getDate().toString();
+      var resDay = dateDay;
+
+      if (dateDay.length === 1) {
+        var addDayZero = "0" + dateDay;
+        resDay = addDayZero;
       }
+
+      return resDay;
     },
-    d: dateVar.DAY_NAMES[oriDate.getDay()].slice(0, 3),
-    dd: dateVar.DAY_NAMES[oriDate.getDay()],
+    d: DAY_NAMES[oriDate.getDay()].slice(0, 3),
+    dd: DAY_NAMES[oriDate.getDay()],
     H: oriDate.getHours(),
-    HH: () => {
-      const dateHour = oriDate.getHours().toString()
-      if(dateHour.length === 1) {
-        const addHourZero = "0" + dateHour
-        return addHourZero
+    HH: function HH() {
+      var dateHour = oriDate.getHours().toString();
+
+      if (dateHour.length === 1) {
+        var addHourZero = "0" + dateHour;
+        return addHourZero;
       } else {
-        return dateHour
+        return dateHour;
       }
     },
-    h: () => {
-      let dateHour2 = Number(oriDate.getHours() + 1)
-      let resetDateHour2 = dateHour2
-      if(dateHour2  > 12) {
-        resetDateHour2 = dateHour2 - (dateHour2 - 1)
+    h: function h() {
+      var dateHour2 = Number(oriDate.getHours() + 1);
+      var resetDateHour2 = dateHour2;
+
+      if (dateHour2 > 12) {
+        resetDateHour2 = dateHour2 - (dateHour2 - 1);
       }
-      return resetDateHour2
+
+      return resetDateHour2;
     },
-    hh: () => {
-      let dateHour2 = Number(oriDate.getHours() + 1)
-      let resetDateHour2 = dateHour2
-      if(dateHour2  > 12) {
-        resetDateHour2 = dateHour2 - (dateHour2 - 1)
+    hh: function hh() {
+      var dateHour2 = Number(oriDate.getHours() + 1);
+      var resetDateHour2 = dateHour2;
+
+      if (dateHour2 > 12) {
+        resetDateHour2 = dateHour2 - (dateHour2 - 1);
       }
-      const dateHour3 = resetDateHour2.toString()
-      if(dateHour3.length === 1) {
-        const addHour3Zero = "0" + dateHour3
-        return addHour3Zero
+
+      var dateHour3 = resetDateHour2.toString();
+
+      if (dateHour3.length === 1) {
+        var addHour3Zero = "0" + dateHour3;
+        return addHour3Zero;
       } else {
-        return dateHour3
+        return dateHour3;
       }
     },
-    k: Number(oriDate.getHours() + 1),
-    kk: () => {
-      const dateHour4 = Number(oriDate.getHours() + 1).toString()
-      if(dateHour4.length === 1) {
-        const addHour4Zero = "0" + dateHour4
-        return addHour4Zero
+    k: function k() {
+      return Number(oriDate.getHours()) === 0 ? 24 : oriDate.getHours();
+    },
+    kk: function kk() {
+      var dateHour4 = Number(oriDate.getHours()).toString();
+
+      if (dateHour4.length === 1) {
+        var addHour4Zero = "0" + dateHour4;
+        return Number(addHour4Zero) === 0 ? 24 : addHour4Zero;
       } else {
-        return dateHour4
+        return Number(dateHour4) === 0 ? 24 : dateHour4;
       }
     },
     i: oriDate.getMinutes(),
-    ii: () => {
-      const dateMinute = oriDate.getMinutes().toString()
-      if(dateMinute.length === 1) {
-        const addMinuteZero = "0" + dateMinute
-        return addMinuteZero
+    ii: function ii() {
+      var dateMinute = oriDate.getMinutes().toString();
+
+      if (dateMinute.length === 1) {
+        var addMinuteZero = "0" + dateMinute;
+        return addMinuteZero;
       } else {
-        return dateMinute
+        return dateMinute;
       }
     },
     s: oriDate.getSeconds(),
-    ss: () => {
-      const dateSecond = oriDate.getSeconds().toString()
-      if(dateSecond.length === 1) {
-        const addSecondZero = "0" + dateSecond
-        return addSecondZero
+    ss: function ss() {
+      var dateSecond = oriDate.getSeconds().toString();
+
+      if (dateSecond.length === 1) {
+        var addSecondZero = "0" + dateSecond;
+        return addSecondZero;
       } else {
-        return dateSecond
+        return dateSecond;
       }
     },
     A: oriDate.getHours() < 12 ? 'AM' : 'PM',
     a: oriDate.getHours() < 12 ? 'am' : 'pm',
     Do: oriDate.getDate().toString() + 'st'
-  }*/
+  };
+  var splitFormat = formatDate.split(/-|\/|\.|:|\s/);
 
-  return newDate.replace(/Y{1,4}/g, 'saya');
+  var _iterator = _createForOfIteratorHelper(splitFormat),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var sf = _step.value;
+
+      if ('YY' === sf) {
+        newDate = newDate.replace(sf, tokens.YY());
+      } else if ('YYYY' === sf) {
+        newDate = newDate.replace(sf, tokens.YYYY);
+      } else if ('M' === sf) {
+        newDate = newDate.replace(sf, tokens.M);
+      } else if ('MM' === sf) {
+        newDate = newDate.replace(sf, tokens.MM());
+      } else if ('m' === sf) {
+        newDate = newDate.replace(sf, tokens.m);
+      } else if ('mm' === sf) {
+        newDate = newDate.replace(sf, tokens.mm);
+      } else if ('D' === sf) {
+        newDate = newDate.replace(sf, tokens.D);
+      } else if ('DD' === sf) {
+        newDate = newDate.replace(sf, tokens.DD());
+      } else if ('d' === sf) {
+        newDate = newDate.replace(sf, tokens.d);
+      } else if ('dd' === sf) {
+        newDate = newDate.replace(sf, tokens.dd);
+      } else if ('H' === sf) {
+        newDate = newDate.replace(sf, tokens.H);
+      } else if ('HH' === sf) {
+        newDate = newDate.replace(sf, tokens.HH());
+      } else if ('h' === sf) {
+        newDate = newDate.replace(sf, tokens.h());
+      } else if ('hh' === sf) {
+        newDate = newDate.replace(sf, tokens.hh());
+      } else if ('k' === sf) {
+        newDate = newDate.replace(sf, tokens.k());
+      } else if ('kk' === sf) {
+        newDate = newDate.replace(sf, tokens.kk());
+      } else if ('i' === sf) {
+        newDate = newDate.replace(sf, tokens.i);
+      } else if ('ii' === sf) {
+        newDate = newDate.replace(sf, tokens.ii());
+      } else if ('s' === sf) {
+        newDate = newDate.replace(sf, tokens.s);
+      } else if ('ss' === sf) {
+        newDate = newDate.replace(sf, tokens.ss());
+      } else if ('A' === sf) {
+        newDate = newDate.replace(sf, tokens.A);
+      } else if ('a' === sf) {
+        newDate = newDate.replace(sf, tokens.a);
+      } else if ('Do' === sf) {
+        newDate = newDate.replace(sf, tokens.Do);
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return newDate;
 };
 
 var now = function now() {
   var dateFormat = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : undefined;
-  var newDate = new Date();
+  var newDate = new Date().toString();
 
   if (typeof dateFormat === 'string') {
     newDate = format(newDate.toString(), dateFormat);
@@ -1325,24 +1435,72 @@ var now = function now() {
   return newDate;
 };
 
-var parse = function parse(dateVal) {
-  var newDate = new Date(dateVal);
+var parse = function parse(dateStr, formatStr) {
+  if (typeof dateStr !== 'string' && new RegExp(REGEX_PARSE_DATE).test(dateStr) === false) {
+    throw new Error('On the first argument, you have to input only the correct date');
+  }
 
-  if (typeof dateVal === 'string' && !/Z$/i.test(dateVal)) {
-    var d = dateVal.match(REGEX_PARSE_DATE);
+  if (typeof formatStr !== 'string' && new RegExp(REGEX_DATE_FORMAT).test(formatStr) === false) {
+    throw new Error('For format date, you must always input the correct one by using characters like these: Y, M, m, D, d, H, h, k, i, S, s, A, a or Do');
+  }
 
-    if (d) {
-      var m = d[2] - 1 || 0;
-      var ms = (d[7] || '0').substring(0, 3);
-      newDate = new Date(d[1], m, d[3] || 1, d[4] || 0, d[5] || 0, d[6] || 0, ms);
+  var dateArr = dateStr.split(/-|\/|\.|:|\s/).filter(function (dt) {
+    return dt.length >= 1 && dt !== " ";
+  }).map(function (word) {
+    return word.trim();
+  });
+  var formatArr = formatStr.split(/-|\/|\.|:|\s/).filter(function (dt) {
+    return dt.length >= 1 && dt !== " ";
+  }).map(function (word) {
+    return word.trim();
+  });
+  var newDate = {
+    year: new Date().getFullYear(),
+    month: Number(new Date().getMonth()) + 1,
+    day: new Date().getDate(),
+    hour: new Date().getHours(),
+    minute: new Date().getMinutes(),
+    second: new Date().getSeconds(),
+    millisecond: new Date().getMilliseconds()
+  };
+
+  if (dateArr.length === formatArr.length) {
+    for (var i = 0; i < dateArr.length; i++) {
+      if (dateArr[i].length === 4 && isNaN(dateArr[i]) === false && formatArr[i] === 'YYYY') {
+        newDate.year = dateArr[i];
+      } else if (dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'YY') {
+        newDate.year = dateArr[i];
+      } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'M' || formatArr[i] === 'MM') {
+        newDate.month = Number(dateArr[i]) - 1;
+      } else if (dateArr[i].length === 3 && MONTH_NAMES.map(function (mn) {
+        return mn.slice(0, 3);
+      }).includes(dateArr[i]) && formatArr[i] === 'm') {
+        newDate.month = MONTH_NAMES.map(function (mn) {
+          return mn.slice(0, 3);
+        }).findIndex(dateArr[i]);
+      } else if (dateArr[i].length >= 3 && MONTH_NAMES.includes(dateArr[i]) && formatArr[i] === 'mm') {
+        newDate.month = MONTH_NAMES.findIndex(dateArr[i]);
+      } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'D' || formatArr[i] === 'DD') {
+        newDate.day = dateArr[i];
+      } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'H' || formatArr[i] === 'HH') {
+        newDate.hour = dateArr[i];
+      } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'h' || formatArr[i] === 'hh') {
+        newDate.hour = dateArr[i] > 12 ? Number(dateArr[i]) - (Number(dateArr[i]) - 1) : dateArr[i];
+      } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'k' || formatArr[i] === 'kk') {
+        newDate.hour = Number(dateArr[i]) === 24 ? 0 : dateArr[i];
+      } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'i' || formatArr[i] === 'ii') {
+        newDate.minute = dateArr[i];
+      } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 's' || formatArr[i] === 'ss') {
+        newDate.second = dateArr[i];
+      } else if (dateArr[i].slice(-2) === 'st' || dateArr[i].slice(-2) === 'nd' || dateArr[i].slice(-2) === 'th' && formatArr[i] === 'Do') {
+        newDate.second = Number(dateArr[i].slice(0, -2));
+      }
     }
+  } else {
+    throw new Error('The numbers and the formats must be in place, so when we check the length of both of these arguments then the result will be the same');
   }
 
-  if (_typeof(dateVal) === 'object' && Array.isArray(dateVal)) {
-    newDate = new Date(Date.UTC.apply(Date, _toConsumableArray(dateVal)));
-  }
-
-  return newDate;
+  return new Date(newDate.year, newDate.month, newDate.day, newDate.hour, newDate.minute, newDate.second, newDate.millisecond).toString();
 };
 
 var utc = function utc() {
@@ -1354,7 +1512,10 @@ var daysInMonth = function daysInMonth() {
     dateArg[_key] = arguments[_key];
   }
 
-  if (!dateArg) return;
+  if (!dateArg && dateArg.length <= 0) {
+    throw new Error('You need to input the year numbers on argument 1 and the month numbers on argument 2');
+  }
+
   var commonDays = [28, 29, 30, 31];
   var numOfDays = new Date(dateArg[0], dateArg[1], 0).getDate();
   var filterNumDays = commonDays.includes(numOfDays) ? numOfDays : 31;
@@ -1372,13 +1533,15 @@ var daysInMonth = function daysInMonth() {
 
   return newObj;
 };
-
 var daysInUTCMonth = function daysInUTCMonth() {
   for (var _len2 = arguments.length, dateArg = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
     dateArg[_key2] = arguments[_key2];
   }
 
-  if (!dateArg) return;
+  if (!dateArg && dateArg.length <= 0) {
+    throw new Error('You need to input the year numbers on argument 1 and the month numbers on argument 2');
+  }
+
   var commonDays = [28, 29, 30, 31];
   var numOfDays = new Date(Date.UTC(dateArg[0], dateArg[1], 0)).getUTCDate();
   var filterNumDays = commonDays.includes(numOfDays) ? numOfDays : 31;
@@ -1423,6 +1586,55 @@ var calendarUTC = function calendarUTC(dateArg1, dateArg2) {
   return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
 };
 
+var monthName = function monthName() {
+  var monthNum = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var locale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'en-US';
+  var monthType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'long';
+  var arrMonthName = [];
+
+  if (typeof monthNum === 'number' && monthNum >= 0 && monthNum <= 11) {
+    var thisDate = new Date(Date.UTC(2021, monthNum));
+    arrMonthName = new Intl.DateTimeFormat(locale, {
+      month: monthType
+    }).format(thisDate);
+  } else {
+    for (var i = 0; i <= 11; i++) {
+      var _thisDate = new Date(Date.UTC(2021, i));
+
+      arrMonthName.push(new Intl.DateTimeFormat(locale, {
+        month: monthType
+      }).format(_thisDate));
+    }
+  }
+
+  return arrMonthName;
+};
+var dayName = function dayName() {
+  var dayNum = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+  var monthNum = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var yearNum = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 2021;
+  var locale = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'en-US';
+  var dayType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'long';
+  var arrDayName = [];
+
+  if (typeof dayNum === 'number' && dayNum >= 1 && dayNum <= 31) {
+    var thisDate = new Date(Date.UTC(yearNum, Number(monthNum) - 1, dayNum));
+    arrDayName = new Intl.DateTimeFormat(locale, {
+      weekday: dayType
+    }).format(thisDate);
+  } else {
+    for (var i = 4; i <= 10; i++) {
+      var _thisDate2 = new Date(Date.UTC(2021, 3, i));
+
+      arrDayName.push(new Intl.DateTimeFormat(locale, {
+        weekday: dayType
+      }).format(_thisDate2));
+    }
+  }
+
+  return arrDayName;
+};
+
 var date = {
   now: now,
   parse: parse,
@@ -1430,7 +1642,9 @@ var date = {
   daysInMonth: daysInMonth,
   daysInUTCMonth: daysInUTCMonth,
   calendar: calendar,
-  calendarUTC: calendarUTC
+  calendarUTC: calendarUTC,
+  monthName: monthName,
+  dayName: dayName
 };
 
 var size = function size(bytes, decimalPoint) {
