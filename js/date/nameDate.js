@@ -1,4 +1,4 @@
-export const monthName = (monthNum = null, locale = 'en-US', monthType = 'long') => {
+export const monthName = (locale = 'en-US', monthType = 'long', monthNum = null) => {
   let arrMonthName = []
   if(typeof monthNum === 'number' && monthNum >= 0 && monthNum <= 11) {
     const thisDate = new Date(Date.UTC(2021, monthNum))
@@ -12,7 +12,7 @@ export const monthName = (monthNum = null, locale = 'en-US', monthType = 'long')
   return arrMonthName
 }
 
-export const dayName = (dayNum = null, monthNum = 1, yearNum = 2021, locale = 'en-US', dayType = 'long') => {
+export const dayName = (locale = 'en-US', dayType = 'long', yearNum = 2021, monthNum = 1, dayNum = null) => {
   let arrDayName = []
   if(typeof dayNum === 'number' && dayNum >= 1 && dayNum <= 31) {
     const thisDate = new Date(Date.UTC(yearNum, Number(monthNum) - 1, dayNum))

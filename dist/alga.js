@@ -36,7 +36,7 @@ var loop = function loop(fromNum, toNum) {
 
   var arrNum = [];
 
-  while (fromNum < toNum) {
+  while (fromNum <= toNum) {
     arrNum.push(fromNum++);
   }
 
@@ -1560,36 +1560,10 @@ var daysInUTCMonth = function daysInUTCMonth() {
   return newObj;
 };
 
-var calendar = function calendar(dateArg1, dateArg2) {
-  var dayArr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  if (!dateArg1) return;
-  if (!dateArg2) return;
-  var dayNames = dayArr.length === 7 ? dayArr : DAY_NAMES;
-  var currentMonth = daysInMonth(dateArg1, dateArg2);
-  var beforeMonth = daysInMonth(dateArg1, Number(Number(dateArg2) - 1));
-  var sliceBeforeMonth = beforeMonth.value.slice(Number('-' + currentMonth.start));
-  var afterMonth = daysInMonth(dateArg1, Number(Number(dateArg2) + 1));
-  var sliceAfterMonth = afterMonth.value.slice(0, 6 - Number(currentMonth.end));
-  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
-};
-
-var calendarUTC = function calendarUTC(dateArg1, dateArg2) {
-  var dayArr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
-  if (!dateArg1) return;
-  if (!dateArg2) return;
-  var dayNames = dayArr.length === 7 ? dayArr : DAY_NAMES;
-  var currentMonth = daysInUTCMonth(dateArg1, dateArg2);
-  var beforeMonth = daysInUTCMonth(dateArg1, Number(Number(dateArg2) - 1));
-  var sliceBeforeMonth = beforeMonth.value.slice(Number('-' + currentMonth.start));
-  var afterMonth = daysInUTCMonth(dateArg1, Number(Number(dateArg2) + 1));
-  var sliceAfterMonth = afterMonth.value.slice(0, 6 - Number(currentMonth.end));
-  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
-};
-
 var monthName = function monthName() {
-  var monthNum = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  var locale = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'en-US';
-  var monthType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'long';
+  var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en-US';
+  var monthType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
+  var monthNum = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
   var arrMonthName = [];
 
   if (typeof monthNum === 'number' && monthNum >= 0 && monthNum <= 11) {
@@ -1610,11 +1584,11 @@ var monthName = function monthName() {
   return arrMonthName;
 };
 var dayName = function dayName() {
-  var dayNum = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
-  var monthNum = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en-US';
+  var dayType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
   var yearNum = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 2021;
-  var locale = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'en-US';
-  var dayType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'long';
+  var monthNum = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+  var dayNum = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
   var arrDayName = [];
 
   if (typeof dayNum === 'number' && dayNum >= 1 && dayNum <= 31) {
@@ -1633,6 +1607,46 @@ var dayName = function dayName() {
   }
 
   return arrDayName;
+};
+
+var calendar = function calendar(yearArg, monthArg) {
+  var dayNameIn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+
+  if (typeof yearArg !== 'string' && typeof yearArg !== 'number') {
+    throw new Error('Only accept year numbers here, also support string type');
+  }
+
+  if (typeof monthArg !== 'string' && typeof monthArg !== 'number') {
+    throw new Error('For month, only accept number and string type');
+  }
+
+  var dayNames = dayName(dayNameIn);
+  var currentMonth = daysInMonth(yearArg, monthArg);
+  var beforeMonth = daysInMonth(yearArg, Number(Number(monthArg) - 1));
+  var sliceBeforeMonth = Number(currentMonth.start) !== 0 ? beforeMonth.value.slice(Number('-' + currentMonth.start)) : [];
+  var afterMonth = daysInMonth(yearArg, Number(Number(monthArg) + 1));
+  var sliceAfterMonth = Number(currentMonth.start) !== 6 ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : [];
+  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
+};
+
+var calendarUTC = function calendarUTC(yearArg, monthArg) {
+  var dayNameIn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+
+  if (typeof yearArg !== 'string' && typeof yearArg !== 'number') {
+    throw new Error('Only accept year numbers here, also support string type');
+  }
+
+  if (typeof monthArg !== 'string' && typeof monthArg !== 'number') {
+    throw new Error('For month, only accept number and string type');
+  }
+
+  var dayNames = dayName(dayNameIn);
+  var currentMonth = daysInUTCMonth(yearArg, monthArg);
+  var beforeMonth = daysInUTCMonth(yearArg, Number(Number(monthArg) - 1));
+  var sliceBeforeMonth = Number(currentMonth.start) !== 0 ? beforeMonth.value.slice(Number('-' + currentMonth.start)) : [];
+  var afterMonth = daysInUTCMonth(yearArg, Number(Number(monthArg) + 1));
+  var sliceAfterMonth = Number(currentMonth.start) !== 6 ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : [];
+  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
 };
 
 var date = {
