@@ -1126,9 +1126,263 @@ var sum = function sum(oriArr) {
   return sumNum;
 };
 
-function isArray(arg) {
+var isArray = function isArray(arg) {
   return _typeof(arg) === 'object' && arg !== null && Array.isArray(arg) ? true : false;
-}
+};
+var isSuperset = function isSuperset(oriArr, subArr) {
+  if (!isArray(oriArr) && !isArray(subArr)) {
+    throw new Error('The both of arguments must be in arrays');
+  }
+
+  var set = new Set(oriArr);
+
+  var _iterator = _createForOfIteratorHelper(subArr),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var sub = _step.value;
+
+      if (!set.has(sub)) {
+        return false;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return true;
+};
+
+var union = function union() {
+  for (var _len = arguments.length, restArg = new Array(_len), _key = 0; _key < _len; _key++) {
+    restArg[_key] = arguments[_key];
+  }
+
+  if (!restArg && restArg.length <= 1) {
+    throw new Error('You have to provide here at least 2 arguments');
+  }
+
+  var set = new Set();
+
+  for (var _i = 0, _restArg = restArg; _i < _restArg.length; _i++) {
+    var arr = _restArg[_i];
+
+    if (isArray(arr)) {
+      arr.forEach(function (item) {
+        if (!set.has(item)) {
+          set.add(item);
+        }
+      });
+    } else {
+      if (!set.has(arr)) {
+        set.add(arr);
+      }
+    }
+  }
+
+  return Array.from(set);
+};
+
+var countDuplication = function countDuplication(arrArg) {
+  if (!isArray(arrArg)) {
+    throw new Error('This argument only accept array');
+  }
+
+  var newObj = {};
+  var newSet = new Set();
+
+  var _iterator = _createForOfIteratorHelper(new Set(arrArg)),
+      _step;
+
+  try {
+    var _loop = function _loop() {
+      var setItem = _step.value;
+      var tempArr = Array.from(arrArg).filter(function (filterItem) {
+        return filterItem === setItem;
+      });
+
+      if (!newSet.has(tempArr.length)) {
+        newSet.add(tempArr.length);
+        newObj[tempArr.length] = [];
+      }
+
+      tempArr.forEach(function (arrItem) {
+        newObj[tempArr.length].push(arrItem);
+      });
+    };
+
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return newObj;
+};
+
+var intersection = function intersection() {
+  for (var _len = arguments.length, restArg = new Array(_len), _key = 0; _key < _len; _key++) {
+    restArg[_key] = arguments[_key];
+  }
+
+  if (!restArg && restArg.length <= 1) {
+    throw new Error('You have to provide here at least 2 arguments');
+  }
+
+  var newArr = [];
+  var obj = {};
+  restArg.forEach(function (arr, index) {
+    if (isArray(arr)) {
+      obj[index] = new Set(arr);
+    } else {
+      obj[index] = new Set().add(arr);
+    }
+
+    if (index !== 0) {
+      var _iterator = _createForOfIteratorHelper(arr),
+          _step;
+
+      try {
+        for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var item = _step.value;
+
+          if (obj[index - 1].has(item)) {
+            newArr.push(item);
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+  });
+  var filter = countDuplication(newArr);
+  return Array.from(new Set(filter[restArg.length - 1]));
+};
+
+var difference = function difference() {
+  for (var _len = arguments.length, restArg = new Array(_len), _key = 0; _key < _len; _key++) {
+    restArg[_key] = arguments[_key];
+  }
+
+  if (!restArg && restArg.length <= 1) {
+    throw new Error('You have to provide here at least 2 arguments');
+  }
+
+  var set = new Set();
+  var interArr = intersection.apply(void 0, restArg);
+  restArg.forEach(function (arr) {
+    if (!isArray(arr)) {
+      throw new Error('Here only accept arrays from all arguments');
+    }
+
+    var _iterator = _createForOfIteratorHelper(arr),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var item = _step.value;
+
+        if (!interArr.includes(item) && !set.has(item)) {
+          set.add(item);
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  });
+  return Array.from(set);
+};
+var asymmetricDifference = function asymmetricDifference() {
+  for (var _len2 = arguments.length, restArg = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    restArg[_key2] = arguments[_key2];
+  }
+
+  if (!restArg && restArg.length <= 1) {
+    throw new Error('You have to provide here at least 2 arguments');
+  }
+
+  var set = new Set();
+  var temp = [];
+
+  for (var _i = 0, _restArg = restArg; _i < _restArg.length; _i++) {
+    var arr = _restArg[_i];
+
+    if (!isArray(arr)) {
+      throw new Error('Here only accept arrays from all arguments');
+    }
+
+    arr.forEach(function (item) {
+      if (set.has(item)) {
+        set["delete"](item);
+        temp.push(item);
+      } else {
+        if (!temp.includes(item)) {
+          set.add(item);
+        }
+      }
+    });
+  }
+
+  return Array.from(set);
+};
+var complement = function complement() {
+  for (var _len3 = arguments.length, restArg = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+    restArg[_key3] = arguments[_key3];
+  }
+
+  if (!restArg && restArg.length <= 1) {
+    throw new Error('You have to provide here at least 1 value');
+  }
+
+  var restArr = Array.from(restArg);
+  restArr.shift();
+  var set = new Set(without.apply(void 0, [restArg[0]].concat(_toConsumableArray(restArr))));
+  return Array.from(set);
+};
+var without = function without(arrArg) {
+  for (var _len4 = arguments.length, restArg = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+    restArg[_key4 - 1] = arguments[_key4];
+  }
+
+  if (!isArray(arrArg) && arrArg.length <= 0) {
+    throw new Error('You need to provide more values to your array');
+  }
+
+  if (!restArg && restArg.length <= 0) {
+    throw new Error('You have to provide here at least 1 value');
+  }
+
+  var arr = [];
+
+  var _iterator2 = _createForOfIteratorHelper(arrArg),
+      _step2;
+
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var item = _step2.value;
+
+      if (!restArg.flat().includes(item)) {
+        arr.push(item);
+      }
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+
+  return arr;
+};
 
 var array = {
   insert: insert,
@@ -1153,7 +1407,14 @@ var array = {
   pagination: pagination,
   sum: sum,
   unique: unique,
-  isArray: isArray
+  isArray: isArray,
+  isSuperset: isSuperset,
+  union: union,
+  intersection: intersection,
+  difference: difference,
+  asymmetricDifference: asymmetricDifference,
+  complement: complement,
+  without: without
 };
 
 var remove = function remove() {
@@ -1622,9 +1883,9 @@ var calendar = function calendar(yearArg, monthArg) {
 
   var dayNames = dayName(dayNameIn);
   var currentMonth = daysInMonth(yearArg, monthArg);
-  var beforeMonth = daysInMonth(yearArg, Number(Number(monthArg) - 1));
+  var beforeMonth = Number(Number(monthArg) - 1) < 1 ? daysInMonth(Number(yearArg - 1), 12) : daysInMonth(yearArg, Number(Number(monthArg) - 1));
   var sliceBeforeMonth = Number(currentMonth.start) !== 0 ? beforeMonth.value.slice(Number('-' + currentMonth.start)) : [];
-  var afterMonth = daysInMonth(yearArg, Number(Number(monthArg) + 1));
+  var afterMonth = Number(Number(monthArg) + 1) > 12 ? daysInMonth(Number(yearArg + 1), 1) : daysInMonth(yearArg, Number(Number(monthArg) + 1));
   var sliceAfterMonth = Number(currentMonth.start) !== 6 ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : [];
   return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
 };
@@ -1642,9 +1903,9 @@ var calendarUTC = function calendarUTC(yearArg, monthArg) {
 
   var dayNames = dayName(dayNameIn);
   var currentMonth = daysInUTCMonth(yearArg, monthArg);
-  var beforeMonth = daysInUTCMonth(yearArg, Number(Number(monthArg) - 1));
+  var beforeMonth = Number(Number(monthArg) - 1) < 1 ? daysInUTCMonth(Number(yearArg - 1), 12) : daysInUTCMonth(yearArg, Number(Number(monthArg) - 1));
   var sliceBeforeMonth = Number(currentMonth.start) !== 0 ? beforeMonth.value.slice(Number('-' + currentMonth.start)) : [];
-  var afterMonth = daysInUTCMonth(yearArg, Number(Number(monthArg) + 1));
+  var afterMonth = Number(Number(monthArg) + 1) >= 12 ? daysInUTCMonth(Number(yearArg + 1), 1) : daysInUTCMonth(yearArg, Number(Number(monthArg) + 1));
   var sliceAfterMonth = Number(currentMonth.start) !== 6 ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : [];
   return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
 };

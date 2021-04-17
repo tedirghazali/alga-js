@@ -12,7 +12,10 @@ import { sort, sorted } from './sortedArray.js'
 import { paginate, pages, show, pagination } from './paginateArray.js'
 import { sum } from './sumArray.js'
 import { unique } from './uniqueArray.js'
-import isArray from './isArray.js'
+import { isArray, isSuperset } from './isArray.js'
+import { union } from './unionArray.js'
+import { intersection } from './intersectionArray.js'
+import { difference, asymmetricDifference, complement, without } from './differenceArray.js'
 
 export {
   insert,
@@ -37,5 +40,12 @@ export {
   pagination,
   sum,
   unique,
-  isArray
+  isArray,
+  isSuperset,
+  union,
+  intersection,
+  difference, 
+  asymmetricDifference, 
+  complement, 
+  without
 }

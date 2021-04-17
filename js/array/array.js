@@ -21,7 +21,14 @@ import {
   pagination,
   sum,
   unique,
-  isArray
+  isArray,
+  isSuperset,
+  union,
+  intersection,
+  difference, 
+  asymmetricDifference, 
+  complement, 
+  without
 } from './arrayLib.js'
 
 export default {
@@ -47,5 +54,12 @@ export default {
   pagination,
   sum,
   unique,
-  isArray
+  isArray,
+  isSuperset,
+  union,
+  intersection,
+  difference, 
+  asymmetricDifference, 
+  complement, 
+  without
 }
