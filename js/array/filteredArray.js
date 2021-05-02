@@ -1,4 +1,4 @@
-const filtered = (...filterStr) => {
+export const filtered = (...filterStr) => {
   if(!filterStr) return
   return (fromArr, whereArr) => {
     if(typeof fromArr !== 'object') return
@@ -23,8 +23,4 @@ const filtered = (...filterStr) => {
     
     return filteredArray
   }
-}
-
-export {
-  filtered
 }

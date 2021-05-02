@@ -826,7 +826,6 @@ var search = function search() {
     return filteredArray;
   };
 };
-
 var searchBy = function searchBy() {
   for (var _len2 = arguments.length, filterStr = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
     filterStr[_key2] = arguments[_key2];
@@ -857,6 +856,9 @@ var searchBy = function searchBy() {
     return filteredArray;
   };
 };
+/*export const find = (...findStr) => {
+  
+}*/
 
 var filtered = function filtered() {
   for (var _len = arguments.length, filterStr = new Array(_len), _key = 0; _key < _len; _key++) {

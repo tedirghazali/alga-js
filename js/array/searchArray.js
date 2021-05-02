@@ -1,6 +1,6 @@
 import { unique } from './uniqueArray.js'
 
-const search = (...searchStr) => {
+export const search = (...searchStr) => {
   if(!searchStr) return
   return (fromArr) => {
     if(typeof fromArr !== 'object') return
@@ -24,7 +24,7 @@ const search = (...searchStr) => {
   }
 }
 
-const searchBy = (...filterStr) => {
+export const searchBy = (...filterStr) => {
   if(!filterStr) return
   return (fromArr, whereArr) => {
     if(typeof fromArr !== 'object') return
@@ -50,7 +50,6 @@ const searchBy = (...filterStr) => {
   }
 }
 
-export {
-  search,
-  searchBy
-}
+/*export const find = (...findStr) => {
+  
+}*/
