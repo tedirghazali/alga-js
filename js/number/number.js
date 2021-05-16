@@ -1,9 +1,7 @@
-import {
-  random,
-  loop
-} from './numberLib.js'
+import { random } from './randomNumber.js'
+import { loop } from './loopNumber.js'
 
-export default {
+export {
   random,
   loop
 }

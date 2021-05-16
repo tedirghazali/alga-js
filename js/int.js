@@ -3,6 +3,6 @@ const random = (max = 255) => {
   return Math.floor(Math.random() * maxNum);
 }
 
-export default {
+export {
   random
 }

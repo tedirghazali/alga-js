@@ -36,7 +36,7 @@ export default [
     plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
   },
   {
-    input: 'js/array/arrayLib.js',
+    input: 'js/array/array.js',
     output: {
       file: 'lib/array.js',
       format: 'es',
@@ -45,7 +45,7 @@ export default [
     plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
   },
   {
-    input: 'js/object/objectLib.js',
+    input: 'js/object/object.js',
     output: {
       file: 'lib/object.js',
       format: 'es',
@@ -54,7 +54,7 @@ export default [
     plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
   },
   {
-    input: 'js/string/stringLib.js',
+    input: 'js/string/string.js',
     output: {
       file: 'lib/string.js',
       format: 'es',
@@ -63,7 +63,7 @@ export default [
     plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
   },
   {
-    input: 'js/date/dateLib.js',
+    input: 'js/date/date.js',
     output: {
       file: 'lib/date.js',
       format: 'es',
@@ -72,7 +72,7 @@ export default [
     plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
   },
   {
-    input: 'js/number/numberLib.js',
+    input: 'js/number/number.js',
     output: {
       file: 'lib/number.js',
       format: 'es',

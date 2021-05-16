@@ -1,11 +1,7 @@
-import {
-  remove,
-  removeBy,
-  merge,
-  replace
-} from './objectLib.js'
+import { remove, removeBy } from './removeObject.js'
+import { merge, replace } from './mergeObject.js'
 
-export default {
+export {
   remove,
   removeBy,
   merge,
