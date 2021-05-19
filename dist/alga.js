@@ -4,9 +4,10 @@ var random = function random() {
   return Math.floor(Math.random() * maxNum);
 };
 
-var int = {
+var int = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   random: random
-};
+});
 
 var random$1 = function random() {
   var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
@@ -43,10 +44,11 @@ var loop = function loop(fromNum, toNum) {
   return arrNum;
 };
 
-var number = {
+var number = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   random: random$1,
   loop: loop
-};
+});
 
 var random$2 = function random() {
   var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
@@ -67,9 +69,10 @@ var random$2 = function random() {
   return outputChar;
 };
 
-var char = {
+var char = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   random: random$2
-};
+});
 
 var split = function split(str) {
   var splitString = function splitString(start) {
@@ -115,10 +118,11 @@ var capitalize = function capitalize(str) {
   return capStr;
 };
 
-var string = {
+var string = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   split: split,
   capitalize: capitalize
-};
+});
 
 function _typeof(obj) {
   "@babel/helpers - typeof";
@@ -1386,7 +1390,105 @@ var without = function without(arrArg) {
   return arr;
 };
 
-var array = {
+var transpose = function transpose() {
+  for (var _len = arguments.length, restArr = new Array(_len), _key = 0; _key < _len; _key++) {
+    restArr[_key] = arguments[_key];
+  }
+
+  if (restArr.length <= 2) {
+    throw new Error('You have to provide at least 2 arguments, both in arrays with the same length');
+  }
+
+  var newObj = {};
+  var lengthArr = restArr[0].length;
+
+  for (var i = 0; i < lengthArr; i++) {
+    newObj[i] = [];
+  }
+
+  for (var _i = 0, _restArr = restArr; _i < _restArr.length; _i++) {
+    var varArr = _restArr[_i];
+    varArr.forEach(function (item, ind) {
+      if (String(ind) in newObj) {
+        newObj[ind].push(item);
+      }
+    });
+  }
+
+  return Object.values(newObj);
+};
+
+var zip = function zip() {
+  for (var _len = arguments.length, restArr = new Array(_len), _key = 0; _key < _len; _key++) {
+    restArr[_key] = arguments[_key];
+  }
+
+  if (restArr.length <= 2) {
+    throw new Error('You have to provide at least 2 arguments, both in arrays with the same length');
+  }
+
+  var oriArr = Array.from(restArr);
+  var newArr = [];
+  var firstArr = oriArr.shift();
+
+  var _iterator = _createForOfIteratorHelper(transpose.apply(void 0, _toConsumableArray(oriArr))),
+      _step;
+
+  try {
+    var _loop = function _loop() {
+      var varArr = _step.value;
+      var newMap = new Map();
+      varArr.forEach(function (item, ind) {
+        if (firstArr[ind]) {
+          newMap.set(firstArr[ind], item);
+        }
+      });
+      newArr.push(Object.fromEntries(newMap));
+    };
+
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop();
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return newArr;
+};
+
+var unzip = function unzip() {
+  for (var _len = arguments.length, restArr = new Array(_len), _key = 0; _key < _len; _key++) {
+    restArr[_key] = arguments[_key];
+  }
+
+  if (restArr.length <= 2) {
+    throw new Error('You have to provide at least 2 arguments, both in arrays with the same length');
+  }
+
+  var oriArr = Array.from(restArr);
+  var objKeys = Object.keys(oriArr[0]);
+  var newObj = {};
+
+  for (var _i = 0, _objKeys = objKeys; _i < _objKeys.length; _i++) {
+    var key = _objKeys[_i];
+    newObj[key] = [];
+  }
+
+  for (var _i2 = 0, _oriArr = oriArr; _i2 < _oriArr.length; _i2++) {
+    var obj = _oriArr[_i2];
+
+    for (var prop in obj) {
+      newObj[prop].push(obj[prop]);
+    }
+  }
+
+  return [objKeys].concat(_toConsumableArray(Object.values(newObj)));
+};
+
+var array = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   insert: insert,
   insertBefore: insertBefore,
   insertAfter: insertAfter,
@@ -1416,8 +1518,11 @@ var array = {
   difference: difference,
   asymmetricDifference: asymmetricDifference,
   complement: complement,
-  without: without
-};
+  without: without,
+  transpose: transpose,
+  zip: zip,
+  unzip: unzip
+});
 
 var remove = function remove() {
   for (var _len = arguments.length, propKey = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -1481,12 +1586,13 @@ var removeBy = function removeBy() {
   };
 };
 
-var object = {
+var object = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   remove: remove,
   removeBy: removeBy,
   merge: merge,
   replace: replace
-};
+});
 
 var REGEX_PARSE_DATE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
 var REGEX_DATE_FORMAT = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
@@ -1912,7 +2018,8 @@ var calendarUTC = function calendarUTC(yearArg, monthArg) {
   return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
 };
 
-var date = {
+var date = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   now: now,
   parse: parse,
   utc: utc,
@@ -1922,7 +2029,7 @@ var date = {
   calendarUTC: calendarUTC,
   monthName: monthName,
   dayName: dayName
-};
+});
 
 var size = function size(bytes, decimalPoint) {
   if (bytes === 0) return '0 Bytes';
@@ -2182,7 +2289,8 @@ var printed = function printed(oriArr) {
   w.print();
 };
 
-var file = {
+var file = /*#__PURE__*/Object.freeze({
+  __proto__: null,
   size: size,
   name: name,
   type: type,
@@ -2194,6 +2302,6 @@ var file = {
   exported: exported,
   download: download,
   printed: printed
-};
+});
 
 export { array as $array, char as $char, date as $date, file as $file, int as $int, number as $number, object as $object, string as $string };

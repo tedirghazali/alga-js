@@ -16,6 +16,9 @@ import { isArray, isSuperset } from './isArray.js'
 import { union } from './unionArray.js'
 import { intersection } from './intersectionArray.js'
 import { difference, asymmetricDifference, complement, without } from './differenceArray.js'
+import { transpose } from './transposeArray.js'
+import { zip } from './zipArray.js'
+import { unzip } from './unzipArray.js'
 
 export {
   insert,
@@ -47,5 +50,8 @@ export {
   difference, 
   asymmetricDifference, 
   complement, 
-  without
+  without,
+  transpose,
+  zip,
+  unzip
 }
