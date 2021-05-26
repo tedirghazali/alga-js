@@ -1,3 +1,5 @@
+import { isNegative, isPositive } from '../number/isNumber.js'
+
 export const range = (...restArg) => {
   if(restArg.length === 0 || restArg.length >= 4) {
     throw new Error('Here only accept 3 arguments, so you have to provide at least 1 argument')
@@ -7,36 +9,59 @@ export const range = (...restArg) => {
   const endNum = (restArg.length >= 2)? Number(restArg[1]) : Number(restArg[0])
   let stepNum = (restArg.length === 3)? Number(restArg[2]) : 1
   
-  const newArr = []
-  if(startNum === 0) {
-    newArr.push(0)
+  if(restArg.length < 3 && isNegative(endNum)) {
+    stepNum = -1
   }
   
+  const newArr = []
   let loopNum = 0
   let result = 0
   
-  if(startNum <= endNum) {
-    loopNum = loopNum
+  if(isNegative(startNum) && isPositive(endNum)) {
+    loopNum = startNum - 1
+  } else if(isPositive(startNum) && isNegative(endNum)) {
+    loopNum = startNum + 1
+  } else if(isPositive(startNum) && isPositive(endNum)) {
+    loopNum = startNum - 1
+  } else if(isNegative(startNum) && isNegative(endNum)) {
+    loopNum = startNum + 1
+  }
+  
+  if(loopNum < endNum) {
     while(loopNum < endNum) {
       loopNum++
-      result += stepNum
-      if(result < endNum) {
-        newArr.push(result)
+      if(stepNum > 1) {
+        result += stepNum
+        if(result < endNum) {
+          newArr.push(result)
+        }
+      } else {
+        if(loopNum < endNum) {
+          newArr.push(loopNum)
+        }
       }
     }
-  } else {
-    loopNum = endNum
-    if(stepNum === 1) {
-      stepNum = -1
+    if(startNum === 0 && !newArr.includes(0)) {
+      newArr.unshift(0)
     }
-    while(loopNum < startNum) {
-      loopNum++
-      result = result + stepNum
-      if(result > endNum) {
-        newArr.push(result)
+  } else if(loopNum > endNum) {
+    while(loopNum > endNum) {
+      loopNum--
+      if(stepNum < -1) {
+        result -= stepNum
+        if(result > endNum) {
+          newArr.unshift(result)
+        }
+      } else {
+        if(loopNum > endNum) {
+          newArr.unshift(loopNum)
+        }
       }
+    }
+    if(startNum === 0 && !newArr.includes(0)) {
+      newArr.push(0)
     }
   }
   
-  return newArr
+  return (newArr.length === 1 && newArr[0] === 0) ? [] : newArr
 }
