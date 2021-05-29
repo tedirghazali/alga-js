@@ -19,6 +19,9 @@ import { difference, asymmetricDifference, complement, without } from './differe
 import { transpose } from './transposeArray.js'
 import { zip } from './zipArray.js'
 import { unzip } from './unzipArray.js'
+import { range } from './rangeArray.js'
+import { move, switched, transfer } from './moveArray.js'
+import { compact } from './compactArray.js'
 
 export {
   insert,
@@ -53,5 +56,10 @@ export {
   without,
   transpose,
   zip,
-  unzip
+  unzip,
+  range,
+  move,
+  switched,
+  transfer,
+  compact
 }

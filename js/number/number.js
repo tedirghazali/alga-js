@@ -1,8 +1,11 @@
 import { random } from './randomNumber.js'
 import { loop } from './loopNumber.js'
-import { isPositive, isNegative } from './isNumber.js'
+import { isNumber, isPositive, isNegative } from './isNumber.js'
 
 export {
   random,
-  loop
+  loop,
+  isNumber, 
+  isPositive, 
+  isNegative
 }

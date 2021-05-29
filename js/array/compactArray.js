@@ -6,5 +6,5 @@ export const compact = (argArr) => {
   }
   
   const newArr = Array.from(argArr)
-  return newArr.filter(val => val !== undefined && val !== null && val !== false && val !== NaN && val !== "" && val > 0)
+  return newArr.filter(val => val !== undefined && val !== null && val !== false && !isNaN(val) && val !== "" && val > 0)
 }

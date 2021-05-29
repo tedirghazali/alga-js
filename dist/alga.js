@@ -44,10 +44,31 @@ var loop = function loop(fromNum, toNum) {
   return arrNum;
 };
 
+var isNumber = function isNumber(numArg) {
+  return typeof numArg === 'number' || !isNaN(numArg) ? true : false;
+};
+var isPositive = function isPositive(numArg) {
+  if (typeof numArg !== 'number' && typeof numArg !== 'string') {
+    throw new Error('You must input only number format here');
+  }
+
+  return Math.sign(numArg) === 1 ? true : false;
+};
+var isNegative = function isNegative(numArg) {
+  if (typeof numArg !== 'number' && typeof numArg !== 'string') {
+    throw new Error('You must input only number format here');
+  }
+
+  return Math.sign(numArg) === -1 ? true : false;
+};
+
 var number = /*#__PURE__*/Object.freeze({
   __proto__: null,
   random: random$1,
-  loop: loop
+  loop: loop,
+  isNumber: isNumber,
+  isPositive: isPositive,
+  isNegative: isNegative
 });
 
 var random$2 = function random() {
@@ -1487,6 +1508,221 @@ var unzip = function unzip() {
   return [objKeys].concat(_toConsumableArray(Object.values(newObj)));
 };
 
+var range = function range() {
+  if (arguments.length === 0 || arguments.length >= 4) {
+    throw new Error('Here only accept 3 arguments, so you have to provide at least 1 argument');
+  }
+
+  var startNum = arguments.length === 1 ? 0 : Number(arguments.length <= 0 ? undefined : arguments[0]);
+  var endNum = arguments.length >= 2 ? Number(arguments.length <= 1 ? undefined : arguments[1]) : Number(arguments.length <= 0 ? undefined : arguments[0]);
+  var stepNum = arguments.length === 3 ? Number(arguments.length <= 2 ? undefined : arguments[2]) : 1;
+
+  if (arguments.length < 3 && isNegative(endNum)) {
+    stepNum = -1;
+  }
+
+  var newArr = [];
+  var loopNum = 0;
+  var result = 0;
+
+  if (isNegative(startNum) && isPositive(endNum)) {
+    loopNum = startNum - 1;
+  } else if (isPositive(startNum) && isNegative(endNum)) {
+    loopNum = startNum + 1;
+  } else if (isPositive(startNum) && isPositive(endNum)) {
+    loopNum = startNum - 1;
+  } else if (isNegative(startNum) && isNegative(endNum)) {
+    loopNum = startNum + 1;
+  }
+
+  if (loopNum < endNum) {
+    while (loopNum < endNum) {
+      loopNum++;
+
+      if (stepNum > 1) {
+        result += stepNum;
+
+        if (result < endNum) {
+          newArr.push(result);
+        }
+      } else {
+        if (loopNum < endNum) {
+          newArr.push(loopNum);
+        }
+      }
+    }
+
+    if (startNum === 0 && !newArr.includes(0)) {
+      newArr.unshift(0);
+    }
+  } else if (loopNum > endNum) {
+    while (loopNum > endNum) {
+      loopNum--;
+
+      if (stepNum < -1) {
+        result -= stepNum;
+
+        if (result > endNum) {
+          newArr.unshift(result);
+        }
+      } else {
+        if (loopNum > endNum) {
+          newArr.unshift(loopNum);
+        }
+      }
+    }
+
+    if (startNum === 0 && !newArr.includes(0)) {
+      newArr.push(0);
+    }
+  }
+
+  return newArr.length === 1 && newArr[0] === 0 ? [] : newArr;
+};
+
+var move = function move() {
+  for (var _len = arguments.length, indexes = new Array(_len), _key = 0; _key < _len; _key++) {
+    indexes[_key] = arguments[_key];
+  }
+
+  if (indexes.length === 0) {
+    throw new Error('Only accept index of array elements and you must input at least one index in number type');
+  }
+
+  return function (fromArr, toIndex) {
+    var removeCount = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+    if (!isArray(fromArr)) {
+      throw new Error('Please enter array only here');
+    }
+
+    if (!isNumber(toIndex)) {
+      throw new Error('Input only index number here');
+    }
+
+    var oriArr = Array.from(fromArr);
+    var tempArr = [];
+
+    var _iterator = _createForOfIteratorHelper(indexes),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var ind = _step.value;
+
+        if (oriArr[Number(ind)] !== undefined) {
+          tempArr.push(oriArr[Number(ind)]);
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    var newArr = destroy.apply(void 0, indexes)(oriArr);
+    newArr.splice.apply(newArr, [toIndex, removeCount].concat(tempArr));
+    return newArr;
+  };
+};
+var switched = function switched() {
+  for (var _len2 = arguments.length, fromIndex = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    fromIndex[_key2] = arguments[_key2];
+  }
+
+  if (fromIndex.length === 0) {
+    throw new Error('Accept index of array elements only and you add at least one index in number');
+  }
+
+  return function (fromArr) {
+    if (!isArray(fromArr)) {
+      throw new Error('Please enter array only here');
+    }
+
+    for (var _len3 = arguments.length, withIndex = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+      withIndex[_key3 - 1] = arguments[_key3];
+    }
+
+    if (withIndex.length === 0 && withIndex.length !== fromIndex.length && intersection(fromIndex, withIndex).length !== 0) {
+      throw new Error('Only accept index of array elements and the number of the first indexes must be the same as the second indexes and also, both indexes must be different');
+    }
+
+    var oriArr = Array.from(fromArr);
+    var newArr = Array.from(fromArr);
+
+    for (var i = 0; i < fromIndex.length; i++) {
+      if (fromIndex[i] !== undefined && withIndex[i] !== undefined) {
+        newArr.splice(fromIndex[i], 1, oriArr[withIndex[i]]);
+        newArr.splice(withIndex[i], 1, oriArr[fromIndex[i]]);
+      }
+    }
+
+    return newArr;
+  };
+};
+var transfer = function transfer() {
+  for (var _len4 = arguments.length, indexes = new Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+    indexes[_key4] = arguments[_key4];
+  }
+
+  if (indexes.length === 0) {
+    throw new Error('Only accept index of array elements and you must enter at least one index in number type');
+  }
+
+  return function (fromArr, toArr, byIndex) {
+    if (!isArray(fromArr)) {
+      throw new Error('Accept array only here');
+    }
+
+    if (!isArray(toArr)) {
+      throw new Error('Accept array only here');
+    }
+
+    if (!isNumber(byIndex)) {
+      throw new Error('Input only index number here');
+    }
+
+    var varFromArr = Array.from(fromArr);
+    var varToArr = Array.from(toArr);
+    var tempArr = [];
+
+    var _iterator2 = _createForOfIteratorHelper(indexes),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var ind = _step2.value;
+
+        if (varFromArr[Number(ind)] !== undefined) {
+          tempArr.push(varFromArr[Number(ind)]);
+        }
+      }
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+
+    varToArr.splice.apply(varToArr, [byIndex, 0].concat(tempArr));
+    var newArr = destroy.apply(void 0, indexes)(varFromArr);
+    return {
+      from: newArr,
+      to: varToArr
+    };
+  };
+};
+
+var compact = function compact(argArr) {
+  if (!isArray(argArr)) {
+    throw new Error('Enter only array type here');
+  }
+
+  var newArr = Array.from(argArr);
+  return newArr.filter(function (val) {
+    return val !== undefined && val !== null && val !== false && !isNaN(val) && val !== "" && val > 0;
+  });
+};
+
 var array = /*#__PURE__*/Object.freeze({
   __proto__: null,
   insert: insert,
@@ -1521,7 +1757,12 @@ var array = /*#__PURE__*/Object.freeze({
   without: without,
   transpose: transpose,
   zip: zip,
-  unzip: unzip
+  unzip: unzip,
+  range: range,
+  move: move,
+  switched: switched,
+  transfer: transfer,
+  compact: compact
 });
 
 var remove = function remove() {
