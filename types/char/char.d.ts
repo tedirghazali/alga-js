@@ -1,5 +1,2 @@
-declare namespace _default {
-    export { random };
-}
-export default _default;
+export { random };
 import { random } from "./randomChar.js";

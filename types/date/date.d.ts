@@ -1,21 +1,10 @@
-declare namespace _default {
-    export { now };
-    export { parse };
-    export { utc };
-    export { daysInMonth };
-    export { daysInUTCMonth };
-    export { calendar };
-    export { calendarUTC };
-    export { monthName };
-    export { dayName };
-}
-export default _default;
-import { now } from "./dateLib.js";
-import { parse } from "./dateLib.js";
-import { utc } from "./dateLib.js";
-import { daysInMonth } from "./dateLib.js";
-import { daysInUTCMonth } from "./dateLib.js";
-import { calendar } from "./dateLib.js";
-import { calendarUTC } from "./dateLib.js";
-import { monthName } from "./dateLib.js";
-import { dayName } from "./dateLib.js";
+import { now } from "./nowDate.js";
+import { parse } from "./parseDate.js";
+import { utc } from "./utcDate.js";
+import { daysInMonth } from "./daysInMonth.js";
+import { daysInUTCMonth } from "./daysInMonth.js";
+import { calendar } from "./calendarDate.js";
+import { calendarUTC } from "./calendarDate.js";
+import { monthName } from "./nameDate.js";
+import { dayName } from "./nameDate.js";
+export { now, parse, utc, daysInMonth, daysInUTCMonth, calendar, calendarUTC, monthName, dayName };

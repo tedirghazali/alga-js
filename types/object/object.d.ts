@@ -1,11 +1,5 @@
-declare namespace _default {
-    export { remove };
-    export { removeBy };
-    export { merge };
-    export { replace };
-}
-export default _default;
-import { remove } from "./objectLib.js";
-import { removeBy } from "./objectLib.js";
-import { merge } from "./objectLib.js";
-import { replace } from "./objectLib.js";
+import { remove } from "./removeObject.js";
+import { removeBy } from "./removeObject.js";
+import { merge } from "./mergeObject.js";
+import { replace } from "./mergeObject.js";
+export { remove, removeBy, merge, replace };

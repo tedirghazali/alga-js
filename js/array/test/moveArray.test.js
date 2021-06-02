@@ -9,6 +9,10 @@ test('Switch between array elements by index', () => {
 })
 
 test('Transfer multiple elements from one array to another', () => {
+  expect(transfer(2, 5, 4)(['a', 'b', 'c', 'd', 'e', 'f'], ['v', 'w', 'x', 'y', 'z'])).toEqual({
+    from: [ 'a', 'b', 'd' ],
+    to: ['v', 'w', 'x', 'y', 'z', 'c', 'f', 'e']
+  })
   expect(transfer(4, 5, 3)(['a', 'b', 'c', 'd', 'e', 'f'], ['v', 'w', 'x', 'y', 'z'], 2)).toEqual({
     from: ['a', 'b', 'c'],
     to: ['v', 'w', 'e', 'f', 'd', 'x', 'y', 'z']

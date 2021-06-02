@@ -1,7 +1,6 @@
-declare namespace _default {
-    export { random };
-    export { loop };
-}
-export default _default;
-import { random } from "./numberLib.js";
-import { loop } from "./numberLib.js";
+import { random } from "./randomNumber.js";
+import { loop } from "./loopNumber.js";
+import { isNumber } from "./isNumber.js";
+import { isPositive } from "./isNumber.js";
+import { isNegative } from "./isNumber.js";
+export { random, loop, isNumber, isPositive, isNegative };

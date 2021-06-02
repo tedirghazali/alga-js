@@ -62,7 +62,7 @@ export const transfer = (...indexes) => {
   if(indexes.length === 0) {
     throw new Error('Only accept index of array elements and you must enter at least one index in number type')
   }
-  return (fromArr, toArr, byIndex) => {
+  return (fromArr, toArr, byIndex = null) => {
     if(!isArray(fromArr)) {
       throw new Error('Accept array only here')
     }
@@ -83,7 +83,9 @@ export const transfer = (...indexes) => {
       }
     }
     
-    varToArr.splice(byIndex, 0, ...tempArr)
+    const byInd = (byIndex === null) ? Number(varToArr.length) : byIndex
+    
+    varToArr.splice(byInd, 0, ...tempArr)
     
     const newArr = destroy(...indexes)(varFromArr)
     

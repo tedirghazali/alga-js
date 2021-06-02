@@ -6,4 +6,4 @@ import * as array from "./array/array.js";
 import * as object from "./object/object.js";
 import * as date from "./date/date.js";
 import * as file from "./file/file.js";
-export { int, int as $int, number, number as $number, char, char as $char, string, string as $string, array, array as $array, object, object as $object, date, date as $date, file, file as $file };
+export { int, number, char, string, array, object, date, file };

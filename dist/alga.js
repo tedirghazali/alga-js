@@ -1669,7 +1669,9 @@ var transfer = function transfer() {
     throw new Error('Only accept index of array elements and you must enter at least one index in number type');
   }
 
-  return function (fromArr, toArr, byIndex) {
+  return function (fromArr, toArr) {
+    var byIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
     if (!isArray(fromArr)) {
       throw new Error('Accept array only here');
     }
@@ -1703,7 +1705,8 @@ var transfer = function transfer() {
       _iterator2.f();
     }
 
-    varToArr.splice.apply(varToArr, [byIndex, 0].concat(tempArr));
+    var byInd = byIndex === null ? Number(varToArr.length) : byIndex;
+    varToArr.splice.apply(varToArr, [byInd, 0].concat(tempArr));
     var newArr = destroy.apply(void 0, indexes)(varFromArr);
     return {
       from: newArr,
