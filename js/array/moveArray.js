@@ -24,7 +24,7 @@ export const move = (...indexes) => {
       }
     }
     
-    const newArr = destroy(...indexes)(oriArr)
+    const newArr = destroy(oriArr, ...indexes)
     
     newArr.splice(toIndex, removeCount, ...tempArr)
     
@@ -87,7 +87,7 @@ export const transfer = (...indexes) => {
     
     varToArr.splice(byInd, 0, ...tempArr)
     
-    const newArr = destroy(...indexes)(varFromArr)
+    const newArr = destroy(varFromArr, ...indexes)
     
     return {
       from: newArr,

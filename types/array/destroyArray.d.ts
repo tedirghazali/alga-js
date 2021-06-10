@@ -1,1 +1,1 @@
-export function destroy(...whereOpt: any[]): (oriArr: any) => any[];
+export function destroy(oriArr: any, ...whereOpt: any[]): any[];

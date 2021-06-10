@@ -5,7 +5,7 @@ import { select, hidden } from './selectArray.js'
 import { toggle } from './toggleArray.js'
 import { flatten } from './flattenArray.js'
 import { nested } from './nestedArray.js'
-import { index } from './indexArray.js'
+import { index, toIndex, randomIndex } from './indexArray.js'
 import { search, searchBy } from './searchArray.js'
 import { filtered } from './filteredArray.js'
 import { sort, sorted } from './sortedArray.js'
@@ -22,6 +22,7 @@ import { unzip } from './unzipArray.js'
 import { range } from './rangeArray.js'
 import { move, switched, transfer } from './moveArray.js'
 import { compact } from './compactArray.js'
+import { includes } from './includesArray.js'
 
 export {
   insert,
@@ -35,6 +36,8 @@ export {
   flatten,
   nested,
   index,
+  toIndex,
+  randomIndex,
   search, 
   searchBy, 
   filtered,
@@ -61,5 +64,6 @@ export {
   move,
   switched,
   transfer,
-  compact
+  compact,
+  includes
 }

@@ -139,10 +139,16 @@ var capitalize = function capitalize(str) {
   return capStr;
 };
 
+var includes = function includes(valueStr, searchStr) {
+  var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  return valueStr.indexOf(searchStr, position) !== -1 ? true : false;
+};
+
 var string = /*#__PURE__*/Object.freeze({
   __proto__: null,
   split: split,
-  capitalize: capitalize
+  capitalize: capitalize,
+  includes: includes
 });
 
 function _typeof(obj) {
@@ -403,11 +409,46 @@ var insertAfter = function insertAfter() {
   };
 };
 
+var isArray = function isArray(arg) {
+  return _typeof(arg) === 'object' && arg !== null && Array.isArray(arg) ? true : false;
+};
+var isSuperset = function isSuperset(oriArr, subArr) {
+  if (!isArray(oriArr) && !isArray(subArr)) {
+    throw new Error('The both of arguments must be in arrays');
+  }
+
+  var set = new Set(oriArr);
+
+  var _iterator = _createForOfIteratorHelper(subArr),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var sub = _step.value;
+
+      if (!set.has(sub)) {
+        return false;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return true;
+};
+
 var index = function index(indexArr) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
     key: 'id',
     value: 0
   };
+
+  if (!isArray(indexArr)) {
+    throw new Error('You must enter the first argument in array only');
+  }
+
   var indexedArray = Array.from(indexArr);
   var resultNum = -1;
 
@@ -432,6 +473,34 @@ var index = function index(indexArr) {
   }
 
   return resultNum;
+};
+var toIndex = function toIndex(fromArr) {
+  var typeStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'dense';
+
+  if (!isArray(fromArr)) {
+    throw new Error('You must enter the first argument in array only');
+  }
+
+  var resIndex = [];
+
+  if (typeStr === 'sparse') {
+    resIndex = Object.keys(fromArr).map(function (item) {
+      return Number(item);
+    });
+  } else {
+    resIndex = _toConsumableArray(fromArr.keys());
+  }
+
+  return resIndex;
+};
+var randomIndex = function randomIndex(fromIndexArr) {
+  if (!isArray(fromIndexArr)) {
+    throw new Error('You must enter the argument in array only');
+  }
+
+  var indexArr = toIndex(fromIndexArr);
+  var ranInd = Number(indexArr[Math.floor(Math.random() * indexArr.length)]);
+  return ranInd;
 };
 
 var merge = function merge() {
@@ -504,77 +573,66 @@ var update = function update(setObj) {
   };
 };
 
-var destroy = function destroy() {
-  for (var _len = arguments.length, whereOpt = new Array(_len), _key = 0; _key < _len; _key++) {
-    whereOpt[_key] = arguments[_key];
+var destroy = function destroy(oriArr) {
+  for (var _len = arguments.length, whereOpt = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    whereOpt[_key - 1] = arguments[_key];
   }
 
   if (!whereOpt) return;
-  return function (oriArr) {
-    if (_typeof(oriArr) !== 'object') return;
-    var oriArray = Array.from(oriArr);
-    var newArray = [];
+  if (_typeof(oriArr) !== 'object') return;
+  var oriArray = Array.from(oriArr);
+  var newArray = [];
 
-    var _iterator = _createForOfIteratorHelper(whereOpt),
-        _step;
+  var _loop = function _loop() {
+    var opt = _whereOpt[_i];
 
-    try {
-      var _loop = function _loop() {
-        var opt = _step.value;
-
-        if (typeof opt === 'string' && opt === 'first') {
-          oriArray = oriArray.map(function (obj, ind) {
-            if (ind === 0) {
-              return null;
-            } else {
-              return obj;
-            }
-          });
-          newArray = oriArray;
-        } else if (typeof opt === 'string' && opt === 'last') {
-          oriArray = oriArray.map(function (obj, ind) {
-            if (ind === oriArray.length - 1) {
-              return null;
-            } else {
-              return obj;
-            }
-          });
-          newArray = oriArray;
-        } else if (typeof opt === 'number') {
-          oriArray = oriArray.map(function (obj, ind) {
-            if (ind === opt) {
-              return null;
-            } else {
-              return obj;
-            }
-          });
-          newArray = oriArray;
-        } else if (_typeof(opt) === 'object' && opt !== null) {
-          var indx = index(oriArray, opt);
-          oriArray = oriArray.map(function (obj, ind) {
-            if (ind === indx) {
-              return null;
-            } else {
-              return obj;
-            }
-          });
-          newArray = oriArray;
+    if (typeof opt === 'string' && opt === 'first') {
+      oriArray = oriArray.map(function (obj, ind) {
+        if (ind === 0) {
+          return null;
+        } else {
+          return obj;
         }
-      };
-
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        _loop();
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
+      });
+      newArray = oriArray;
+    } else if (typeof opt === 'string' && opt === 'last') {
+      oriArray = oriArray.map(function (obj, ind) {
+        if (ind === oriArray.length - 1) {
+          return null;
+        } else {
+          return obj;
+        }
+      });
+      newArray = oriArray;
+    } else if (typeof opt === 'number') {
+      oriArray = oriArray.map(function (obj, ind) {
+        if (ind === opt) {
+          return null;
+        } else {
+          return obj;
+        }
+      });
+      newArray = oriArray;
+    } else if (_typeof(opt) === 'object' && opt !== null) {
+      var indx = index(oriArray, opt);
+      oriArray = oriArray.map(function (obj, ind) {
+        if (ind === indx) {
+          return null;
+        } else {
+          return obj;
+        }
+      });
+      newArray = oriArray;
     }
-
-    return newArray.filter(function (obj) {
-      return obj !== null;
-    });
   };
+
+  for (var _i = 0, _whereOpt = whereOpt; _i < _whereOpt.length; _i++) {
+    _loop();
+  }
+
+  return newArray.filter(function (obj) {
+    return obj !== null;
+  });
 };
 
 var select = function select() {
@@ -1153,36 +1211,6 @@ var sum = function sum(oriArr) {
   return sumNum;
 };
 
-var isArray = function isArray(arg) {
-  return _typeof(arg) === 'object' && arg !== null && Array.isArray(arg) ? true : false;
-};
-var isSuperset = function isSuperset(oriArr, subArr) {
-  if (!isArray(oriArr) && !isArray(subArr)) {
-    throw new Error('The both of arguments must be in arrays');
-  }
-
-  var set = new Set(oriArr);
-
-  var _iterator = _createForOfIteratorHelper(subArr),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var sub = _step.value;
-
-      if (!set.has(sub)) {
-        return false;
-      }
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
-
-  return true;
-};
-
 var union = function union() {
   for (var _len = arguments.length, restArg = new Array(_len), _key = 0; _key < _len; _key++) {
     restArg[_key] = arguments[_key];
@@ -1620,7 +1648,7 @@ var move = function move() {
       _iterator.f();
     }
 
-    var newArr = destroy.apply(void 0, indexes)(oriArr);
+    var newArr = destroy.apply(void 0, [oriArr].concat(indexes));
     newArr.splice.apply(newArr, [toIndex, removeCount].concat(tempArr));
     return newArr;
   };
@@ -1707,7 +1735,7 @@ var transfer = function transfer() {
 
     var byInd = byIndex === null ? Number(varToArr.length) : byIndex;
     varToArr.splice.apply(varToArr, [byInd, 0].concat(tempArr));
-    var newArr = destroy.apply(void 0, indexes)(varFromArr);
+    var newArr = destroy.apply(void 0, [varFromArr].concat(indexes));
     return {
       from: newArr,
       to: varToArr
@@ -1726,6 +1754,11 @@ var compact = function compact(argArr) {
   });
 };
 
+var includes$1 = function includes(valueArr, searchStr) {
+  var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  return valueArr.indexOf(searchStr, position) !== -1 ? true : false;
+};
+
 var array = /*#__PURE__*/Object.freeze({
   __proto__: null,
   insert: insert,
@@ -1739,6 +1772,8 @@ var array = /*#__PURE__*/Object.freeze({
   flatten: flatten,
   nested: nested,
   index: index,
+  toIndex: toIndex,
+  randomIndex: randomIndex,
   search: search,
   searchBy: searchBy,
   filtered: filtered,
@@ -1765,7 +1800,8 @@ var array = /*#__PURE__*/Object.freeze({
   move: move,
   switched: switched,
   transfer: transfer,
-  compact: compact
+  compact: compact,
+  includes: includes$1
 });
 
 var remove = function remove() {
