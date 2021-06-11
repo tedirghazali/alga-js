@@ -22,7 +22,8 @@ import { unzip } from './unzipArray.js'
 import { range } from './rangeArray.js'
 import { move, switched, transfer } from './moveArray.js'
 import { compact } from './compactArray.js'
-import { includes } from './includesArray.js'
+import { chunk } from './chunkArray.js'
+import { shuffle } from './shuffleArray.js'
 
 export {
   insert,
@@ -65,5 +66,6 @@ export {
   switched,
   transfer,
   compact,
-  includes
+  chunk,
+  shuffle
 }

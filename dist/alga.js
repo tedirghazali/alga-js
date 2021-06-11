@@ -1754,9 +1754,55 @@ var compact = function compact(argArr) {
   });
 };
 
-var includes$1 = function includes(valueArr, searchStr) {
-  var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  return valueArr.indexOf(searchStr, position) !== -1 ? true : false;
+var chunk = function chunk(arrArg) {
+  var sizeArg = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+
+  if (!isArray(arrArg) && arrArg.length <= 2) {
+    throw new Error('Please insert array only on the first argument and must have 3 values at least');
+  }
+
+  if (typeof sizeArg !== 'number') {
+    throw new Error('On the second argument, you must input in a number type only');
+  }
+
+  var stepArr = range(sizeArg, arrArg.length, sizeArg);
+  var newArr = [];
+
+  var _iterator = _createForOfIteratorHelper(stepArr),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var step = _step.value;
+      var childArr = arrArg.slice(Number(step) - Number(sizeArg), step);
+      newArr.push(childArr);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  if (stepArr[Number(stepArr.length) - 1] <= arrArg.length) {
+    newArr.push(arrArg.slice(stepArr[Number(stepArr.length) - 1], arrArg.length));
+  }
+
+  return newArr;
+};
+
+var shuffle = function shuffle(arrArg) {
+  if (!isArray(arrArg) && arrArg.length <= 2) {
+    throw new Error('This shuffle method only work on data in array type');
+  }
+
+  var newArr = Array.from(arrArg);
+
+  for (var i = Number(newArr.length) - 1; i > 2; i--) {
+    var sliceArr = newArr.slice(0, Number(i) + 1);
+    newArr = switched(i)(newArr, randomIndex(sliceArr));
+  }
+
+  return newArr;
 };
 
 var array = /*#__PURE__*/Object.freeze({
@@ -1801,7 +1847,8 @@ var array = /*#__PURE__*/Object.freeze({
   switched: switched,
   transfer: transfer,
   compact: compact,
-  includes: includes$1
+  chunk: chunk,
+  shuffle: shuffle
 });
 
 var remove = function remove() {
