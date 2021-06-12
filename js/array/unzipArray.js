@@ -1,5 +1,7 @@
+import { transpose } from './transposeArray.js'
+
 export const unzip = (...restArr) => {
-  if(restArr.length <= 2) {
+  if(restArr.length < 2) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length')
   }
   
@@ -17,5 +19,5 @@ export const unzip = (...restArr) => {
     }
   }
   
-  return [objKeys, ...Object.values(newObj)]
+  return [objKeys, ...transpose(...Object.values(newObj))]
 }

@@ -1,5 +1,5 @@
 export const transpose = (...restArr) => {
-  if(restArr.length <= 2) {
+  if(restArr.length < 2) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length')
   }
   

@@ -318,6 +318,36 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
   };
 }
 
+var isArray = function isArray(arg) {
+  return _typeof(arg) === 'object' && arg !== null && Array.isArray(arg) ? true : false;
+};
+var isSuperset = function isSuperset(oriArr, subArr) {
+  if (!isArray(oriArr) && !isArray(subArr)) {
+    throw new Error('The both of arguments must be in arrays');
+  }
+
+  var set = new Set(oriArr);
+
+  var _iterator = _createForOfIteratorHelper(subArr),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var sub = _step.value;
+
+      if (!set.has(sub)) {
+        return false;
+      }
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return true;
+};
+
 var Insert = /*#__PURE__*/function () {
   function Insert(valArr, toArr) {
     _classCallCheck(this, Insert);
@@ -360,12 +390,18 @@ var insert = function insert() {
     value[_key] = arguments[_key];
   }
 
-  if (!value) return;
+  if (value.length < 1) {
+    throw new Error('You have to enter at least one value');
+  }
 
   var to = function to(toArr) {
     var toPosition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var atIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-    if (_typeof(toArr) !== 'object') return;
+
+    if (!isArray(toArr)) {
+      throw new Error('Only array accept here');
+    }
+
     var arrVal = Array.from(toArr);
     var resArr = new Insert(value, arrVal);
 
@@ -384,59 +420,55 @@ var insert = function insert() {
 
   return to;
 };
-
 var insertBefore = function insertBefore() {
   for (var _len2 = arguments.length, value = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
     value[_key2] = arguments[_key2];
   }
 
-  if (!value) return;
+  if (value.length < 1) {
+    throw new Error('You have to enter at least one value');
+  }
+
   return function (toArr, atIndex) {
-    var arrVal = Array.from(toArr);
-    return new Insert(value, arrVal).before(atIndex);
+    if (!isArray(toArr)) {
+      throw new Error('In the first argument, here only accept array type');
+    }
+
+    if (!isNumber(atIndex)) {
+      throw new Error('In the second argument, accept only numeric or number type');
+    }
+
+    var toArray = Array.from(toArr); //return new Insert(value, toArray).before(atIndex)
+
+    var indexBefore = isNaN(atIndex) ? 1 : atIndex;
+    toArray.splice(Number(indexBefore) - 1, 0, value);
+    return toArray.flat();
   };
 };
-
 var insertAfter = function insertAfter() {
   for (var _len3 = arguments.length, value = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
     value[_key3] = arguments[_key3];
   }
 
-  if (!value) return;
+  if (value.length < 1) {
+    throw new Error('You have to enter at least one value');
+  }
+
   return function (toArr, atIndex) {
-    var arrVal = Array.from(toArr);
-    return new Insert(value, arrVal).after(atIndex);
-  };
-};
-
-var isArray = function isArray(arg) {
-  return _typeof(arg) === 'object' && arg !== null && Array.isArray(arg) ? true : false;
-};
-var isSuperset = function isSuperset(oriArr, subArr) {
-  if (!isArray(oriArr) && !isArray(subArr)) {
-    throw new Error('The both of arguments must be in arrays');
-  }
-
-  var set = new Set(oriArr);
-
-  var _iterator = _createForOfIteratorHelper(subArr),
-      _step;
-
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var sub = _step.value;
-
-      if (!set.has(sub)) {
-        return false;
-      }
+    if (!isArray(toArr)) {
+      throw new Error('In the first argument, here only accept array type');
     }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
-  }
 
-  return true;
+    if (!isNumber(atIndex)) {
+      throw new Error('In the second argument, accept only numeric or number type');
+    }
+
+    var toArray = Array.from(toArr); //return new Insert(value, toArray).after(atIndex)
+
+    var indexAfter = isNaN(atIndex) ? 0 : atIndex;
+    toArray.splice(Number(indexAfter) + 1, 0, value);
+    return toArray.flat();
+  };
 };
 
 var index = function index(indexArr) {
@@ -1444,7 +1476,7 @@ var transpose = function transpose() {
     restArr[_key] = arguments[_key];
   }
 
-  if (restArr.length <= 2) {
+  if (restArr.length < 2) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length');
   }
 
@@ -1472,7 +1504,7 @@ var zip = function zip() {
     restArr[_key] = arguments[_key];
   }
 
-  if (restArr.length <= 2) {
+  if (restArr.length < 2) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length');
   }
 
@@ -1480,28 +1512,19 @@ var zip = function zip() {
   var newArr = [];
   var firstArr = oriArr.shift();
 
-  var _iterator = _createForOfIteratorHelper(transpose.apply(void 0, _toConsumableArray(oriArr))),
-      _step;
+  var _loop = function _loop() {
+    var varArr = _oriArr[_i];
+    var newMap = new Map();
+    varArr.forEach(function (item, ind) {
+      if (firstArr[ind]) {
+        newMap.set(firstArr[ind], item);
+      }
+    });
+    newArr.push(Object.fromEntries(newMap));
+  };
 
-  try {
-    var _loop = function _loop() {
-      var varArr = _step.value;
-      var newMap = new Map();
-      varArr.forEach(function (item, ind) {
-        if (firstArr[ind]) {
-          newMap.set(firstArr[ind], item);
-        }
-      });
-      newArr.push(Object.fromEntries(newMap));
-    };
-
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      _loop();
-    }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
+  for (var _i = 0, _oriArr = oriArr; _i < _oriArr.length; _i++) {
+    _loop();
   }
 
   return newArr;
@@ -1512,7 +1535,7 @@ var unzip = function unzip() {
     restArr[_key] = arguments[_key];
   }
 
-  if (restArr.length <= 2) {
+  if (restArr.length < 2) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length');
   }
 
@@ -1533,7 +1556,7 @@ var unzip = function unzip() {
     }
   }
 
-  return [objKeys].concat(_toConsumableArray(Object.values(newObj)));
+  return [objKeys].concat(_toConsumableArray(transpose.apply(void 0, _toConsumableArray(Object.values(newObj)))));
 };
 
 var range = function range() {
@@ -1913,12 +1936,28 @@ var removeBy = function removeBy() {
   };
 };
 
+var isObject = function isObject(objArg) {
+  return _typeof(objArg) === 'object' && objArg !== null && Object.prototype.toString.call(objArg) === "[object Object]" ? true : false;
+};
+
+var invert = function invert(objArg) {
+  if (!isObject(objArg)) {
+    throw new Error('You have to input object only here');
+  }
+
+  var allKeys = Object.keys(objArg);
+  var allValues = Object.values(objArg);
+  return zip(allValues, allKeys)[0];
+};
+
 var object = /*#__PURE__*/Object.freeze({
   __proto__: null,
   remove: remove,
   removeBy: removeBy,
   merge: merge,
-  replace: replace
+  replace: replace,
+  isObject: isObject,
+  invert: invert
 });
 
 var REGEX_PARSE_DATE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;

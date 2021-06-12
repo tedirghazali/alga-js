@@ -1,7 +1,5 @@
-import { transpose } from './transposeArray.js'
-
 export const zip = (...restArr) => {
-  if(restArr.length <= 2) {
+  if(restArr.length < 2) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length')
   }
   
@@ -10,7 +8,7 @@ export const zip = (...restArr) => {
   
   const firstArr = oriArr.shift()
   
-  for(let varArr of transpose(...oriArr)) {
+  for(let varArr of oriArr) {
     const newMap = new Map()
     varArr.forEach((item, ind) => {
       if(firstArr[ind]) {
@@ -22,3 +20,4 @@ export const zip = (...restArr) => {
   
   return newArr
 }
+
