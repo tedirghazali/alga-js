@@ -585,10 +585,24 @@ var replace = function replace() {
   return newObj;
 };
 
+var isObject = function isObject(objArg) {
+  return _typeof(objArg) === 'object' && objArg !== null && Object.prototype.toString.call(objArg) === "[object Object]" ? true : false;
+};
+
 var update = function update(setObj) {
-  if (_typeof(setObj) !== 'object' && setObj !== null) return;
+  if (!isObject(setObj)) {
+    throw new Error('You must enter object only here');
+  }
+
   return function (oriArr, whereObj) {
-    if (_typeof(oriArr) !== 'object' && _typeof(whereObj) !== 'object') return;
+    if (!isArray(oriArr)) {
+      throw new Error('You have to enter array only on the first argument');
+    }
+
+    if (!isObject(whereObj)) {
+      throw new Error('You must enter object only on the second argument');
+    }
+
     var oriArray = Array.from(oriArr);
     var newArray = [];
     var indexNum = index(oriArray, whereObj);
@@ -1850,7 +1864,9 @@ var array = /*#__PURE__*/Object.freeze({
   sorted: sorted,
   paginate: paginate,
   pages: pages,
+  paginatePages: pages,
   show: show,
+  paginateShow: show,
   pagination: pagination,
   sum: sum,
   unique: unique,
@@ -1934,10 +1950,6 @@ var removeBy = function removeBy() {
 
     return newObj;
   };
-};
-
-var isObject = function isObject(objArg) {
-  return _typeof(objArg) === 'object' && objArg !== null && Object.prototype.toString.call(objArg) === "[object Object]" ? true : false;
 };
 
 var invert = function invert(objArg) {

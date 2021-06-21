@@ -1,8 +1,13 @@
 import { index } from './indexArray.js'
+import { isArray } from './isArray.js'
 
 export const destroy = (oriArr, ...whereOpt) => {
-  if(!whereOpt) return
-  if(typeof oriArr !== 'object') return
+  if(!isArray(oriArr)) {
+    throw new Error('Please provide array that you want to remove its element')
+  }
+  if(whereOpt.length < 1) {
+    throw new Error('On the last of argument, you have to enter at least one argument')
+  }
   
   let oriArray = Array.from(oriArr)
   let newArray = []

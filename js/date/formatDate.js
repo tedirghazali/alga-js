@@ -1,14 +1,15 @@
 import * as dateVar from './dateVar.js'
+import { isFullDate, isFormatDate } from './isDate.js'
 
-const format = (dateStr, formatStr) => {
-  if(typeof dateStr !== 'string' && new RegExp(dateVar.REGEX_PARSE_DATE).test(dateStr) === false) {
-    throw new Error('You\'re entering the wrong date string, please use this statement "new Date(\'yourdatestr\').toString()" instead')
+export const format = (dateParam, formatStr) => {
+  if(!isFullDate(dateParam)) {
+    throw new Error('You\'re entering the wrong date string, please use this statement "new Date(\'yourdateParam\').toString()" instead or array "[year, monthIndex, dateNumber]"')
   }
-  if(typeof formatStr !== 'string' && new RegExp(dateVar.REGEX_DATE_FORMAT).test(formatStr) === false) {
+  if(!isFormatDate(formatStr)) {
     throw new Error('Please enter the correct date format')
   }
   
-  const oriDate = new Date(dateStr)
+  const oriDate = new Date(dateParam)
   const formatDate = formatStr
   let newDate = formatStr
   
@@ -165,8 +166,4 @@ const format = (dateStr, formatStr) => {
   }
   
   return newDate
-}
-
-export {
-  format
 }

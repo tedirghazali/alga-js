@@ -17,9 +17,9 @@ const results = [
 ]
 
 test('Select array of objects by property name', () => {
-  expect(select('name', 'office')(data.third)).toEqual(results)
+  expect(select(data.third, 'name', 'office')).toEqual(results)
 })
 
 test('Hide some property from array of objects', () => {
-  expect(hidden('id', 'position', 'startdate', 'salary', 'extension')(data.third)).toEqual(results)
+  expect(hidden(data.third, 'id', 'position', 'startdate', 'salary', 'extension')).toEqual(results)
 })
