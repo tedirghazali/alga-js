@@ -5,10 +5,23 @@ test('Get week numbers', () => {
 })
 
 test('Get the week and the date in that week', () => {
-  console.log(weeks(2021, 6, 21))
+  expect(weeks(2021, 25, 'YYYY-MM-DD')).toEqual([
+    '2021-06-20',
+    '2021-06-21',
+    '2021-06-22',
+    '2021-06-23',
+    '2021-06-24',
+    '2021-06-25',
+    '2021-06-26'
+  ])
+})
+
+test('Get week in one month', () => {
+  expect(weeksInMonth(2022, 1)).toEqual([ '1', '2', '3', '4', '5' ])
 })
 
 test('Get weeks in one year', () => {
+  //console.log(weeksInYear(2021, 'YYYY-MM-DD'))
   expect(weeksInYear(2021)).toEqual({
     '1': [ '03', '09' ], '2': [ '10', '16' ], '3': [ '17', '23' ],
     '4': [ '24', '30' ], '5': [ '31', '06' ], '6': [ '07', '13' ],

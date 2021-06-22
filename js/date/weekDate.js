@@ -1,5 +1,6 @@
 // ambil pengecekan
 import { isYear, isMonth, isDate, isLeapYear, isFormatDate } from './isDate.js'
+import { isNumber } from '../number/isNumber.js'
 // ambil semua pesannya
 import msgDate from './msgDate.js'
 import { daysInMonth, daysInYear, daysInBetween } from './dayDate.js'
@@ -36,32 +37,28 @@ export const week = (yearParams, monthParams, dateParams) => {
   return Math.ceil(((Number(calcCurrentDays) + addDay) - subtractDay) / 7)
 }
 
-export const weeks = (yearParams, monthParams, dateParams) => {
-  if(!isYear(yearParams)) {
+export const weeks = (yearParam, weekParam, formatParam) => {
+  if(!isYear(yearParam)) {
     throw new Error(msgDate.yearMsg)
   }
-  if(!isMonth(monthParams)) {
-    throw new Error(msgDate.monthMsg)
+  if(!isNumber(weekParam)) {
+    throw new Error('You have to enter a number')
   }
-  if(!isDate(dateParams)) {
-    throw new Error(msgDate.dateMsg)
+  if(!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly')
   }
-  // cek posisi dari nomor hari
-  const getCurrentDay = Number(new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)).getDay())
-  let dateWeeks = []
-  if(getCurrentDay === 0) {
-    const add6Date = addDate(new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)), 6)
-    dateWeeks = rangeDate(new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)), add6Date)
-  } else if(getCurrentDay > 0 && getCurrentDay < 6) {
-    const add6Date = addDate(new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)), getCurrentDay + 1)
-    const subtract6Date = subtractDate(new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)), getCurrentDay)
-    dateWeeks = rangeDate(add6Date, subtract6Date)
-  } else if(getCurrentDay === 6) {
-    const subtract6Date = subtractDate(new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)), 6)
-    dateWeeks = rangeDate(subtract6Date, new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)))
-  }
+  // cek taggal dari nomor pekan
+  const getWeekDate = weeksInYear(yearParam, 'YYYY-MM-DD')[weekParam.toString()]
+  // pecahkan tanggal menjadi bagian-bagian yang terpisah
+  const splitFirstDate = getWeekDate[0].split('-')
+  const splitLastDate = getWeekDate[1].split('-')
+  // rangekan tanggal
+  const rangeWeekDate = rangeDate(
+    new Date(Number(splitFirstDate[0]), Number(splitFirstDate[1]) - 1, Number(splitFirstDate[2])), 
+    new Date(Number(splitLastDate[0]), Number(splitLastDate[1]) - 1, Number(splitLastDate[2]))
+  , formatParam)
   // 7 tanggal dalam satu array
-  return dateWeeks
+  return rangeWeekDate
 }
 
 export const weeksInMonth = (yearParam, monthParam) => {
@@ -71,6 +68,16 @@ export const weeksInMonth = (yearParam, monthParam) => {
   if(!isMonth(monthParam)) {
     throw new Error(msgDate.monthMsg)
   }
+  
+  // cek bulan dari semua nilai pekan dalam setahun
+  const getWeekNumbers = weeksInYear(yearParam, 'M')
+  const resWeeks = []
+  for(let [key, val] of Object.entries(getWeekNumbers)) {
+    if(val.includes(monthParam.toString())) {
+      resWeeks.push(key)
+    }
+  }
+  return (Number(monthParam) === 1) ? resWeeks.filter(w => w !== '52') : resWeeks
 }
 
 export const weeksInYear = (yearParams, formatDate = 'DD') => {
@@ -98,10 +105,11 @@ export const weeksInYear = (yearParams, formatDate = 'DD') => {
   const objWeek = {}
   let startDay = subtractDay + 1
   let startMonth = 0
+  let startYear = yearParams
   for(let i = 1; i <= totalWeeks;i++) {
     objWeek[i.toString()] = [
-      format(new Date(yearParams, startMonth, startDay), formatDate),
-      format(addDate(new Date(yearParams, startMonth, startDay), 6), formatDate)
+      format(new Date(startYear, startMonth, startDay), formatDate),
+      format(addDate(new Date(startYear, startMonth, startDay), 6), formatDate)
     ]
     startDay = startDay + 7
     if(startMonth < 12 && startDay > Number(daysInMonth(yearParams, startMonth + 1))) {
@@ -110,6 +118,7 @@ export const weeksInYear = (yearParams, formatDate = 'DD') => {
         startMonth = startMonth + 1
       } else {
         startMonth = 1
+        startYear = startYear + 1
       }
     }
   }

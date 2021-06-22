@@ -23,9 +23,9 @@ export const format = (dateParam, formatStr) => {
       return dateYear
     },
     YYYY: oriDate.getFullYear(),
-    M: Number(oriDate.getMonth() + 1),
+    M: Number(oriDate.getMonth()) + 1,
     MM: () => {
-      const dateMonth = Number(oriDate.getMonth() + 1).toString()
+      const dateMonth = Number(Number(oriDate.getMonth()) + 1).toString()
       if(dateMonth.length === 1) {
         const addZero = "0" + dateMonth
         return addZero

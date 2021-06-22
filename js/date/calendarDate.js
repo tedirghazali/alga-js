@@ -1,44 +1,99 @@
-//import * as dateVar from './dateVar.js'
-import { daysInMonth, daysInUTCMonth } from './daysInMonth.js'
-import { dayName } from './nameDate.js'
+import { isYear, isMonth, isDate, isFormatDate } from './isDate.js'
+import msgDate from './msgDate.js'
+import { days, daysInMonth } from './dayDate.js'
+import { week, weeks, weeksInMonth } from './weekDate.js'
+import { rangeDate } from './rangeDate.js'
+import { format } from './formatDate.js'
+import { zip } from '../array/zipArray.js'
 
-const calendar = (yearArg, monthArg, dayNameIn = 'en-US') => {
-  if(typeof yearArg !== 'string' && typeof yearArg !== 'number') {
-    throw new Error('Only accept year numbers here, also support string type')
+export const calendar = (yearArg, monthArg, flatParam = true, formatParam = 'YYYY-MM-DD', locale = 'en-US') => {
+  if(!isYear(yearArg)) {
+    throw new Error(msgDate.yearMsg)
   }
-  if(typeof monthArg !== 'string' && typeof monthArg !== 'number') {
-    throw new Error('For month, only accept number and string type')
+  if(!isMonth(monthArg)) {
+    throw new Error(msgDate.monthMsg)
+  }
+  if(!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly')
+  }
+  // ambil nama-nama hari
+  const dayNames = days(locale)
+  // rangekan dan hasilkan semua tanggal
+  const currentMonth = rangeDate(
+    new Date(yearArg, Number(monthArg) - 1, 1), 
+    new Date(yearArg, Number(monthArg) - 1, daysInMonth(yearArg, monthArg))
+  , formatParam)
+   // cek hari pertama, kurangi hari yang tidak dimulai dari hari ahad
+  const getFirstDay = Number(new Date(yearArg, Number(monthArg) - 1, 1).getDay())
+  let prevMonth = []
+  if(getFirstDay > 0) {
+    const subtractPrevDay = getFirstDay - 1
+    prevMonth = rangeDate(
+      new Date(yearArg, Number(monthArg) - 2, Number(daysInMonth(yearArg, Number(monthArg) - 1)) - subtractPrevDay), 
+      new Date(yearArg, Number(monthArg) - 2, daysInMonth(yearArg, Number(monthArg) - 1))
+    , formatParam)
   }
   
-  const dayNames = dayName(dayNameIn)
-  const currentMonth = daysInMonth(yearArg, monthArg)
-  const beforeMonth = (Number(Number(monthArg) - 1) < 1) ? daysInMonth(Number(yearArg - 1), 12) : daysInMonth(yearArg, Number(Number(monthArg) - 1))
-  const sliceBeforeMonth = (Number(currentMonth.start) !== 0) ? beforeMonth.value.slice(Number('-'+currentMonth.start)) : []
-  const afterMonth = (Number(Number(monthArg) + 1) > 12) ? daysInMonth(Number(yearArg + 1), 1) : daysInMonth(yearArg, Number(Number(monthArg) + 1))
-  const sliceAfterMonth = (Number(currentMonth.start) !== 6) ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : []
+  // cek hari terakhir, perlu penambahan jika tidak berakhir hari sabtu
+  const getLastDay = Number(new Date(yearArg, Number(monthArg) - 1, daysInMonth(yearArg, monthArg)).getDay())
+  let nextMonth = []
+  if(getLastDay < 6) {
+    let addNextDay = 6 - (getLastDay + 1)
+    nextMonth = rangeDate(
+      new Date(yearArg, Number(monthArg), 1), 
+      new Date(yearArg, Number(monthArg), 1 + addNextDay)
+    , formatParam)
+  }
   
-  return [...dayNames, ...sliceBeforeMonth, ...currentMonth.value, ...sliceAfterMonth]
+  const newMonth = [dayNames, prevMonth, currentMonth, nextMonth]
+  return (flatParam === true) ? newMonth.flat() : newMonth
 }
 
-const calendarUTC = (yearArg, monthArg, dayNameIn = 'en-US') => {
-  if(typeof yearArg !== 'string' && typeof yearArg !== 'number') {
-    throw new Error('Only accept year numbers here, also support string type')
+export const weeklyCalendar = (yearParam, monthParam, dateParam, formatParam = 'YYYY-MM-DD', locale = 'en-US') => {
+  if(!isYear(yearParam)) {
+    throw new Error(msgDate.yearMsg)
   }
-  if(typeof monthArg !== 'string' && typeof monthArg !== 'number') {
-    throw new Error('For month, only accept number and string type')
+  if(!isMonth(monthParam)) {
+    throw new Error(msgDate.monthMsg)
+  }
+  if(!isDate(dateParam)) {
+    throw new Error(msgDate.dateMsg)
+  }
+  if(!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly')
   }
   
-  const dayNames = dayName(dayNameIn)
-  const currentMonth = daysInUTCMonth(yearArg, monthArg)
-  const beforeMonth = (Number(Number(monthArg) - 1) < 1) ? daysInUTCMonth(Number(yearArg - 1), 12) : daysInUTCMonth(yearArg, Number(Number(monthArg) - 1))
-  const sliceBeforeMonth = (Number(currentMonth.start) !== 0) ? beforeMonth.value.slice(Number('-'+currentMonth.start)) : []
-  const afterMonth = (Number(Number(monthArg) + 1) >= 12) ? daysInUTCMonth(Number(yearArg + 1), 1) : daysInUTCMonth(yearArg, Number(Number(monthArg) + 1))
-  const sliceAfterMonth = (Number(currentMonth.start) !== 6) ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : []
-  
-  return [...dayNames, ...sliceBeforeMonth, ...currentMonth.value, ...sliceAfterMonth]
+  const dayNames = days(locale)
+  const weekNumbers = week(yearParam, monthParam, dateParam)
+  const weekDates = weeks(yearParam, weekNumbers, formatParam)
+  return zip(dayNames, weekDates)[0]
 }
 
-export {
-  calendar,
-  calendarUTC
+export const calendarWithWeeks = (yearArg, monthArg, flatParam = true, formatParam = 'YYYY-MM-DD', locale = 'en-US') => {
+  if(!isYear(yearArg)) {
+    throw new Error(msgDate.yearMsg)
+  }
+  if(!isMonth(monthArg)) {
+    throw new Error(msgDate.monthMsg)
+  }
+  if(!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly')
+  }
+  // ambil nama-nama hari
+  const dayNames = days(locale)
+  // ambil nomor pekan saja dari bulan ini
+  const weekNumbers = weeksInMonth(yearArg, monthArg)
+  const currentMonth = []
+  if(Number(new Date(yearArg, Number(monthArg) - 1, 1).getDay()) !== 0 && Number(monthArg) === 1) {
+    currentMonth.push('52')
+    currentMonth.push(weeks(Number(yearArg) - 1, 52, formatParam))
+  }
+  for(let wn of weekNumbers) {
+    currentMonth.push(wn)
+    currentMonth.push(weeks(yearArg, wn, formatParam))
+  }
+  
+  const newMonth = ['Week', dayNames, ...currentMonth]
+  return (flatParam === true) ? newMonth.flat() : newMonth
 }
+
