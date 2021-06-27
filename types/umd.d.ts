@@ -6,4 +6,5 @@ import * as array from "./array/array.js";
 import * as object from "./object/object.js";
 import * as date from "./date/date.js";
 import * as file from "./file/file.js";
-export { int, number, char, string, array, object, date, file };
+import * as storage from "./storage/storage.js";
+export { int, number, char, string, array, object, date, file, storage };

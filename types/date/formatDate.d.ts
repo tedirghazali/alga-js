@@ -1,1 +1,1 @@
-export function format(dateStr: any, formatStr: any): any;
+export function format(dateParam: any, formatStr: any, locale?: string, dayType?: string): any;

@@ -1,23 +1,27 @@
-import { calendar, weeklyCalendar, calendarWithWeeks } from '../../js/date/calendarDate.js'
+import { calendar, daysInCalendar, prevDaysInCalendar, nextDaysInCalendar, weeklyCalendar, calendarWithWeeks } from '../../js/date/calendarDate.js'
 
-test('Get monthly calendar', () => {
-  //console.log(calendar(2021, 8, false))
-  expect(calendar(2021, 3)).toEqual([
-    'Sunday',     'Monday',     'Tuesday',
-    'Wednesday',  'Thursday',   'Friday',
-    'Saturday',   '2021-02-28', '2021-03-01',
-    '2021-03-02', '2021-03-03', '2021-03-04',
-    '2021-03-05', '2021-03-06', '2021-03-07',
-    '2021-03-08', '2021-03-09', '2021-03-10',
-    '2021-03-11', '2021-03-12', '2021-03-13',
-    '2021-03-14', '2021-03-15', '2021-03-16',
-    '2021-03-17', '2021-03-18', '2021-03-19',
-    '2021-03-20', '2021-03-21', '2021-03-22',
-    '2021-03-23', '2021-03-24', '2021-03-25',
-    '2021-03-26', '2021-03-27', '2021-03-28',
-    '2021-03-29', '2021-03-30', '2021-03-31',
-    '2021-04-01', '2021-04-02', '2021-04-03'
+test('Get all days in monthly calendar', () => {
+  expect(daysInCalendar(2021, 3)).toEqual([
+    '2021-03-01', '2021-03-02', '2021-03-03', 
+    '2021-03-04', '2021-03-05', '2021-03-06', 
+    '2021-03-07', '2021-03-08', '2021-03-09', 
+    '2021-03-10', '2021-03-11', '2021-03-12', 
+    '2021-03-13', '2021-03-14', '2021-03-15', 
+    '2021-03-16', '2021-03-17', '2021-03-18', 
+    '2021-03-19', '2021-03-20', '2021-03-21', 
+    '2021-03-22', '2021-03-23', '2021-03-24', 
+    '2021-03-25', '2021-03-26', '2021-03-27', 
+    '2021-03-28', '2021-03-29', '2021-03-30', 
+    '2021-03-31'
   ])
+})
+
+test('Get previous days in monthly calendar', () => {
+  expect(prevDaysInCalendar(2021, 3)).toEqual([ '2021-02-28' ])
+})
+
+test('Get next days in monthly calendar', () => {
+  expect(nextDaysInCalendar(2021, 3)).toEqual([ '2021-04-01', '2021-04-02', '2021-04-03' ])
 })
 
 test('Get weekly calendar', () => {
@@ -32,8 +36,7 @@ test('Get weekly calendar', () => {
   })
 })
 
-test('Get monthly calendar', () => {
-  console.log(calendarWithWeeks(2021, 1, false))
+/*test('Get monthly calendar with weeks', () => {
   expect(calendarWithWeeks(2021, 6, false)).toEqual([
     'Week', ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     '22', ['2021-05-30', '2021-05-31', '2021-06-01', '2021-06-02', '2021-06-03', '2021-06-04', '2021-06-05'],
@@ -42,4 +45,4 @@ test('Get monthly calendar', () => {
     '25', ['2021-06-20', '2021-06-21', '2021-06-22', '2021-06-23', '2021-06-24', '2021-06-25', '2021-06-26'],
     '26', ['2021-06-27', '2021-06-28', '2021-06-29', '2021-06-30', '2021-07-01', '2021-07-02', '2021-07-03']
   ])
-})
+})*/

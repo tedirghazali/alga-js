@@ -6,6 +6,7 @@ import * as array from './array/array.js'
 import * as object from './object/object.js'
 import * as date from './date/date.js'
 import * as file from './file/file.js'
+import * as storage from './storage/storage.js'
 
 export {
   int,
@@ -15,5 +16,6 @@ export {
   array,
   object,
   date,
-  file
+  file,
+  storage
 }

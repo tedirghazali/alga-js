@@ -24,7 +24,5 @@ export const DATE_INFO = {
     Q: 'quarter',
     Y: 'year',
     DATE: 'date'
-  }
+}
 
-export const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-export const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']

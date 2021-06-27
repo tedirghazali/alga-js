@@ -15,7 +15,7 @@ export const subtractDate = (dateParam, subtractNum, formatParam = null) => {
   // kurangi tanggal
   const subtractNewDate = Number(newDate.getDate()) - Number(subtractNum)
   // pastikan tanggal tidak melewati jumlah tanggal pada bulan tertentu
-  const prevAllDays = Number(daysInMonth(Number(newDate.getFullYear()), newDate.getMonth()))
+  const allDays = Number(daysInMonth(Number(newDate.getFullYear()), newDate.getMonth()))
   if(subtractNewDate < 1) {
     const restNewDate = allDays + (subtractNewDate - 1)
     // pastikan juga bulannya tidak bulan 1, kalau ya berati masuk tahun lama

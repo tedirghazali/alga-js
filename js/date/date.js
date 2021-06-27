@@ -1,18 +1,45 @@
-import { now } from './nowDate.js'
+import { now, nowHijri } from './nowDate.js'
 import { parse } from './parseDate.js'
 import { utc } from './utcDate.js'
-import { daysInMonth, daysInUTCMonth } from './daysInMonth.js'
-import { calendar, calendarUTC } from './calendarDate.js'
-import { monthName, dayName } from './nameDate.js'
+import { addDate } from './addDate.js'
+import { subtractDate } from './subtractDate.js'
+import { rangeDate } from './rangeDate.js'
+import { day, days, daysInMonth, daysInYear, daysInBetween } from './dayDate.js'
+import { week, weeks, weeksInMonth, weeksInYear } from './weekDate.js'
+import { month, months } from './monthDate.js'
+import { isYear, isMonth, isDate, isFullDate, isFormatDate, isLeapYear } from './isDate.js'
+import { calendar, daysInCalendar, prevDaysInCalendar, nextDaysInCalendar, weeklyCalendar, calendarWithWeeks } from './calendarDate.js'
 
 export {
   now,
+  nowHijri,
   parse,
+  parse as parseDate,
   utc,
+  addDate,
+  subtractDate,
+  rangeDate,
+  day,
+  days,
   daysInMonth,
-  daysInUTCMonth,
+  daysInYear,
+  daysInBetween,
+  week,
+  weeks,
+  weeksInMonth,
+  weeksInYear,
+  month,
+  months,
+  isYear,
+  isMonth,
+  isDate,
+  isFullDate,
+  isFormatDate,
+  isLeapYear,
   calendar,
-  calendarUTC,
-  monthName,
-  dayName
+  daysInCalendar, 
+  prevDaysInCalendar, 
+  nextDaysInCalendar,
+  weeklyCalendar,
+  calendarWithWeeks
 }

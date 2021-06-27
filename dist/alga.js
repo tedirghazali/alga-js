@@ -620,12 +620,18 @@ var update = function update(setObj) {
 };
 
 var destroy = function destroy(oriArr) {
+  if (!isArray(oriArr)) {
+    throw new Error('Please provide array that you want to remove its element');
+  }
+
   for (var _len = arguments.length, whereOpt = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     whereOpt[_key - 1] = arguments[_key];
   }
 
-  if (!whereOpt) return;
-  if (_typeof(oriArr) !== 'object') return;
+  if (whereOpt.length < 1) {
+    throw new Error('On the last of argument, you have to enter at least one argument');
+  }
+
   var oriArray = Array.from(oriArr);
   var newArray = [];
 
@@ -681,64 +687,71 @@ var destroy = function destroy(oriArr) {
   });
 };
 
-var select = function select() {
-  for (var _len = arguments.length, selProp = new Array(_len), _key = 0; _key < _len; _key++) {
-    selProp[_key] = arguments[_key];
+var select = function select(fromArr) {
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, you have to provide array only');
   }
 
-  if (!selProp) return;
-  return function (fromArr) {
-    if (_typeof(fromArr) !== 'object') return;
-    var fromArray = Array.from(fromArr);
-    var newArray = [];
+  for (var _len = arguments.length, selProp = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    selProp[_key - 1] = arguments[_key];
+  }
 
-    var _loop = function _loop() {
-      var obj = _fromArray[_i];
-      var newObject = {};
-      selProp.forEach(function (sel) {
-        if (sel in obj) {
-          newObject[sel] = obj[sel];
-        }
-      });
-      newArray.push(newObject);
-    };
+  if (selProp.length < 1) {
+    throw new Error('On the second argument, you must enter at least one value');
+  }
 
-    for (var _i = 0, _fromArray = fromArray; _i < _fromArray.length; _i++) {
-      _loop();
-    }
+  var fromArray = Array.from(fromArr);
+  var newArray = [];
 
-    return newArray;
+  var _loop = function _loop() {
+    var obj = _fromArray[_i];
+    var newObject = {};
+    selProp.forEach(function (sel) {
+      if (sel in obj) {
+        newObject[sel] = obj[sel];
+      }
+    });
+    newArray.push(newObject);
   };
+
+  for (var _i = 0, _fromArray = fromArray; _i < _fromArray.length; _i++) {
+    _loop();
+  }
+
+  return newArray;
 };
-
-var hidden = function hidden() {
-  for (var _len2 = arguments.length, selProp = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    selProp[_key2] = arguments[_key2];
+var hidden = function hidden(fromArr) {
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, you have to provide array only');
   }
 
-  if (!selProp) return;
-  return function (fromArr) {
-    if (_typeof(fromArr) !== 'object') return;
-    var fromArray = Array.from(fromArr);
-    var newArray = [];
+  for (var _len2 = arguments.length, selProp = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    selProp[_key2 - 1] = arguments[_key2];
+  }
 
-    var _loop2 = function _loop2() {
-      var obj = _fromArray2[_i2];
-      var newObject = obj;
-      selProp.forEach(function (sel) {
-        if (sel in obj) {
-          delete newObject[sel];
-        }
-      });
-      newArray.push(newObject);
-    };
+  if (selProp.length < 1) {
+    throw new Error('On the second argument, you must enter at least one value');
+  }
 
-    for (var _i2 = 0, _fromArray2 = fromArray; _i2 < _fromArray2.length; _i2++) {
-      _loop2();
-    }
+  var fromArray = Array.from(fromArr);
+  var newArray = [];
 
-    return newArray;
+  var _loop2 = function _loop2() {
+    var obj = _fromArray2[_i2];
+    var newObject = obj;
+    selProp.forEach(function (sel) {
+      if (sel in obj) {
+        delete newObject[sel];
+      }
+    });
+    newArray.push(newObject);
   };
+
+  for (var _i2 = 0, _fromArray2 = fromArray; _i2 < _fromArray2.length; _i2++) {
+    _loop2();
+  }
+
+  return newArray;
 };
 
 var toggle = function toggle(val) {
@@ -1974,19 +1987,169 @@ var object = /*#__PURE__*/Object.freeze({
 
 var REGEX_PARSE_DATE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
 var REGEX_DATE_FORMAT = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
-var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-var format = function format(dateStr, formatStr) {
-  if (typeof dateStr !== 'string' && new RegExp(REGEX_PARSE_DATE).test(dateStr) === false) {
-    throw new Error('You\'re entering the wrong date string, please use this statement "new Date(\'yourdatestr\').toString()" instead');
+var isYear = function isYear(yearParams) {
+  return typeof yearParams === 'number' || typeof yearParams === 'string' ? true : false;
+}; // pengecekan bulan mulai dari tipenya sampai jumlahnya
+
+var isMonth = function isMonth(monthParams) {
+  return typeof monthParams === 'number' || typeof monthParams === 'string' ? true : false;
+}; // pengecekan tanggal dan hasilnya selalu dalam tipe boolean (true atau false)
+
+var isDate = function isDate(dateParams) {
+  return typeof dateParams === 'number' || typeof dateParams === 'string' ? true : false;
+}; // pengecekan tanggal, bulan dan tahun sekaligus
+
+var isFullDate = function isFullDate(dateParams) {
+  return _typeof(new Date(dateParams)) === 'object' && dateParams !== null || typeof dateParams === 'string' && new RegExp(REGEX_PARSE_DATE).test(dateParams) ? true : false;
+};
+var isFormatDate = function isFormatDate(formatParams) {
+  return typeof formatParams === 'string' && new RegExp(REGEX_DATE_FORMAT).test(formatParams) ? true : false;
+}; // cek tahun kabisat (leap year)
+
+var isLeapYear = function isLeapYear(yearParams) {
+  return yearParams % 400 === 0 || yearParams % 100 !== 0 && yearParams % 4 === 0 ? true : false;
+};
+
+// semua pesan untuk date helper saya kumpulkan disini
+var msgDate = {
+  yearMsg: 'Year must be in a number or a string type, the length of year either 4 or 2',
+  monthMsg: 'Month must be in a number or a string type, the month number start from 1 to 12',
+  dateMsg: 'Date must be in a number or a string type, the date number start from 1 to 31',
+  fullDateMsg: 'Full date must be in string or array type'
+};
+
+// ambil pengecekan
+
+var day = function day(yearParams) {
+  var monthParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var dateParams = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var locale = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'en-US';
+  var dayType = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'long';
+
+  // pengecekan tahun, bulan, dan tangal, saya pisahkan dengan pesannya pada berkas lain
+  if (!isYear(yearParams)) {
+    throw new Error(msgDate.yearMsg);
   }
 
-  if (typeof formatStr !== 'string' && new RegExp(REGEX_DATE_FORMAT).test(formatStr) === false) {
+  if (!isMonth(monthParams)) {
+    throw new Error(msgDate.monthMsg);
+  }
+
+  if (!isDate(dateParams)) {
+    throw new Error(msgDate.dateMsg);
+  } // disini kita ingin mendapatkan tanggal secara lokal
+
+
+  var localDate = new Date(Date.UTC(Number(yearParams), Number(monthParams) - 1, Number(dateParams))); // kemudian kita ubah menjadi nama hari
+
+  return new Intl.DateTimeFormat(locale, {
+    weekday: dayType
+  }).format(localDate);
+}; // fungsi ini untuk mendapatkan semua nama hari dalam tipe array
+
+var days = function days() {
+  var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en-US';
+  var dayType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
+  var daysArr = []; // melakukan iterasi dari tanggal 4 sampai 10 April 2021, kemudian kita isi nama harinya kedalam array
+
+  for (var i = 4; i <= 10; i++) {
+    var localDate = new Date(Date.UTC(2021, 3, i));
+    daysArr.push(new Intl.DateTimeFormat(locale, {
+      weekday: dayType
+    }).format(localDate));
+  }
+
+  return daysArr;
+};
+var daysInMonth = function daysInMonth(yearParams) {
+  var monthParams = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+
+  if (!isYear(yearParams)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthParams)) {
+    throw new Error(msgDate.monthMsg);
+  } // jumlah hari (rata-rata) dari setiap bulan
+
+
+  var commonDays = [28, 29, 30, 31]; // ambil hari ini (angka)
+
+  var numOfDays = new Date(Date.UTC(Number(yearParams), Number(monthParams), 0)).getUTCDate(); // kemudian saring atau cek apakah angkanya sesuai dari jumlah hari diatas, jika tidak maka hasilnya 31
+
+  return commonDays.includes(numOfDays) ? numOfDays : 31;
+};
+var daysInYear = function daysInYear(yearParams) {
+  if (!isYear(yearParams)) {
+    throw new Error(msgDate.yearMsg);
+  } // jumlah hari dalam setahun
+
+
+  return isLeapYear(yearParams) ? 366 : 365;
+};
+var daysInBetween = function daysInBetween(firstDate, lastDate) {
+  if (!isFullDate(firstDate)) {
+    throw new Error('Error in the first argument: ' + msgDate.fullDateMsg);
+  }
+
+  if (!isFullDate(lastDate)) {
+    throw new Error('Error in the second argument: ' + msgDate.fullDateMsg);
+  }
+
+  var startDate = new Date(firstDate);
+  var endDate = new Date(lastDate); // hitung perbedaan waktu
+
+  var timeDifference = Number(endDate.getTime()) - Number(startDate.getTime()); // hasilnya dapat dibagi dari perbedaan waktu dengan jumlah semua milisekon
+
+  return timeDifference / (1000 * 60 * 60 * 24);
+};
+
+var month = function month(yearParam, monthParam) {
+  var locale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+  var monthType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'long';
+
+  if (!isYear(yearParam)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthParam)) {
+    throw new Error(msgDate.monthMsg);
+  }
+
+  var currentMonth = Date.UTC(yearParam, Number(monthParam) - 1);
+  return new Intl.DateTimeFormat(locale, {
+    month: monthType
+  }).format(new Date(currentMonth));
+};
+var months = function months() {
+  var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en-US';
+  var monthType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
+  var monthNames = [];
+
+  for (var i = 0; i <= 11; i++) {
+    var currentMonth = Date.UTC(2021, i);
+    monthNames.push(new Intl.DateTimeFormat(locale, {
+      month: monthType
+    }).format(new Date(currentMonth)));
+  }
+
+  return monthNames;
+};
+
+var format = function format(dateParam, formatStr) {
+  var locale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+  var dayType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'long';
+
+  if (!isFullDate(dateParam)) {
+    throw new Error('You\'re entering the wrong date string, please use this statement "new Date(\'yourdateParam\').toString()" instead or array "[year, monthIndex, dateNumber]"');
+  }
+
+  if (!isFormatDate(formatStr)) {
     throw new Error('Please enter the correct date format');
   }
 
-  var oriDate = new Date(dateStr);
+  var oriDate = new Date(dateParam);
   var formatDate = formatStr;
   var newDate = formatStr;
   var tokens = {
@@ -2001,9 +2164,9 @@ var format = function format(dateStr, formatStr) {
       return dateYear;
     },
     YYYY: oriDate.getFullYear(),
-    M: Number(oriDate.getMonth() + 1),
+    M: Number(oriDate.getMonth()) + 1,
     MM: function MM() {
-      var dateMonth = Number(oriDate.getMonth() + 1).toString();
+      var dateMonth = Number(Number(oriDate.getMonth()) + 1).toString();
 
       if (dateMonth.length === 1) {
         var addZero = "0" + dateMonth;
@@ -2012,8 +2175,8 @@ var format = function format(dateStr, formatStr) {
         return dateMonth;
       }
     },
-    m: MONTH_NAMES[oriDate.getMonth()].slice(0, 3),
-    mm: MONTH_NAMES[oriDate.getMonth()],
+    m: months(locale, dayType)[oriDate.getMonth()].slice(0, 3),
+    mm: months(locale, dayType)[oriDate.getMonth()],
     D: oriDate.getDate,
     DD: function DD() {
       var dateDay = oriDate.getDate().toString();
@@ -2026,8 +2189,8 @@ var format = function format(dateStr, formatStr) {
 
       return resDay;
     },
-    d: DAY_NAMES[oriDate.getDay()].slice(0, 3),
-    dd: DAY_NAMES[oriDate.getDay()],
+    d: days(locale, dayType)[oriDate.getDay()].slice(0, 3),
+    dd: days(locale, dayType)[oriDate.getDay()],
     H: oriDate.getHours(),
     HH: function HH() {
       var dateHour = oriDate.getHours().toString();
@@ -2176,18 +2339,37 @@ var now = function now() {
   var newDate = new Date().toString();
 
   if (typeof dateFormat === 'string') {
-    newDate = format(newDate.toString(), dateFormat);
+    newDate = format(newDate, dateFormat);
   }
 
   return newDate;
 };
+var nowHijri = function nowHijri() {
+  var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en-US';
+  var utcNowDate = Date.UTC(Number(new Date().getFullYear()), Number(new Date().getMonth()), Number(new Date().getDate()), Number(new Date().getHours()), Number(new Date().getMinutes()), Number(new Date().getSeconds()), Number(new Date().getMilliseconds()));
+  var newDate = new Intl.DateTimeFormat(locale, {
+    calendar: 'islamic',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hourCycle: 'h24'
+  }).format(new Date(utcNowDate));
+  return newDate;
+};
 
+//import * as dateVar from './dateVar.js'
 var parse = function parse(dateStr, formatStr) {
-  if (typeof dateStr !== 'string' && new RegExp(REGEX_PARSE_DATE).test(dateStr) === false) {
+  var locale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+  var dayType = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'long';
+
+  if (!isFullDate(dateStr)) {
     throw new Error('On the first argument, you have to input only the correct date');
   }
 
-  if (typeof formatStr !== 'string' && new RegExp(REGEX_DATE_FORMAT).test(formatStr) === false) {
+  if (!isFormatDate(formatStr)) {
     throw new Error('For format date, you must always input the correct one by using characters like these: Y, M, m, D, d, H, h, k, i, S, s, A, a or Do');
   }
 
@@ -2219,14 +2401,14 @@ var parse = function parse(dateStr, formatStr) {
         newDate.year = dateArr[i];
       } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'M' || formatArr[i] === 'MM') {
         newDate.month = Number(dateArr[i]) - 1;
-      } else if (dateArr[i].length === 3 && MONTH_NAMES.map(function (mn) {
+      } else if (dateArr[i].length === 3 && months(locale, dayType).map(function (mn) {
         return mn.slice(0, 3);
       }).includes(dateArr[i]) && formatArr[i] === 'm') {
-        newDate.month = MONTH_NAMES.map(function (mn) {
+        newDate.month = months(locale, dayType).map(function (mn) {
           return mn.slice(0, 3);
         }).findIndex(dateArr[i]);
-      } else if (dateArr[i].length >= 3 && MONTH_NAMES.includes(dateArr[i]) && formatArr[i] === 'mm') {
-        newDate.month = MONTH_NAMES.findIndex(dateArr[i]);
+      } else if (dateArr[i].length >= 3 && months(locale, dayType).includes(dateArr[i]) && formatArr[i] === 'mm') {
+        newDate.month = months(locale, dayType).findIndex(dateArr[i]);
       } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'D' || formatArr[i] === 'DD') {
         newDate.day = dateArr[i];
       } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'H' || formatArr[i] === 'HH') {
@@ -2254,159 +2436,455 @@ var utc = function utc() {
   return new Date(Date.UTC.apply(Date, arguments));
 };
 
-var daysInMonth = function daysInMonth() {
-  for (var _len = arguments.length, dateArg = new Array(_len), _key = 0; _key < _len; _key++) {
-    dateArg[_key] = arguments[_key];
+var addDate = function addDate(dateParam, addNum) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  if (!isFullDate(dateParam)) {
+    throw new Error('Please enter a date in correct way, either in string or array type');
   }
 
-  if (!dateArg && dateArg.length <= 0) {
-    throw new Error('You need to input the year numbers on argument 1 and the month numbers on argument 2');
+  if (!isNumber(addNum)) {
+    throw new Error('Only accept number type on second argument');
   }
 
-  var commonDays = [28, 29, 30, 31];
-  var numOfDays = new Date(dateArg[0], dateArg[1], 0).getDate();
-  var filterNumDays = commonDays.includes(numOfDays) ? numOfDays : 31;
-  var newObj = {
-    days: filterNumDays,
-    start: new Date([dateArg[0], dateArg[1], 1]).getDay(),
-    end: new Date([dateArg[0], dateArg[1], filterNumDays]).getDay(),
-    value: []
-  };
+  var newDate = new Date(dateParam); // tambah hari atau tanggal
 
-  for (var i = 1; i <= filterNumDays; i++) {
-    var dateValue = new Date([dateArg[0], dateArg[1], i]).getDate();
-    newObj.value.push(dateArg[0] + '-' + dateArg[1] + '-' + dateValue);
-  }
+  var addNewDate = Number(newDate.getDate()) + Number(addNum); // pastikan tanggal tidak melewati jumlah tanggal pada bulan tertentu
 
-  return newObj;
-};
-var daysInUTCMonth = function daysInUTCMonth() {
-  for (var _len2 = arguments.length, dateArg = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    dateArg[_key2] = arguments[_key2];
-  }
+  var allDays = Number(daysInMonth(Number(newDate.getFullYear()), newDate.getMonth() + 1));
 
-  if (!dateArg && dateArg.length <= 0) {
-    throw new Error('You need to input the year numbers on argument 1 and the month numbers on argument 2');
-  }
+  if (addNewDate > allDays) {
+    var restNewDate = addNewDate - allDays; // pastikan juga bulannya tidak bulan 12, kalau ya berati masuk tahun baru
 
-  var commonDays = [28, 29, 30, 31];
-  var numOfDays = new Date(Date.UTC(dateArg[0], dateArg[1], 0)).getUTCDate();
-  var filterNumDays = commonDays.includes(numOfDays) ? numOfDays : 31;
-  var newObj = {
-    days: filterNumDays,
-    start: new Date(Date.UTC(dateArg[0], Number(dateArg[1]) - 1, 1)).getUTCDay(),
-    end: new Date(Date.UTC(dateArg[0], Number(dateArg[1]) - 1, filterNumDays)).getUTCDay(),
-    value: []
-  };
-
-  for (var i = 1; i <= filterNumDays; i++) {
-    var dateValue = new Date(Date.UTC(dateArg[0], Number(dateArg[1]) - 1, i)).getUTCDate();
-    newObj.value.push(dateArg[0] + '-' + dateArg[1] + '-' + dateValue);
-  }
-
-  return newObj;
-};
-
-var monthName = function monthName() {
-  var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en-US';
-  var monthType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
-  var monthNum = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-  var arrMonthName = [];
-
-  if (typeof monthNum === 'number' && monthNum >= 0 && monthNum <= 11) {
-    var thisDate = new Date(Date.UTC(2021, monthNum));
-    arrMonthName = new Intl.DateTimeFormat(locale, {
-      month: monthType
-    }).format(thisDate);
+    if (Number(newDate.getMonth()) === 11) {
+      newDate = new Date(Number(newDate.getFullYear()) + 1, 0, restNewDate);
+    } else {
+      newDate = new Date(Number(newDate.getFullYear()), Number(newDate.getMonth()) + 1, restNewDate);
+    }
   } else {
-    for (var i = 0; i <= 11; i++) {
-      var _thisDate = new Date(Date.UTC(2021, i));
+    newDate = new Date(Number(newDate.getFullYear()), Number(newDate.getMonth()), addNewDate);
+  } // cek format
 
-      arrMonthName.push(new Intl.DateTimeFormat(locale, {
-        month: monthType
-      }).format(_thisDate));
+
+  var formatDate = formatParam !== null && isFormatDate(formatParam) !== false ? format(newDate, formatParam) : newDate;
+  return formatDate;
+};
+
+var subtractDate = function subtractDate(dateParam, subtractNum) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  if (!isFullDate(dateParam)) {
+    throw new Error('Please enter a date in correct way, either in string or array type');
+  }
+
+  if (!isNumber(subtractNum)) {
+    throw new Error('Only accept number type on second argument');
+  }
+
+  var newDate = new Date(dateParam); // kurangi tanggal
+
+  var subtractNewDate = Number(newDate.getDate()) - Number(subtractNum); // pastikan tanggal tidak melewati jumlah tanggal pada bulan tertentu
+
+  var allDays = Number(daysInMonth(Number(newDate.getFullYear()), newDate.getMonth()));
+
+  if (subtractNewDate < 1) {
+    var restNewDate = allDays + (subtractNewDate - 1); // pastikan juga bulannya tidak bulan 1, kalau ya berati masuk tahun lama
+
+    if (Number(newDate.getMonth()) === 0) {
+      newDate = new Date(Number(newDate.getFullYear()) - 1, 0, restNewDate);
+    } else {
+      newDate = new Date(Number(newDate.getFullYear()), Number(newDate.getMonth()) + 1, restNewDate);
+    }
+  } else {
+    newDate = new Date(Number(newDate.getFullYear()), Number(newDate.getMonth()), subtractNewDate);
+  } // cek dan buat formatnya
+
+
+  var formatDate = formatParam !== null && isFormatDate(formatParam) !== false ? format(newDate, formatParam) : newDate;
+  return formatDate;
+};
+
+var rangeDate = function rangeDate(startDate, endDate) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+  if (!isFullDate(firstDate)) {
+    throw new Error('Error in the first argument: ' + msgDate.fullDateMsg);
+  }
+
+  if (!isFullDate(lastDate)) {
+    throw new Error('Error in the second argument: ' + msgDate.fullDateMsg);
+  }
+
+  var firstDate = new Date(startDate);
+  var lastDate = new Date(endDate);
+  var arrayDate = [];
+  var currentDate = firstDate; // iterasi tanggal dan push kedalam array
+
+  while (currentDate <= lastDate) {
+    var formatDate = formatParam !== null && isFormatDate(formatParam) !== false ? format(currentDate, formatParam) : currentDate;
+    arrayDate.push(formatDate);
+    currentDate = addDate(currentDate, 1);
+  } // tanggal dalam array
+
+
+  return arrayDate;
+};
+
+var week = function week(yearParams, monthParams, dateParams) {
+  // pengecekan tahun, bulan, dan tangal dan untuk pesan saya pisahkan pada berkas lain
+  if (!isYear(yearParams)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthParams)) {
+    throw new Error(msgDate.monthMsg);
+  }
+
+  if (!isDate(dateParams)) {
+    throw new Error(msgDate.dateMsg);
+  } // hitung jumlah hari yang telah dilalui dalam tahun ini
+
+
+  var calcCurrentDays = daysInBetween(new Date(Number(yearParams), 0, 1), new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams))); // kurangi hari yang tidak dimulai dari hari ahad
+
+  var getFirstDay = Number(new Date(yearParams, 0, 1).getDay());
+  var subtractDay = 0;
+
+  if (getFirstDay > 0) {
+    subtractDay = 6 - (getFirstDay - 1);
+  } // perlu penambahan jika tidak berakhir hari sabtu
+
+
+  var getLastDay = Number(new Date(Number(yearParams), Number(monthParams) - 1, Number(dateParams)).getDay());
+  var addDay = 0;
+
+  if (getLastDay < 6) {
+    addDay = 6 - getLastDay;
+  }
+
+  return Math.ceil((Number(calcCurrentDays) + addDay - subtractDay) / 7);
+};
+var weeks = function weeks(yearParam, weekParam, formatParam) {
+  if (!isYear(yearParam)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isNumber(weekParam)) {
+    throw new Error('You have to enter a number');
+  }
+
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  } // cek taggal dari nomor pekan
+
+
+  var getWeekDate = weeksInYear(yearParam, 'YYYY-MM-DD')[weekParam.toString()]; // pecahkan tanggal menjadi bagian-bagian yang terpisah
+
+  var splitFirstDate = getWeekDate[0].split('-');
+  var splitLastDate = getWeekDate[1].split('-'); // rangekan tanggal
+
+  var rangeWeekDate = rangeDate(new Date(Number(splitFirstDate[0]), Number(splitFirstDate[1]) - 1, Number(splitFirstDate[2])), new Date(Number(splitLastDate[0]), Number(splitLastDate[1]) - 1, Number(splitLastDate[2])), formatParam); // 7 tanggal dalam satu array
+
+  return rangeWeekDate;
+};
+var weeksInMonth = function weeksInMonth(yearParam, monthParam) {
+  if (!isYear(yearParam)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthParam)) {
+    throw new Error(msgDate.monthMsg);
+  } // cek bulan dari semua nilai pekan dalam setahun
+
+
+  var getWeekNumbers = weeksInYear(yearParam, 'M');
+  var resWeeks = [];
+
+  for (var _i = 0, _Object$entries = Object.entries(getWeekNumbers); _i < _Object$entries.length; _i++) {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+        key = _Object$entries$_i[0],
+        val = _Object$entries$_i[1];
+
+    if (val.includes(monthParam.toString())) {
+      resWeeks.push(key);
     }
   }
 
-  return arrMonthName;
+  return Number(monthParam) === 1 ? resWeeks.filter(function (w) {
+    return w !== '52';
+  }) : resWeeks;
 };
-var dayName = function dayName() {
-  var locale = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'en-US';
-  var dayType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
-  var yearNum = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 2021;
-  var monthNum = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
-  var dayNum = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;
-  var arrDayName = [];
+var weeksInYear = function weeksInYear(yearParams) {
+  var formatDate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'DD';
 
-  if (typeof dayNum === 'number' && dayNum >= 1 && dayNum <= 31) {
-    var thisDate = new Date(Date.UTC(yearNum, Number(monthNum) - 1, dayNum));
-    arrDayName = new Intl.DateTimeFormat(locale, {
-      weekday: dayType
-    }).format(thisDate);
-  } else {
-    for (var i = 4; i <= 10; i++) {
-      var _thisDate2 = new Date(Date.UTC(2021, 3, i));
+  if (!isYear(yearParams)) {
+    throw new Error(msgDate.yearMsg);
+  }
 
-      arrDayName.push(new Intl.DateTimeFormat(locale, {
-        weekday: dayType
-      }).format(_thisDate2));
+  if (!isFormatDate(formatDate)) {
+    throw new Error('Please enter the correct date format in a string type');
+  } // cek posisi dari tanggal dan bulan pertama
+
+
+  var getFirstDay = Number(new Date(Number(yearParams), 0, 1).getDay());
+  var subtractDay = 0;
+
+  if (getFirstDay > 0) {
+    subtractDay = 6 - (getFirstDay - 1);
+  } // cek posisi dari tanggal dan bulan terakhir
+
+
+  var getLastDay = Number(new Date(Number(yearParams), 11, 31).getDay());
+  var addDay = 0;
+
+  if (getLastDay < 6) {
+    addDay = 6 - getLastDay;
+  } // hitung jumlah pekan dalam satu tahun
+
+
+  var totalWeeks = Math.ceil((Number(daysInYear(yearParams)) + addDay - subtractDay) / 7); // ini akan menghasilkan object dengan angka setiap pekan sebagai property key dan tanggal mulai dan akhir dari sepekan dalam array
+
+  var objWeek = {};
+  var startDay = subtractDay + 1;
+  var startMonth = 0;
+  var startYear = yearParams;
+
+  for (var i = 1; i <= totalWeeks; i++) {
+    objWeek[i.toString()] = [format(new Date(startYear, startMonth, startDay), formatDate), format(addDate(new Date(startYear, startMonth, startDay), 6), formatDate)];
+    startDay = startDay + 7;
+
+    if (startMonth < 12 && startDay > Number(daysInMonth(yearParams, startMonth + 1))) {
+      startDay = startDay - Number(daysInMonth(yearParams, startMonth + 1));
+
+      if (startMonth !== 11) {
+        startMonth = startMonth + 1;
+      } else {
+        startMonth = 1;
+        startYear = startYear + 1;
+      }
     }
   }
 
-  return arrDayName;
+  return objWeek;
 };
 
 var calendar = function calendar(yearArg, monthArg) {
-  var dayNameIn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+  var flatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var formatParam = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'YYYY-MM-DD';
+  var locale = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'en-US';
 
-  if (typeof yearArg !== 'string' && typeof yearArg !== 'number') {
-    throw new Error('Only accept year numbers here, also support string type');
+  if (!isYear(yearArg)) {
+    throw new Error(msgDate.yearMsg);
   }
 
-  if (typeof monthArg !== 'string' && typeof monthArg !== 'number') {
-    throw new Error('For month, only accept number and string type');
+  if (!isMonth(monthArg)) {
+    throw new Error(msgDate.monthMsg);
   }
 
-  var dayNames = dayName(dayNameIn);
-  var currentMonth = daysInMonth(yearArg, monthArg);
-  var beforeMonth = Number(Number(monthArg) - 1) < 1 ? daysInMonth(Number(yearArg - 1), 12) : daysInMonth(yearArg, Number(Number(monthArg) - 1));
-  var sliceBeforeMonth = Number(currentMonth.start) !== 0 ? beforeMonth.value.slice(Number('-' + currentMonth.start)) : [];
-  var afterMonth = Number(Number(monthArg) + 1) > 12 ? daysInMonth(Number(yearArg + 1), 1) : daysInMonth(yearArg, Number(Number(monthArg) + 1));
-  var sliceAfterMonth = Number(currentMonth.start) !== 6 ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : [];
-  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  } // ambil nama-nama hari
+
+
+  var dayNames = days(locale); // rangekan dan hasilkan semua tanggal
+
+  var currentMonth = rangeDate(new Date(yearArg, Number(monthArg) - 1, 1), new Date(yearArg, Number(monthArg) - 1, daysInMonth(yearArg, monthArg)), formatParam); // cek hari pertama, kurangi hari yang tidak dimulai dari hari ahad
+
+  var getFirstDay = Number(new Date(yearArg, Number(monthArg) - 1, 1).getDay());
+  var prevMonth = [];
+
+  if (getFirstDay > 0) {
+    var subtractPrevDay = getFirstDay - 1;
+    prevMonth = rangeDate(new Date(yearArg, Number(monthArg) - 2, Number(daysInMonth(yearArg, Number(monthArg) - 1)) - subtractPrevDay), new Date(yearArg, Number(monthArg) - 2, daysInMonth(yearArg, Number(monthArg) - 1)), formatParam);
+  } // cek hari terakhir, perlu penambahan jika tidak berakhir hari sabtu
+
+
+  var getLastDay = Number(new Date(yearArg, Number(monthArg) - 1, daysInMonth(yearArg, monthArg)).getDay());
+  var nextMonth = [];
+
+  if (getLastDay < 6) {
+    var addNextDay = 6 - (getLastDay + 1);
+    nextMonth = rangeDate(new Date(yearArg, Number(monthArg), 1), new Date(yearArg, Number(monthArg), 1 + addNextDay), formatParam);
+  }
+
+  var newMonth = [dayNames, prevMonth, currentMonth, nextMonth];
+  return flatParam === true ? newMonth.flat() : newMonth;
 };
+var daysInCalendar = function daysInCalendar(yearArg, monthArg) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'YYYY-MM-DD';
 
-var calendarUTC = function calendarUTC(yearArg, monthArg) {
-  var dayNameIn = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
-
-  if (typeof yearArg !== 'string' && typeof yearArg !== 'number') {
-    throw new Error('Only accept year numbers here, also support string type');
+  if (!isYear(yearArg)) {
+    throw new Error(msgDate.yearMsg);
   }
 
-  if (typeof monthArg !== 'string' && typeof monthArg !== 'number') {
-    throw new Error('For month, only accept number and string type');
+  if (!isMonth(monthArg)) {
+    throw new Error(msgDate.monthMsg);
   }
 
-  var dayNames = dayName(dayNameIn);
-  var currentMonth = daysInUTCMonth(yearArg, monthArg);
-  var beforeMonth = Number(Number(monthArg) - 1) < 1 ? daysInUTCMonth(Number(yearArg - 1), 12) : daysInUTCMonth(yearArg, Number(Number(monthArg) - 1));
-  var sliceBeforeMonth = Number(currentMonth.start) !== 0 ? beforeMonth.value.slice(Number('-' + currentMonth.start)) : [];
-  var afterMonth = Number(Number(monthArg) + 1) >= 12 ? daysInUTCMonth(Number(yearArg + 1), 1) : daysInUTCMonth(yearArg, Number(Number(monthArg) + 1));
-  var sliceAfterMonth = Number(currentMonth.start) !== 6 ? afterMonth.value.slice(0, 6 - Number(currentMonth.end)) : [];
-  return [].concat(_toConsumableArray(dayNames), _toConsumableArray(sliceBeforeMonth), _toConsumableArray(currentMonth.value), _toConsumableArray(sliceAfterMonth));
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  } // rangekan dan hasilkan semua tanggal untuk bulan ini
+
+
+  return rangeDate(new Date(yearArg, Number(monthArg) - 1, 1), new Date(yearArg, Number(monthArg) - 1, daysInMonth(yearArg, monthArg)), formatParam);
+};
+var prevDaysInCalendar = function prevDaysInCalendar(yearArg, monthArg) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'YYYY-MM-DD';
+
+  if (!isYear(yearArg)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthArg)) {
+    throw new Error(msgDate.monthMsg);
+  }
+
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  } // cek hari pertama, kurangi hari yang tidak dimulai dari hari ahad
+
+
+  var getFirstDay = Number(new Date(yearArg, Number(monthArg) - 1, 1).getDay());
+  var restPrevMonth = [];
+
+  if (getFirstDay > 0) {
+    var subtractPrevDay = getFirstDay - 1;
+    restPrevMonth = rangeDate(new Date(yearArg, Number(monthArg) - 2, Number(daysInMonth(yearArg, Number(monthArg) - 1)) - subtractPrevDay), new Date(yearArg, Number(monthArg) - 2, daysInMonth(yearArg, Number(monthArg) - 1)), formatParam);
+  }
+
+  return restPrevMonth;
+};
+var nextDaysInCalendar = function nextDaysInCalendar(yearArg, monthArg) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'YYYY-MM-DD';
+
+  if (!isYear(yearArg)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthArg)) {
+    throw new Error(msgDate.monthMsg);
+  }
+
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  } // cek hari terakhir, perlu penambahan jika tidak berakhir hari sabtu
+
+
+  var getLastDay = Number(new Date(yearArg, Number(monthArg) - 1, daysInMonth(yearArg, monthArg)).getDay());
+  var restNextMonth = [];
+
+  if (getLastDay < 6) {
+    var addNextDay = 6 - (getLastDay + 1);
+    restNextMonth = rangeDate(new Date(yearArg, Number(monthArg), 1), new Date(yearArg, Number(monthArg), 1 + addNextDay), formatParam);
+  }
+
+  return restNextMonth;
+};
+var weeklyCalendar = function weeklyCalendar(yearParam, monthParam, dateParam) {
+  var formatParam = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'YYYY-MM-DD';
+  var locale = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'en-US';
+
+  if (!isYear(yearParam)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthParam)) {
+    throw new Error(msgDate.monthMsg);
+  }
+
+  if (!isDate(dateParam)) {
+    throw new Error(msgDate.dateMsg);
+  }
+
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  }
+
+  var dayNames = days(locale);
+  var weekNumbers = week(yearParam, monthParam, dateParam);
+  var weekDates = weeks(yearParam, weekNumbers, formatParam);
+  return zip(dayNames, weekDates)[0];
+};
+var calendarWithWeeks = function calendarWithWeeks(yearArg, monthArg) {
+  var flatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  var formatParam = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'YYYY-MM-DD';
+  var locale = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 'en-US';
+
+  if (!isYear(yearArg)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isMonth(monthArg)) {
+    throw new Error(msgDate.monthMsg);
+  }
+
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  } // ambil nama-nama hari
+
+
+  var dayNames = days(locale); // ambil nomor pekan saja dari bulan ini
+
+  var weekNumbers = weeksInMonth(yearArg, monthArg);
+  var currentMonth = [];
+
+  if (Number(new Date(yearArg, Number(monthArg) - 1, 1).getDay()) !== 0 && Number(monthArg) === 1) {
+    currentMonth.push('52');
+    currentMonth.push(weeks(Number(yearArg) - 1, 52, formatParam));
+  }
+
+  var _iterator = _createForOfIteratorHelper(weekNumbers),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var wn = _step.value;
+      currentMonth.push(wn);
+      currentMonth.push(weeks(yearArg, wn, formatParam));
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  var newMonth = ['Week', dayNames].concat(currentMonth);
+  return flatParam === true ? newMonth.flat() : newMonth;
 };
 
 var date = /*#__PURE__*/Object.freeze({
   __proto__: null,
   now: now,
+  nowHijri: nowHijri,
   parse: parse,
+  parseDate: parse,
   utc: utc,
+  addDate: addDate,
+  subtractDate: subtractDate,
+  rangeDate: rangeDate,
+  day: day,
+  days: days,
   daysInMonth: daysInMonth,
-  daysInUTCMonth: daysInUTCMonth,
+  daysInYear: daysInYear,
+  daysInBetween: daysInBetween,
+  week: week,
+  weeks: weeks,
+  weeksInMonth: weeksInMonth,
+  weeksInYear: weeksInYear,
+  month: month,
+  months: months,
+  isYear: isYear,
+  isMonth: isMonth,
+  isDate: isDate,
+  isFullDate: isFullDate,
+  isFormatDate: isFormatDate,
+  isLeapYear: isLeapYear,
   calendar: calendar,
-  calendarUTC: calendarUTC,
-  monthName: monthName,
-  dayName: dayName
+  daysInCalendar: daysInCalendar,
+  prevDaysInCalendar: prevDaysInCalendar,
+  nextDaysInCalendar: nextDaysInCalendar,
+  weeklyCalendar: weeklyCalendar,
+  calendarWithWeeks: calendarWithWeeks
 });
 
 var size = function size(bytes, decimalPoint) {
@@ -2682,4 +3160,104 @@ var file = /*#__PURE__*/Object.freeze({
   printed: printed
 });
 
-export { array as $array, char as $char, date as $date, file as $file, int as $int, number as $number, object as $object, string as $string, array, char, date, file, int, number, object, string };
+var setCookie = function setCookie(name, value, days) {
+  var expires;
+
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = "expires=" + date.toGMTString();
+  } else {
+    expires = "";
+  }
+
+  document.cookie = name + "=" + value + "; SameSite=Lax;" + expires + "; path=/";
+};
+var getCookie = function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(";");
+
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+
+    while (c.charAt(0) === " ") {
+      c = c.substring(1, c.length);
+    }
+
+    if (c.indexOf(nameEQ) === 0) {
+      return c.substring(nameEQ.length, c.length);
+    }
+  }
+
+  return null;
+};
+var hasCookie = function hasCookie(name) {
+  return getCookie(name) ? true : false;
+};
+var removeCookie = function removeCookie(name) {
+  setCookie(name, "", -1);
+};
+var clearCookie = function clearCookie() {
+  var cookies = document.cookie.split(";");
+
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    var eqPos = cookie.indexOf("=");
+    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+};
+
+var isStorage = function isStorage(storageType) {
+  return (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && "".concat(storageType, "Storage") in window ? true : false;
+};
+var isCookie = function isCookie() {
+  return (typeof document === "undefined" ? "undefined" : _typeof(document)) === 'object' && 'cookie' in document ? true : false;
+};
+
+var setStorage = function setStorage(key, value) {
+  var storageType = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'local';
+  if (!isStorage(storageType)) return;
+  window["".concat(storageType, "Storage")].setItem(key, value);
+};
+var getStorage = function getStorage(key) {
+  var storageType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'local';
+  if (!isStorage(storageType)) return;
+  return window["".concat(storageType, "Storage")].getItem(key);
+};
+var hasStorage = function hasStorage(key) {
+  var storageType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'local';
+  if (!isStorage(storageType)) return;
+  return window["".concat(storageType, "Storage")].getItem(key) ? true : false;
+};
+var removeStorage = function removeStorage(key) {
+  var storageType = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'local';
+  if (!isStorage(storageType)) return;
+
+  if (hasStorage(key, storageType)) {
+    window["".concat(storageType, "Storage")].removeItem(key);
+  }
+};
+var clearStorage = function clearStorage() {
+  var storageType = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'local';
+  if (!isStorage(storageType)) return;
+  window["".concat(storageType, "Storage")].clear();
+};
+
+var storage = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  setCookie: setCookie,
+  getCookie: getCookie,
+  hasCookie: hasCookie,
+  removeCookie: removeCookie,
+  clearCookie: clearCookie,
+  isStorage: isStorage,
+  isCookie: isCookie,
+  setStorage: setStorage,
+  getStorage: getStorage,
+  hasStorage: hasStorage,
+  removeStorage: removeStorage,
+  clearStorage: clearStorage
+});
+
+export { array as $array, char as $char, date as $date, file as $file, int as $int, number as $number, object as $object, string as $string, array, char, date, file, int, number, object, storage, string };

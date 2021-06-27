@@ -1,12 +1,11 @@
 // ambil pengecekan
-import { isYear, isMonth, isDate, isLeapYear, isFormatDate } from './isDate.js'
+import { isYear, isMonth, isDate, isFormatDate } from './isDate.js'
 import { isNumber } from '../number/isNumber.js'
 // ambil semua pesannya
 import msgDate from './msgDate.js'
 import { daysInMonth, daysInYear, daysInBetween } from './dayDate.js'
 import { format } from './formatDate.js'
 import { addDate } from './addDate.js'
-import { subtractDate } from './subtractDate.js'
 import { rangeDate } from './rangeDate.js'
 
 export const week = (yearParams, monthParams, dateParams) => {

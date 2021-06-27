@@ -1,10 +1,13 @@
-import * as dateVar from './dateVar.js'
+//import * as dateVar from './dateVar.js'
+//import { days } from './dayDate.js'
+import { months } from './monthDate.js'
+import { isFullDate, isFormatDate } from './isDate.js'
 
-export const parse = (dateStr, formatStr) => {
-  if(typeof dateStr !== 'string' && new RegExp(dateVar.REGEX_PARSE_DATE).test(dateStr) === false) {
+export const parse = (dateStr, formatStr, locale = 'en-US', dayType = 'long') => {
+  if(!isFullDate(dateStr)) {
     throw new Error('On the first argument, you have to input only the correct date')
   }
-  if(typeof formatStr !== 'string' && new RegExp(dateVar.REGEX_DATE_FORMAT).test(formatStr) === false) {
+  if(!isFormatDate(formatStr)) {
     throw new Error('For format date, you must always input the correct one by using characters like these: Y, M, m, D, d, H, h, k, i, S, s, A, a or Do')
   }
   
@@ -28,10 +31,10 @@ export const parse = (dateStr, formatStr) => {
         newDate.year = dateArr[i]
       } else if(dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'M' || formatArr[i] === 'MM') {
         newDate.month = Number(dateArr[i]) - 1
-      } else if(dateArr[i].length === 3 && dateVar.MONTH_NAMES.map(mn => mn.slice(0, 3)).includes(dateArr[i]) && formatArr[i] === 'm') {
-        newDate.month = dateVar.MONTH_NAMES.map(mn => mn.slice(0, 3)).findIndex(dateArr[i])
-      } else if(dateArr[i].length >= 3 && dateVar.MONTH_NAMES.includes(dateArr[i]) && formatArr[i] === 'mm') {
-        newDate.month = dateVar.MONTH_NAMES.findIndex(dateArr[i])
+      } else if(dateArr[i].length === 3 && months(locale, dayType).map(mn => mn.slice(0, 3)).includes(dateArr[i]) && formatArr[i] === 'm') {
+        newDate.month = months(locale, dayType).map(mn => mn.slice(0, 3)).findIndex(dateArr[i])
+      } else if(dateArr[i].length >= 3 && months(locale, dayType).includes(dateArr[i]) && formatArr[i] === 'mm') {
+        newDate.month = months(locale, dayType).findIndex(dateArr[i])
       } else if(dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'D' || formatArr[i] === 'DD') {
         newDate.day = dateArr[i]
       } else if(dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 'H' || formatArr[i] === 'HH') {

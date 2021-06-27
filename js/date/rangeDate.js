@@ -1,7 +1,7 @@
 import { isFullDate, isFormatDate } from './isDate.js'
 import { format } from './formatDate.js'
-import { daysInBetween } from './dayDate.js'
 import { addDate } from './addDate.js'
+import msgDate from './msgDate.js'
 
 export const rangeDate = (startDate, endDate, formatParam = null) => {
   if(!isFullDate(firstDate)) {
@@ -13,8 +13,6 @@ export const rangeDate = (startDate, endDate, formatParam = null) => {
   
   const firstDate = new Date(startDate)
   const lastDate = new Date(endDate)
-  // total hari
-  const numOfDays = daysInBetween(firstDate, lastDate)
   const arrayDate = []
   let currentDate = firstDate
   // iterasi tanggal dan push kedalam array

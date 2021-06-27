@@ -23,5 +23,3 @@ export namespace DATE_INFO {
     const Y: string;
     const DATE: string;
 }
-export const DAY_NAMES: string[];
-export const MONTH_NAMES: string[];

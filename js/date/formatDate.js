@@ -1,7 +1,9 @@
-import * as dateVar from './dateVar.js'
+//import * as dateVar from './dateVar.js'
 import { isFullDate, isFormatDate } from './isDate.js'
+import { days } from './dayDate.js'
+import { months } from './monthDate.js'
 
-export const format = (dateParam, formatStr) => {
+export const format = (dateParam, formatStr, locale = 'en-US', dayType = 'long') => {
   if(!isFullDate(dateParam)) {
     throw new Error('You\'re entering the wrong date string, please use this statement "new Date(\'yourdateParam\').toString()" instead or array "[year, monthIndex, dateNumber]"')
   }
@@ -33,8 +35,8 @@ export const format = (dateParam, formatStr) => {
         return dateMonth
       }
     },
-    m: dateVar.MONTH_NAMES[oriDate.getMonth()].slice(0, 3),
-    mm: dateVar.MONTH_NAMES[oriDate.getMonth()],
+    m: months(locale, dayType)[oriDate.getMonth()].slice(0, 3),
+    mm: months(locale, dayType)[oriDate.getMonth()],
     D: oriDate.getDate,
     DD: () => {
       const dateDay = oriDate.getDate().toString()
@@ -45,8 +47,8 @@ export const format = (dateParam, formatStr) => {
       }
       return resDay
     },
-    d: dateVar.DAY_NAMES[oriDate.getDay()].slice(0, 3),
-    dd: dateVar.DAY_NAMES[oriDate.getDay()],
+    d: days(locale, dayType)[oriDate.getDay()].slice(0, 3),
+    dd: days(locale, dayType)[oriDate.getDay()],
     H: oriDate.getHours(),
     HH: () => {
       const dateHour = oriDate.getHours().toString()
