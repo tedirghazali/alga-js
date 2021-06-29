@@ -1,6 +1,6 @@
 {
   "name": "alga-js",
-  "version": "0.0.1-beta2",
+  "version": "0.0.1-beta3",
   "description": "Alga.js is a javascript helper and utility for any web font-end framework",
   "module": "dist/alga.min.js",
   "main": "dist/alga-umd.js",
@@ -9,6 +9,7 @@
   "files": [
     "js",
     "dist/*.js",
+    "lib/*.js",
     "types/**/*.d.ts"
   ],
   "scripts": {

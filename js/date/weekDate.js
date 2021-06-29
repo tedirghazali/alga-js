@@ -36,7 +36,7 @@ export const week = (yearParams, monthParams, dateParams) => {
   return Math.ceil(((Number(calcCurrentDays) + addDay) - subtractDay) / 7)
 }
 
-export const weeks = (yearParam, weekParam, formatParam) => {
+export const weeks = (yearParam, weekParam, formatParam = 'YYYY-MM-DD') => {
   if(!isYear(yearParam)) {
     throw new Error(msgDate.yearMsg)
   }
@@ -47,7 +47,7 @@ export const weeks = (yearParam, weekParam, formatParam) => {
     throw new Error('Please enter a format of date correctly')
   }
   // cek taggal dari nomor pekan
-  const getWeekDate = weeksInYear(yearParam, 'YYYY-MM-DD')[weekParam.toString()]
+  const getWeekDate = weeksOfYear(yearParam, weekParam, 'YYYY-MM-DD')[weekParam.toString()]
   // pecahkan tanggal menjadi bagian-bagian yang terpisah
   const splitFirstDate = getWeekDate[0].split('-')
   const splitLastDate = getWeekDate[1].split('-')
@@ -69,7 +69,7 @@ export const weeksInMonth = (yearParam, monthParam) => {
   }
   
   // cek bulan dari semua nilai pekan dalam setahun
-  const getWeekNumbers = weeksInYear(yearParam, 'M')
+  const getWeekNumbers = weeksOfYear(yearParam, 52, 'M')
   const resWeeks = []
   for(let [key, val] of Object.entries(getWeekNumbers)) {
     if(val.includes(monthParam.toString())) {
@@ -79,12 +79,9 @@ export const weeksInMonth = (yearParam, monthParam) => {
   return (Number(monthParam) === 1) ? resWeeks.filter(w => w !== '52') : resWeeks
 }
 
-export const weeksInYear = (yearParams, formatDate = 'DD') => {
+export const weeksInYear = (yearParams) => {
   if(!isYear(yearParams)) {
     throw new Error(msgDate.yearMsg)
-  }
-  if(!isFormatDate(formatDate)) {
-    throw new Error('Please enter the correct date format in a string type')
   }
   // cek posisi dari tanggal dan bulan pertama
   const getFirstDay = Number(new Date(Number(yearParams), 0, 1).getDay())
@@ -100,19 +97,39 @@ export const weeksInYear = (yearParams, formatDate = 'DD') => {
   }
   // hitung jumlah pekan dalam satu tahun
   const totalWeeks = Math.ceil(((Number(daysInYear(yearParams)) + addDay) - subtractDay) / 7)
+  
+  return totalWeeks
+}
+
+export const weeksOfYear = (yearParam, weekParam, formatParam = 'YYYY-MM-DD') => {
+  if(!isYear(yearParam)) {
+    throw new Error(msgDate.yearMsg)
+  }
+  if(!isNumber(weekParam)) {
+    throw new Error('You have to enter a number')
+  }
+  if(!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly')
+  }
+  // pengecekan posisi dari tanggal dan bulan pertama
+  const getFirstDay = Number(new Date(Number(yearParam), 0, 1).getDay())
+  let subtractDay = 0
+  if(getFirstDay > 0) {
+    subtractDay = 6 - (getFirstDay - 1)
+  }
   // ini akan menghasilkan object dengan angka setiap pekan sebagai property key dan tanggal mulai dan akhir dari sepekan dalam array
   const objWeek = {}
   let startDay = subtractDay + 1
   let startMonth = 0
-  let startYear = yearParams
-  for(let i = 1; i <= totalWeeks;i++) {
+  let startYear = yearParam
+  for(let i = 1; i <= weekParam;i++) {
     objWeek[i.toString()] = [
-      format(new Date(startYear, startMonth, startDay), formatDate),
-      format(addDate(new Date(startYear, startMonth, startDay), 6), formatDate)
+      format(new Date(startYear, startMonth, startDay), formatParam),
+      format(addDate(new Date(startYear, startMonth, startDay), 6), formatParam)
     ]
     startDay = startDay + 7
-    if(startMonth < 12 && startDay > Number(daysInMonth(yearParams, startMonth + 1))) {
-      startDay = startDay - Number(daysInMonth(yearParams, startMonth + 1))
+    if(startMonth < 12 && startDay > Number(daysInMonth(yearParam, startMonth + 1))) {
+      startDay = startDay - Number(daysInMonth(yearParam, startMonth + 1))
       if(startMonth !== 11) {
         startMonth = startMonth + 1
       } else {

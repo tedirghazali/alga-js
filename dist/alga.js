@@ -2564,7 +2564,9 @@ var week = function week(yearParams, monthParams, dateParams) {
 
   return Math.ceil((Number(calcCurrentDays) + addDay - subtractDay) / 7);
 };
-var weeks = function weeks(yearParam, weekParam, formatParam) {
+var weeks = function weeks(yearParam, weekParam) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'YYYY-MM-DD';
+
   if (!isYear(yearParam)) {
     throw new Error(msgDate.yearMsg);
   }
@@ -2578,7 +2580,7 @@ var weeks = function weeks(yearParam, weekParam, formatParam) {
   } // cek taggal dari nomor pekan
 
 
-  var getWeekDate = weeksInYear(yearParam, 'YYYY-MM-DD')[weekParam.toString()]; // pecahkan tanggal menjadi bagian-bagian yang terpisah
+  var getWeekDate = weeksOfYear(yearParam, weekParam, 'YYYY-MM-DD')[weekParam.toString()]; // pecahkan tanggal menjadi bagian-bagian yang terpisah
 
   var splitFirstDate = getWeekDate[0].split('-');
   var splitLastDate = getWeekDate[1].split('-'); // rangekan tanggal
@@ -2597,7 +2599,7 @@ var weeksInMonth = function weeksInMonth(yearParam, monthParam) {
   } // cek bulan dari semua nilai pekan dalam setahun
 
 
-  var getWeekNumbers = weeksInYear(yearParam, 'M');
+  var getWeekNumbers = weeksOfYear(yearParam, 52, 'M');
   var resWeeks = [];
 
   for (var _i = 0, _Object$entries = Object.entries(getWeekNumbers); _i < _Object$entries.length; _i++) {
@@ -2615,14 +2617,8 @@ var weeksInMonth = function weeksInMonth(yearParam, monthParam) {
   }) : resWeeks;
 };
 var weeksInYear = function weeksInYear(yearParams) {
-  var formatDate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'DD';
-
   if (!isYear(yearParams)) {
     throw new Error(msgDate.yearMsg);
-  }
-
-  if (!isFormatDate(formatDate)) {
-    throw new Error('Please enter the correct date format in a string type');
   } // cek posisi dari tanggal dan bulan pertama
 
 
@@ -2642,19 +2638,44 @@ var weeksInYear = function weeksInYear(yearParams) {
   } // hitung jumlah pekan dalam satu tahun
 
 
-  var totalWeeks = Math.ceil((Number(daysInYear(yearParams)) + addDay - subtractDay) / 7); // ini akan menghasilkan object dengan angka setiap pekan sebagai property key dan tanggal mulai dan akhir dari sepekan dalam array
+  var totalWeeks = Math.ceil((Number(daysInYear(yearParams)) + addDay - subtractDay) / 7);
+  return totalWeeks;
+};
+var weeksOfYear = function weeksOfYear(yearParam, weekParam) {
+  var formatParam = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'YYYY-MM-DD';
+
+  if (!isYear(yearParam)) {
+    throw new Error(msgDate.yearMsg);
+  }
+
+  if (!isNumber(weekParam)) {
+    throw new Error('You have to enter a number');
+  }
+
+  if (!isFormatDate(formatParam)) {
+    throw new Error('Please enter a format of date correctly');
+  } // pengecekan posisi dari tanggal dan bulan pertama
+
+
+  var getFirstDay = Number(new Date(Number(yearParam), 0, 1).getDay());
+  var subtractDay = 0;
+
+  if (getFirstDay > 0) {
+    subtractDay = 6 - (getFirstDay - 1);
+  } // ini akan menghasilkan object dengan angka setiap pekan sebagai property key dan tanggal mulai dan akhir dari sepekan dalam array
+
 
   var objWeek = {};
   var startDay = subtractDay + 1;
   var startMonth = 0;
-  var startYear = yearParams;
+  var startYear = yearParam;
 
-  for (var i = 1; i <= totalWeeks; i++) {
-    objWeek[i.toString()] = [format(new Date(startYear, startMonth, startDay), formatDate), format(addDate(new Date(startYear, startMonth, startDay), 6), formatDate)];
+  for (var i = 1; i <= weekParam; i++) {
+    objWeek[i.toString()] = [format(new Date(startYear, startMonth, startDay), formatParam), format(addDate(new Date(startYear, startMonth, startDay), 6), formatParam)];
     startDay = startDay + 7;
 
-    if (startMonth < 12 && startDay > Number(daysInMonth(yearParams, startMonth + 1))) {
-      startDay = startDay - Number(daysInMonth(yearParams, startMonth + 1));
+    if (startMonth < 12 && startDay > Number(daysInMonth(yearParam, startMonth + 1))) {
+      startDay = startDay - Number(daysInMonth(yearParam, startMonth + 1));
 
       if (startMonth !== 11) {
         startMonth = startMonth + 1;
