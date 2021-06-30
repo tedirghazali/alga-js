@@ -2577,17 +2577,48 @@ var weeks = function weeks(yearParam, weekParam) {
 
   if (!isFormatDate(formatParam)) {
     throw new Error('Please enter a format of date correctly');
-  } // cek taggal dari nomor pekan
+  } // pengecekan posisi dari tanggal dan bulan pertama
 
 
-  var getWeekDate = weeksOfYear(yearParam, weekParam, 'YYYY-MM-DD')[weekParam.toString()]; // pecahkan tanggal menjadi bagian-bagian yang terpisah
+  var getFirstDay = Number(new Date(Number(yearParam), 0, 1).getDay());
+  var subtractDay = 0;
 
-  var splitFirstDate = getWeekDate[0].split('-');
-  var splitLastDate = getWeekDate[1].split('-'); // rangekan tanggal
+  if (getFirstDay > 0) {
+    subtractDay = 6 - (getFirstDay - 1);
+  } // ini akan menghasilkan object dengan angka setiap pekan sebagai property key dan tanggal mulai dan akhir dari sepekan dalam array
 
-  var rangeWeekDate = rangeDate(new Date(Number(splitFirstDate[0]), Number(splitFirstDate[1]) - 1, Number(splitFirstDate[2])), new Date(Number(splitLastDate[0]), Number(splitLastDate[1]) - 1, Number(splitLastDate[2])), formatParam); // 7 tanggal dalam satu array
 
-  return rangeWeekDate;
+  var arrWeek = [];
+  var startDay = subtractDay + 1;
+  var startMonth = 0;
+  var startYear = yearParam;
+
+  for (var i = 1; i <= Number(weekParam); i++) {
+    if (i === Number(weekParam)) {
+      arrWeek.push(format(new Date(startYear, startMonth, startDay), formatParam));
+      var j = 0;
+
+      while (j < 6) {
+        j++;
+        arrWeek.push(format(addDate(new Date(startYear, startMonth, startDay), j), formatParam));
+      }
+    }
+
+    startDay = startDay + 7;
+
+    if (startMonth < 12 && startDay > Number(daysInMonth(yearParam, startMonth + 1))) {
+      startDay = startDay - Number(daysInMonth(yearParam, startMonth + 1));
+
+      if (startMonth !== 11) {
+        startMonth = startMonth + 1;
+      } else {
+        startMonth = 1;
+        startYear = startYear + 1;
+      }
+    }
+  }
+
+  return arrWeek;
 };
 var weeksInMonth = function weeksInMonth(yearParam, monthParam) {
   if (!isYear(yearParam)) {

@@ -6,7 +6,7 @@ import msgDate from './msgDate.js'
 import { daysInMonth, daysInYear, daysInBetween } from './dayDate.js'
 import { format } from './formatDate.js'
 import { addDate } from './addDate.js'
-import { rangeDate } from './rangeDate.js'
+//import { rangeDate } from './rangeDate.js'
 
 export const week = (yearParams, monthParams, dateParams) => {
   // pengecekan tahun, bulan, dan tangal dan untuk pesan saya pisahkan pada berkas lain
@@ -46,18 +46,38 @@ export const weeks = (yearParam, weekParam, formatParam = 'YYYY-MM-DD') => {
   if(!isFormatDate(formatParam)) {
     throw new Error('Please enter a format of date correctly')
   }
-  // cek taggal dari nomor pekan
-  const getWeekDate = weeksOfYear(yearParam, weekParam, 'YYYY-MM-DD')[weekParam.toString()]
-  // pecahkan tanggal menjadi bagian-bagian yang terpisah
-  const splitFirstDate = getWeekDate[0].split('-')
-  const splitLastDate = getWeekDate[1].split('-')
-  // rangekan tanggal
-  const rangeWeekDate = rangeDate(
-    new Date(Number(splitFirstDate[0]), Number(splitFirstDate[1]) - 1, Number(splitFirstDate[2])), 
-    new Date(Number(splitLastDate[0]), Number(splitLastDate[1]) - 1, Number(splitLastDate[2]))
-  , formatParam)
-  // 7 tanggal dalam satu array
-  return rangeWeekDate
+  // pengecekan posisi dari tanggal dan bulan pertama
+  const getFirstDay = Number(new Date(Number(yearParam), 0, 1).getDay())
+  let subtractDay = 0
+  if(getFirstDay > 0) {
+    subtractDay = 6 - (getFirstDay - 1)
+  }
+  // ini akan menghasilkan object dengan angka setiap pekan sebagai property key dan tanggal mulai dan akhir dari sepekan dalam array
+  const arrWeek = []
+  let startDay = subtractDay + 1
+  let startMonth = 0
+  let startYear = yearParam
+  for(let i = 1; i <= Number(weekParam);i++) {
+    if(i === Number(weekParam)) {
+      arrWeek.push(format(new Date(startYear, startMonth, startDay), formatParam))
+      let j = 0
+      while(j < 6) {
+        j++
+        arrWeek.push(format(addDate(new Date(startYear, startMonth, startDay), j), formatParam))
+      }
+    }
+    startDay = startDay + 7
+    if(startMonth < 12 && startDay > Number(daysInMonth(yearParam, startMonth + 1))) {
+      startDay = startDay - Number(daysInMonth(yearParam, startMonth + 1))
+      if(startMonth !== 11) {
+        startMonth = startMonth + 1
+      } else {
+        startMonth = 1
+        startYear = startYear + 1
+      }
+    }
+  }
+  return arrWeek
 }
 
 export const weeksInMonth = (yearParam, monthParam) => {
