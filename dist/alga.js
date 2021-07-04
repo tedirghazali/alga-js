@@ -144,11 +144,16 @@ var includes = function includes(valueStr, searchStr) {
   return valueStr.indexOf(searchStr, position) !== -1 ? true : false;
 };
 
+var isString = function isString(param) {
+  return typeof param === 'string' ? true : false;
+};
+
 var string = /*#__PURE__*/Object.freeze({
   __proto__: null,
   split: split,
   capitalize: capitalize,
-  includes: includes
+  includes: includes,
+  isString: isString
 });
 
 function _typeof(obj) {
@@ -1855,6 +1860,43 @@ var shuffle = function shuffle(arrArg) {
   return newArr;
 };
 
+var isFunction = function isFunction(param) {
+  return typeof param === 'function' ? true : false;
+};
+
+var group = function group(param, callback) {
+  if (!isArray(param)) {
+    throw new Error('You must enter array literal here');
+  }
+
+  if (!isFunction(callback)) {
+    throw new Error('You have to enter a function or callback on the second argument');
+  }
+
+  var obj = {};
+
+  var _iterator = _createForOfIteratorHelper(param),
+      _step;
+
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var item = _step.value;
+
+      if (obj[callback(item).toString()] === undefined) {
+        obj[callback(item).toString()] = [];
+      }
+
+      obj[callback(item).toString()].push(item);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+
+  return obj;
+};
+
 var array = /*#__PURE__*/Object.freeze({
   __proto__: null,
   insert: insert,
@@ -1900,7 +1942,8 @@ var array = /*#__PURE__*/Object.freeze({
   transfer: transfer,
   compact: compact,
   chunk: chunk,
-  shuffle: shuffle
+  shuffle: shuffle,
+  group: group
 });
 
 var remove = function remove() {
@@ -1986,7 +2029,7 @@ var object = /*#__PURE__*/Object.freeze({
 });
 
 var REGEX_PARSE_DATE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;
-var REGEX_DATE_FORMAT = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g;
+var REGEX_DATE_FORMAT = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|T|H{1,2}|h{1,2}|a|A|i{1,2}|s{1,2}|Z{1,2}|SSS/g;
 
 var isYear = function isYear(yearParams) {
   return typeof yearParams === 'number' || typeof yearParams === 'string' ? true : false;

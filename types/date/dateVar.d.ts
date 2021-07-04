@@ -7,7 +7,7 @@ export const DAY_IN_MILLISECONDS: number;
 export const DAY_IN_SECONDS: number;
 export const WEEK_IN_MILLISECONDS: number;
 export const WEEK_IN_SECONDS: number;
-export const DEFAULT_DATE_FORMAT: "YYYY-MM-DDTHH:mm:ssZ";
+export const DEFAULT_DATE_FORMAT: "YYYY-MM-DDTHH:ii:ssZ";
 export const INVALID_DATE_STRING: "Invalid Date";
 export const REGEX_PARSE_DATE: RegExp;
 export const REGEX_DATE_FORMAT: RegExp;

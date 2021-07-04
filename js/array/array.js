@@ -24,6 +24,7 @@ import { move, switched, transfer } from './moveArray.js'
 import { compact } from './compactArray.js'
 import { chunk } from './chunkArray.js'
 import { shuffle } from './shuffleArray.js'
+import { group } from './groupArray.js'
 
 export {
   insert,
@@ -69,5 +70,6 @@ export {
   transfer,
   compact,
   chunk,
-  shuffle
+  shuffle,
+  group
 }

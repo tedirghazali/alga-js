@@ -40,4 +40,5 @@ import { transfer } from "./moveArray.js";
 import { compact } from "./compactArray.js";
 import { chunk } from "./chunkArray.js";
 import { shuffle } from "./shuffleArray.js";
-export { insert, insertBefore, insertAfter, update, destroy, select, hidden, toggle, flatten, nested, index, toIndex, randomIndex, search, searchBy, filtered, sort, sorted, paginate, pages, pages as paginatePages, show, show as paginateShow, pagination, sum, unique, isArray, isSuperset, union, intersection, difference, asymmetricDifference, complement, without, transpose, zip, unzip, range, move, switched, transfer, compact, chunk, shuffle };
+import { group } from "./groupArray.js";
+export { insert, insertBefore, insertAfter, update, destroy, select, hidden, toggle, flatten, nested, index, toIndex, randomIndex, search, searchBy, filtered, sort, sorted, paginate, pages, pages as paginatePages, show, show as paginateShow, pagination, sum, unique, isArray, isSuperset, union, intersection, difference, asymmetricDifference, complement, without, transpose, zip, unzip, range, move, switched, transfer, compact, chunk, shuffle, group };

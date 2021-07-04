@@ -3,12 +3,12 @@ import { format } from '../../js/date/formatDate.js'
 import { parse } from '../../js/date/parseDate.js'
 
 test('Get date now', () => {
-  console.log(now())
+  //console.log(now())
   console.log(now('DD-MM-YYYY'))
 })
 
 test('Get date from hijri calendar', () => {
-  console.log(nowHijri('id-ID'))
+  //console.log(nowHijri('id-ID'))
 })
 
 test('Format the date to custom format numbers', () => {
@@ -16,5 +16,8 @@ test('Format the date to custom format numbers', () => {
 })
 
 test('Parse date with its format', () => {
-  console.log(parse('04-04-2021', 'DD-MM-YYYY'))
+  //console.log(parse('04-04-2021', 'DD-MM-YYYY'))
+  console.log(parse('2021-07-02T01:00:00.000Z', 'YYYY-MM-DDTHH:ii:ss.SSSZ'))
+  //console.log(parse('0000-00-00 00:00:00', 'YYYY-MM-DD HH:ii:ss'))
+  console.log(parse('0000-00-00 00:00:00', 'YYYY-MM-DDTHH:ii:ss.SSSZ'))
 })
