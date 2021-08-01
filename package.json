@@ -1,9 +1,15 @@
 {
   "name": "alga-js",
-  "version": "0.0.1-beta4",
+  "version": "0.0.1-beta6",
   "description": "Alga.js is a javascript helper and utility for any web font-end framework",
   "module": "dist/alga.min.js",
   "main": "dist/alga-umd.js",
+  "exports": {
+    ".": {
+      "import": "dist/alga.min.js",
+      "require": "dist/alga-umd.js"
+    }
+  },
   "unpkg": "dist/alga-umd.js",
   "typings": "types/app.d.ts",
   "files": [
@@ -45,5 +51,6 @@
     "rollup": "^2.36.1",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.2.4"
-  }
+  },
+  "dependencies": {}
 }

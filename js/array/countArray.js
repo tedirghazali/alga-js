@@ -1,4 +1,5 @@
 import { isArray } from './isArray.js'
+import { isFunction } from '../func/isFunc.js'
 
 export const countDuplication = (arrArg) => {
   if(!isArray(arrArg)) {
@@ -19,4 +20,14 @@ export const countDuplication = (arrArg) => {
   }
   
   return newObj
+}
+
+export const countBy = (arrParam, callbackParam) => {
+  if(!isArray(arrParam)) {
+    throw new Error('The first paramenter only accept array')
+  }
+  if(!isFunction(callbackParam)) {
+    throw new Error('The second paramenter only accept callback function')
+  }
+  return arrParam.filter(item => callbackParam(item)).length
 }

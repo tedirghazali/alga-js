@@ -1,5 +1,5 @@
 import { isArray } from './isArray.js'
-import { isFunction } from '../function/isFunction.js'
+import { isFunction } from '../func/isFunc.js'
 
 export const group = (param, callback) => {
   if(!isArray(param)) {

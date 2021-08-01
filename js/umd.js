@@ -7,6 +7,7 @@ import * as object from './object/object.js'
 import * as date from './date/date.js'
 import * as file from './file/file.js'
 import * as storage from './storage/storage.js'
+import * as func from './func/func.js'
 
 export {
   int,
@@ -17,5 +18,6 @@ export {
   object,
   date,
   file,
-  storage
+  storage,
+  func
 }

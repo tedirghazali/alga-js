@@ -25,6 +25,7 @@ import { compact } from './compactArray.js'
 import { chunk } from './chunkArray.js'
 import { shuffle } from './shuffleArray.js'
 import { group } from './groupArray.js'
+import { countDuplication, countBy } from './countArray.js'
 
 export {
   insert,
@@ -71,5 +72,7 @@ export {
   compact,
   chunk,
   shuffle,
-  group
+  group,
+  countDuplication,
+  countBy
 }

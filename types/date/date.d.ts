@@ -28,4 +28,5 @@ import { prevDaysInCalendar } from "./calendarDate.js";
 import { nextDaysInCalendar } from "./calendarDate.js";
 import { weeklyCalendar } from "./calendarDate.js";
 import { calendarWithWeeks } from "./calendarDate.js";
-export { now, nowHijri, parse, parse as parseDate, utc, addDate, subtractDate, rangeDate, day, days, daysInMonth, daysInYear, daysInBetween, week, weeks, weeksInMonth, weeksInYear, month, months, isYear, isMonth, isDate, isFullDate, isFormatDate, isLeapYear, calendar, daysInCalendar, prevDaysInCalendar, nextDaysInCalendar, weeklyCalendar, calendarWithWeeks };
+import { dateToArray } from "./arrayDate.js";
+export { now, nowHijri, parse, parse as parseDate, utc, addDate, subtractDate, rangeDate, day, days, daysInMonth, daysInYear, daysInBetween, week, weeks, weeksInMonth, weeksInYear, month, months, isYear, isMonth, isDate, isFullDate, isFormatDate, isLeapYear, calendar, daysInCalendar, prevDaysInCalendar, nextDaysInCalendar, weeklyCalendar, calendarWithWeeks, dateToArray };

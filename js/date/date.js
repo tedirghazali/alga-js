@@ -9,6 +9,7 @@ import { week, weeks, weeksInMonth, weeksInYear } from './weekDate.js'
 import { month, months } from './monthDate.js'
 import { isYear, isMonth, isDate, isFullDate, isFormatDate, isLeapYear } from './isDate.js'
 import { calendar, daysInCalendar, prevDaysInCalendar, nextDaysInCalendar, weeklyCalendar, calendarWithWeeks } from './calendarDate.js'
+import { dateToArray } from './arrayDate.js'
 
 export {
   now,
@@ -41,5 +42,6 @@ export {
   prevDaysInCalendar, 
   nextDaysInCalendar,
   weeklyCalendar,
-  calendarWithWeeks
+  calendarWithWeeks,
+  dateToArray
 }

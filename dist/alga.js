@@ -73,21 +73,25 @@ var number = /*#__PURE__*/Object.freeze({
 
 var random$2 = function random() {
   var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
-  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'basic';
-  var outputChar = '';
-  var basicChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_';
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
+  var output = '';
+  var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_~!@#$%^&*()+={}[]|:;<>,./?';
 
-  if (type === 'hex') {
-    basicChar = '0123456789abcdef';
-  } else if (type === 'password') {
-    basicChar = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_~!@#$%^&*()+={}[]|:;<>,./?';
+  if (type === 'short') {
+    characters = characters.slice(0, 64);
+  } else if (type === 'narrow') {
+    characters = characters.slice(0, 36);
+  } else if (type === 'hex') {
+    characters = characters.slice(0, 16);
+  } else if (type === 'number') {
+    characters = characters.slice(0, 10);
   }
 
   for (var i = 0; i < size; i++) {
-    outputChar += basicChar.charAt(Math.floor(Math.random() * basicChar.length));
+    output += characters.charAt(Math.floor(Math.random() * characters.length));
   }
 
-  return outputChar;
+  return output;
 };
 
 var char = /*#__PURE__*/Object.freeze({
@@ -1275,34 +1279,17 @@ var sum = function sum(oriArr) {
   return sumNum;
 };
 
+// Union of Arrays (Set Theory/Operation) in JavaScript by Tedir Ghazali
 var union = function union() {
   for (var _len = arguments.length, restArg = new Array(_len), _key = 0; _key < _len; _key++) {
     restArg[_key] = arguments[_key];
   }
 
-  if (!restArg && restArg.length <= 1) {
-    throw new Error('You have to provide here at least 2 arguments');
-  }
+  return Array.from(new Set(restArg.flat()));
+};
 
-  var set = new Set();
-
-  for (var _i = 0, _restArg = restArg; _i < _restArg.length; _i++) {
-    var arr = _restArg[_i];
-
-    if (isArray(arr)) {
-      arr.forEach(function (item) {
-        if (!set.has(item)) {
-          set.add(item);
-        }
-      });
-    } else {
-      if (!set.has(arr)) {
-        set.add(arr);
-      }
-    }
-  }
-
-  return Array.from(set);
+var isFunction = function isFunction(param) {
+  return typeof param === 'function' ? true : false;
 };
 
 var countDuplication = function countDuplication(arrArg) {
@@ -1343,6 +1330,19 @@ var countDuplication = function countDuplication(arrArg) {
   }
 
   return newObj;
+};
+var countBy = function countBy(arrParam, callbackParam) {
+  if (!isArray(arrParam)) {
+    throw new Error('The first paramenter only accept array');
+  }
+
+  if (!isFunction(callbackParam)) {
+    throw new Error('The second paramenter only accept callback function');
+  }
+
+  return arrParam.filter(function (item) {
+    return callbackParam(item);
+  }).length;
 };
 
 var intersection = function intersection() {
@@ -1860,10 +1860,6 @@ var shuffle = function shuffle(arrArg) {
   return newArr;
 };
 
-var isFunction = function isFunction(param) {
-  return typeof param === 'function' ? true : false;
-};
-
 var group = function group(param, callback) {
   if (!isArray(param)) {
     throw new Error('You must enter array literal here');
@@ -1943,7 +1939,9 @@ var array = /*#__PURE__*/Object.freeze({
   compact: compact,
   chunk: chunk,
   shuffle: shuffle,
-  group: group
+  group: group,
+  countDuplication: countDuplication,
+  countBy: countBy
 });
 
 var remove = function remove() {
@@ -2307,6 +2305,7 @@ var format = function format(dateParam, formatStr) {
         return dateSecond;
       }
     },
+    uuu: oriDate.getMilliseconds(),
     A: oriDate.getHours() < 12 ? 'AM' : 'PM',
     a: oriDate.getHours() < 12 ? 'am' : 'pm',
     Do: oriDate.getDate().toString() + 'st'
@@ -2360,6 +2359,8 @@ var format = function format(dateParam, formatStr) {
         newDate = newDate.replace(sf, tokens.s);
       } else if ('ss' === sf) {
         newDate = newDate.replace(sf, tokens.ss());
+      } else if ('uuu' === sf) {
+        newDate = newDate.replace(sf, tokens.uuu);
       } else if ('A' === sf) {
         newDate = newDate.replace(sf, tokens.A);
       } else if ('a' === sf) {
@@ -2416,12 +2417,12 @@ var parse = function parse(dateStr, formatStr) {
     throw new Error('For format date, you must always input the correct one by using characters like these: Y, M, m, D, d, H, h, k, i, S, s, A, a or Do');
   }
 
-  var dateArr = dateStr.split(/-|\/|\.|:|\s/).filter(function (dt) {
+  var dateArr = dateStr.split(/-|\/|\.|T|Z|:|\s/).filter(function (dt) {
     return dt.length >= 1 && dt !== " ";
   }).map(function (word) {
     return word.trim();
   });
-  var formatArr = formatStr.split(/-|\/|\.|:|\s/).filter(function (dt) {
+  var formatArr = formatStr.split(/-|\/|\.|T|Z|:|\s/).filter(function (dt) {
     return dt.length >= 1 && dt !== " ";
   }).map(function (word) {
     return word.trim();
@@ -2464,6 +2465,8 @@ var parse = function parse(dateStr, formatStr) {
         newDate.minute = dateArr[i];
       } else if (dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 's' || formatArr[i] === 'ss') {
         newDate.second = dateArr[i];
+      } else if (dateArr[i].length >= 3 && isNaN(dateArr[i]) === false && formatArr[i] === 'uuu') {
+        newDate.millisecond = dateArr[i];
       } else if (dateArr[i].slice(-2) === 'st' || dateArr[i].slice(-2) === 'nd' || dateArr[i].slice(-2) === 'th' && formatArr[i] === 'Do') {
         newDate.second = Number(dateArr[i].slice(0, -2));
       }
@@ -2947,6 +2950,15 @@ var calendarWithWeeks = function calendarWithWeeks(yearArg, monthArg) {
   return flatParam === true ? newMonth.flat() : newMonth;
 };
 
+var dateToArray = function dateToArray(date) {
+  if (!isFullDate(date)) {
+    throw new Error('Please enter a valid date');
+  }
+
+  var newDate = new Date(date).toJSON();
+  return newDate.replace('Z', '').split(/-|:|\s|\.|T/g);
+};
+
 var date = /*#__PURE__*/Object.freeze({
   __proto__: null,
   now: now,
@@ -2979,7 +2991,8 @@ var date = /*#__PURE__*/Object.freeze({
   prevDaysInCalendar: prevDaysInCalendar,
   nextDaysInCalendar: nextDaysInCalendar,
   weeklyCalendar: weeklyCalendar,
-  calendarWithWeeks: calendarWithWeeks
+  calendarWithWeeks: calendarWithWeeks,
+  dateToArray: dateToArray
 });
 
 var size = function size(bytes, decimalPoint) {
@@ -3355,4 +3368,17 @@ var storage = /*#__PURE__*/Object.freeze({
   clearStorage: clearStorage
 });
 
-export { array as $array, char as $char, date as $date, file as $file, int as $int, number as $number, object as $object, string as $string, array, char, date, file, int, number, object, storage, string };
+var ternary = function ternary(cb1, cb2, cb3) {
+  if (!isFunction(cb1) && !isFunction(cb2) && !isFunction(cb3)) {
+    throw new Error('All arguments here only accept value in function');
+  }
+
+  return cb1() ? cb2() : cb3();
+};
+
+var func = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  ternary: ternary
+});
+
+export { array as $array, char as $char, date as $date, file as $file, int as $int, number as $number, object as $object, string as $string, array, char, date, file, func, int, number, object, storage, string };

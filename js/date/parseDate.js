@@ -11,8 +11,8 @@ export const parse = (dateStr, formatStr, locale = 'en-US', dayType = 'long') =>
     throw new Error('For format date, you must always input the correct one by using characters like these: Y, M, m, D, d, H, h, k, i, S, s, A, a or Do')
   }
   
-  const dateArr = dateStr.split(/-|\/|\.|:|\s/).filter(dt => dt.length >= 1 && dt !== " ").map(word => word.trim())
-  const formatArr = formatStr.split(/-|\/|\.|:|\s/).filter(dt => dt.length >= 1 && dt !== " ").map(word => word.trim())
+  const dateArr = dateStr.split(/-|\/|\.|T|Z|:|\s/).filter(dt => dt.length >= 1 && dt !== " ").map(word => word.trim())
+  const formatArr = formatStr.split(/-|\/|\.|T|Z|:|\s/).filter(dt => dt.length >= 1 && dt !== " ").map(word => word.trim())
   let newDate = {
     year: new Date().getFullYear(),
     month: Number(new Date().getMonth()) + 1,
@@ -47,6 +47,8 @@ export const parse = (dateStr, formatStr, locale = 'en-US', dayType = 'long') =>
         newDate.minute = dateArr[i]
       } else if(dateArr[i].length === 1 || dateArr[i].length === 2 && isNaN(dateArr[i]) === false && formatArr[i] === 's' || formatArr[i] === 'ss') {
         newDate.second = dateArr[i]
+      } else if(dateArr[i].length >= 3 && isNaN(dateArr[i]) === false && formatArr[i] === 'uuu') {
+        newDate.millisecond = dateArr[i]
       } else if(dateArr[i].slice(-2) === 'st' || dateArr[i].slice(-2) === 'nd' ||dateArr[i].slice(-2) === 'th' && formatArr[i] === 'Do') {
         newDate.second = Number(dateArr[i].slice(0, -2))
       }

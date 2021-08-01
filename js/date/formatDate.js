@@ -111,6 +111,7 @@ export const format = (dateParam, formatStr, locale = 'en-US', dayType = 'long')
         return dateSecond
       }
     },
+    uuu: oriDate.getMilliseconds(),
     A: oriDate.getHours() < 12 ? 'AM' : 'PM',
     a: oriDate.getHours() < 12 ? 'am' : 'pm',
     Do: oriDate.getDate().toString() + 'st'
@@ -158,6 +159,8 @@ export const format = (dateParam, formatStr, locale = 'en-US', dayType = 'long')
       newDate = newDate.replace(sf, tokens.s)
     } else if('ss' === sf) {
       newDate = newDate.replace(sf, tokens.ss())
+    } else if('uuu' === sf) {
+      newDate = newDate.replace(sf, tokens.uuu)
     } else if('A' === sf) {
       newDate = newDate.replace(sf, tokens.A)
     } else if('a' === sf) {

@@ -7,4 +7,5 @@ import * as object from "./object/object.js";
 import * as date from "./date/date.js";
 import * as file from "./file/file.js";
 import * as storage from "./storage/storage.js";
-export { int, number, char, string, array, object, date, file, storage };
+import * as func from "./func/func.js";
+export { int, number, char, string, array, object, date, file, storage, func };
