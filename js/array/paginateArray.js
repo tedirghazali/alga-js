@@ -1,24 +1,34 @@
-const paginate = (oriArr) => {
-  if(typeof oriArr !== 'object') return
-  
-  return (pageNum, showNum) => {
-    if(typeof pageNum !== 'number') return
-    if(typeof showNum !== 'number') return
-    
-    const oriArray = Array.from(oriArr)
-    const startPaginate = (Number(showNum) * Number(pageNum)) - (Number(showNum) - 1)
-    const endPaginate = Number(showNum) * Number(pageNum)
-    
-    return oriArray.slice(startPaginate - 1, (endPaginate <= oriArray.length) ? endPaginate : oriArray.length)
+import { isArray } from './isArray.js'
+import { isNumber } from '../number/isNumber.js'
+
+export const paginate = (fromArr, pageActive = 1, pageLimit = 10) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array')
   }
+  if(!isNumber(pageActive)) {
+    throw new Error('This is the page active number, please enter number only')
+  }
+  if(!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only')
+  }
+    
+  const newArr = Array.from(fromArr)
+  const startPaginate = (Number(pageLimit) * Number(pageActive)) - (Number(pageLimit) - 1)
+  const endPaginate = Number(pageLimit) * Number(pageActive)
+    
+  return newArr.slice(startPaginate - 1, (endPaginate <= newArr.length) ? endPaginate : newArr.length)
 }
 
-const pages = (oriArr, showNum) => {
-  if(typeof oriArr !== 'object') return
-  if(typeof showNum !== 'number') return
+export const pages = (fromArr, pageLimit = 10) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array')
+  }
+  if(!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only')
+  }
   
-  const oriArray = Array.from(oriArr)
-  const divideLength = oriArray.length / Number(showNum)
+  const newArr = Array.from(fromArr)
+  const divideLength = newArr.length / Number(pageLimit)
   const splitFloatNum = divideLength.toString().split('.')
   const checkFloatNum = (Number(splitFloatNum[1]) >= 5) ? 0 : 1
   let pageNumber = 0
@@ -27,27 +37,38 @@ const pages = (oriArr, showNum) => {
   } else {
     pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum
   }
-  pageNumber = (pageNumber === Number(showNum)) ? 1 : pageNumber
+  pageNumber = (pageNumber === Number(pageLimit)) ? 1 : pageNumber
   return pageNumber
 }
 
-const show = (oriArr) => {
-  if(typeof oriArr !== 'object') return
-  
-  return (pageNum, showNum) => {
-    if(typeof pageNum !== 'number') return
-    if(typeof showNum !== 'number') return
-    
-    const oriArray = Array.from(oriArr)
-    const startPaginate = (Number(showNum) * Number(pageNum)) - (Number(showNum) - 1)
-    const endPaginate = Number(showNum) * Number(pageNum)
-    
-    return { from: startPaginate, to: (endPaginate <= oriArray.length) ? endPaginate : oriArray.length, of: oriArray.length}
+export const pageInfo = (fromArr, pageActive = 1, pageLimit = 10) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array')
   }
+  if(!isNumber(pageActive)) {
+    throw new Error('This is the page active number, please enter number only')
+  }
+  if(!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only')
+  }
+  
+  const newArr = Array.from(fromArr)
+  const startPaginate = (Number(pageLimit) * Number(pageActive)) - (Number(pageLimit) - 1)
+  const endPaginate = Number(pageLimit) * Number(pageActive)
+    
+  return { from: startPaginate, to: (endPaginate <= newArr.length) ? endPaginate : newArr.length, of: newArr.length}
 }
 
-const pagination = (allPages, pageActive = 1, pageLimit = 0) => {
-  if(typeof allPages !== 'number') return
+export const pagination = (allPages, pageActive = 1, pageLimit = 0) => {
+  if(!isNumber(allPages)) {
+    throw new Error('This is the total or all pages in numbers, please enter number only')
+  }
+  if(!isNumber(pageActive)) {
+    throw new Error('This is the page active number, please enter number only')
+  }
+  if(!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only')
+  }
   
   const newArray = []
   const maxPages = (Number(allPages) < Number(pageActive)) ? Number(allPages) : Number(pageActive)
@@ -79,11 +100,4 @@ const pagination = (allPages, pageActive = 1, pageLimit = 0) => {
   }
     
   return filterMax
-}
-
-export {
-  paginate,
-  pages,
-  show,
-  pagination
 }

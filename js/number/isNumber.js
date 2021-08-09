@@ -1,5 +1,5 @@
 export const isNumber = (numArg) => {
-  return (typeof numArg === 'number' || !isNaN(numArg))? true : false
+  return (!isNaN(numArg) && typeof Number(numArg) === 'number')? true : false
 }
 
 export const isPositive = (numArg) => {

@@ -9,7 +9,7 @@ import { index, toIndex, randomIndex } from './indexArray.js'
 import { search, searchBy } from './searchArray.js'
 import { filtered } from './filteredArray.js'
 import { sort, sorted } from './sortedArray.js'
-import { paginate, pages, show, pagination } from './paginateArray.js'
+import { paginate, pages, pageInfo, pagination } from './paginateArray.js'
 import { sum } from './sumArray.js'
 import { unique } from './uniqueArray.js'
 import { isArray, isSuperset } from './isArray.js'
@@ -47,10 +47,9 @@ export {
   sort,
   sorted,
   paginate, 
-  pages, 
-  pages as paginatePages, 
-  show, 
-  show as paginateShow, 
+  pages,
+  pageInfo, 
+  pageInfo as show, 
   pagination,
   sum,
   unique,

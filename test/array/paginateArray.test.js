@@ -1,4 +1,4 @@
-import { paginate, pages, show, pagination } from '../../js/array/paginateArray.js'
+import { paginate, pages, pageInfo, pagination } from '../../js/array/paginateArray.js'
 
 const values = [
   { id: 1, name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
@@ -16,7 +16,7 @@ const values = [
 ]
 
 test('Paginating in arrays', () => {
-  expect(paginate(values)(3, 5)).toEqual([
+  expect(paginate(values, 3, 5)).toEqual([
     { id: 11, name: 'Zulkifli Usman', office: 'Manado', age: 56 },
     { id: 12, name: 'Teuku Usman', office: 'Ternate', age: 58 }
   ])
@@ -26,8 +26,8 @@ test('Get pagination page numbers', () => {
   expect(pages(values, 5)).toBe(3)
 })
 
-test('Showing active page numbers of pagination', () => {
-  expect(show(values)(3, 5)).toEqual({ from: 11, to: 12, of: 12 })
+test('Showing page information', () => {
+  expect(pageInfo(values, 3, 5)).toEqual({ from: 11, to: 12, of: 12 })
 })
 
 test('Getting pagination numbers in array', () => {

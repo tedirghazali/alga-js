@@ -45,7 +45,7 @@ var loop = function loop(fromNum, toNum) {
 };
 
 var isNumber = function isNumber(numArg) {
-  return typeof numArg === 'number' || !isNaN(numArg) ? true : false;
+  return !isNaN(numArg) && typeof Number(numArg) === 'number' ? true : false;
 };
 var isPositive = function isPositive(numArg) {
   if (typeof numArg !== 'number' && typeof numArg !== 'string') {
@@ -1139,23 +1139,40 @@ var sorted = function sorted(oriArr) {
   };
 };
 
-var paginate = function paginate(oriArr) {
-  if (_typeof(oriArr) !== 'object') return;
-  return function (pageNum, showNum) {
-    if (typeof pageNum !== 'number') return;
-    if (typeof showNum !== 'number') return;
-    var oriArray = Array.from(oriArr);
-    var startPaginate = Number(showNum) * Number(pageNum) - (Number(showNum) - 1);
-    var endPaginate = Number(showNum) * Number(pageNum);
-    return oriArray.slice(startPaginate - 1, endPaginate <= oriArray.length ? endPaginate : oriArray.length);
-  };
-};
+var paginate = function paginate(fromArr) {
+  var pageActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var pageLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
 
-var pages = function pages(oriArr, showNum) {
-  if (_typeof(oriArr) !== 'object') return;
-  if (typeof showNum !== 'number') return;
-  var oriArray = Array.from(oriArr);
-  var divideLength = oriArray.length / Number(showNum);
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array');
+  }
+
+  if (!isNumber(pageActive)) {
+    throw new Error('This is the page active number, please enter number only');
+  }
+
+  if (!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only');
+  }
+
+  var newArr = Array.from(fromArr);
+  var startPaginate = Number(pageLimit) * Number(pageActive) - (Number(pageLimit) - 1);
+  var endPaginate = Number(pageLimit) * Number(pageActive);
+  return newArr.slice(startPaginate - 1, endPaginate <= newArr.length ? endPaginate : newArr.length);
+};
+var pages = function pages(fromArr) {
+  var pageLimit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array');
+  }
+
+  if (!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only');
+  }
+
+  var newArr = Array.from(fromArr);
+  var divideLength = newArr.length / Number(pageLimit);
   var splitFloatNum = divideLength.toString().split('.');
   var checkFloatNum = Number(splitFloatNum[1]) >= 5 ? 0 : 1;
   var pageNumber = 0;
@@ -1166,30 +1183,50 @@ var pages = function pages(oriArr, showNum) {
     pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum;
   }
 
-  pageNumber = pageNumber === Number(showNum) ? 1 : pageNumber;
+  pageNumber = pageNumber === Number(pageLimit) ? 1 : pageNumber;
   return pageNumber;
 };
+var pageInfo = function pageInfo(fromArr) {
+  var pageActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  var pageLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
 
-var show = function show(oriArr) {
-  if (_typeof(oriArr) !== 'object') return;
-  return function (pageNum, showNum) {
-    if (typeof pageNum !== 'number') return;
-    if (typeof showNum !== 'number') return;
-    var oriArray = Array.from(oriArr);
-    var startPaginate = Number(showNum) * Number(pageNum) - (Number(showNum) - 1);
-    var endPaginate = Number(showNum) * Number(pageNum);
-    return {
-      from: startPaginate,
-      to: endPaginate <= oriArray.length ? endPaginate : oriArray.length,
-      of: oriArray.length
-    };
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array');
+  }
+
+  if (!isNumber(pageActive)) {
+    throw new Error('This is the page active number, please enter number only');
+  }
+
+  if (!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only');
+  }
+
+  var newArr = Array.from(fromArr);
+  var startPaginate = Number(pageLimit) * Number(pageActive) - (Number(pageLimit) - 1);
+  var endPaginate = Number(pageLimit) * Number(pageActive);
+  return {
+    from: startPaginate,
+    to: endPaginate <= newArr.length ? endPaginate : newArr.length,
+    of: newArr.length
   };
 };
-
 var pagination = function pagination(allPages) {
   var pageActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var pageLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  if (typeof allPages !== 'number') return;
+
+  if (!isNumber(allPages)) {
+    throw new Error('This is the total or all pages in numbers, please enter number only');
+  }
+
+  if (!isNumber(pageActive)) {
+    throw new Error('This is the page active number, please enter number only');
+  }
+
+  if (!isNumber(pageLimit)) {
+    throw new Error('This is the limit of entries in one page in a number, please enter number only');
+  }
+
   var newArray = [];
   var maxPages = Number(allPages) < Number(pageActive) ? Number(allPages) : Number(pageActive);
   var minPages = Number(pageActive) < 1 ? 1 : Number(pageActive);
@@ -1915,9 +1952,8 @@ var array = /*#__PURE__*/Object.freeze({
   sorted: sorted,
   paginate: paginate,
   pages: pages,
-  paginatePages: pages,
-  show: show,
-  paginateShow: show,
+  pageInfo: pageInfo,
+  show: pageInfo,
   pagination: pagination,
   sum: sum,
   unique: unique,
