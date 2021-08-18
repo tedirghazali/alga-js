@@ -1,4 +1,4 @@
-export const random = (size = 3, type = 'long') => {
+export const random = (size = 11, type = 'long') => {
   let output = ''
   let characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_~!@#$%^&*()+={}[]|:;<>,./?'
   if(type === 'short') {
