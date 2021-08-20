@@ -72,18 +72,20 @@ var number = /*#__PURE__*/Object.freeze({
 });
 
 var random$2 = function random() {
-  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 3;
+  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 11;
   var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
   var output = '';
   var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_~!@#$%^&*()+={}[]|:;<>,./?';
 
-  if (type === 'short') {
+  if (type === 'short' || type === 'alphadash') {
     characters = characters.slice(0, 64);
-  } else if (type === 'narrow') {
-    characters = characters.slice(0, 36);
+  } else if (type === 'narrow' || type === 'alphanumeric') {
+    characters = characters.slice(0, 62);
+  } else if (type === 'alpha') {
+    characters = characters.slice(10, 62);
   } else if (type === 'hex') {
     characters = characters.slice(0, 16);
-  } else if (type === 'number') {
+  } else if (type === 'number' || type === 'numeric') {
     characters = characters.slice(0, 10);
   }
 
@@ -1141,7 +1143,7 @@ var sorted = function sorted(oriArr) {
 
 var paginate = function paginate(fromArr) {
   var pageActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  var pageLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+  var limitPerPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
 
   if (!isArray(fromArr)) {
     throw new Error('On the first argument, here only accept array');
@@ -1151,44 +1153,44 @@ var paginate = function paginate(fromArr) {
     throw new Error('This is the page active number, please enter number only');
   }
 
-  if (!isNumber(pageLimit)) {
+  if (!isNumber(limitPerPage)) {
     throw new Error('This is the limit of entries in one page in a number, please enter number only');
   }
 
   var newArr = Array.from(fromArr);
-  var startPaginate = Number(pageLimit) * Number(pageActive) - (Number(pageLimit) - 1);
-  var endPaginate = Number(pageLimit) * Number(pageActive);
+  var startPaginate = Number(limitPerPage) * Number(pageActive) - (Number(limitPerPage) - 1);
+  var endPaginate = Number(limitPerPage) * Number(pageActive);
   return newArr.slice(startPaginate - 1, endPaginate <= newArr.length ? endPaginate : newArr.length);
 };
 var pages = function pages(fromArr) {
-  var pageLimit = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
+  var limitPerPage = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 10;
 
   if (!isArray(fromArr)) {
     throw new Error('On the first argument, here only accept array');
   }
 
-  if (!isNumber(pageLimit)) {
+  if (!isNumber(limitPerPage)) {
     throw new Error('This is the limit of entries in one page in a number, please enter number only');
   }
 
   var newArr = Array.from(fromArr);
-  var divideLength = newArr.length / Number(pageLimit);
-  var splitFloatNum = divideLength.toString().split('.');
-  var checkFloatNum = Number(splitFloatNum[1]) >= 5 ? 0 : 1;
-  var pageNumber = 0;
-
-  if (Number.isInteger(divideLength)) {
-    pageNumber = divideLength;
+  var divideLength = newArr.length / Number(limitPerPage);
+  /*const splitFloatNum = divideLength.toString().split('.')
+  const checkFloatNum = (Number(splitFloatNum[1]) >= 5) ? 0 : 1
+  let pageNumber = 0
+  if(Number.isInteger(divideLength)) {
+    pageNumber = divideLength
   } else {
-    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum;
-  }
+    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum
+  }*/
 
-  pageNumber = pageNumber === Number(pageLimit) ? 1 : pageNumber;
+  var pageNumber = Math.ceil(divideLength); //(pageNumber === Number(limitPerPage)) ? 1 : pageNumber
+
   return pageNumber;
 };
 var pageInfo = function pageInfo(fromArr) {
   var pageActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  var pageLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
+  var limitPerPage = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 10;
 
   if (!isArray(fromArr)) {
     throw new Error('On the first argument, here only accept array');
@@ -1198,24 +1200,24 @@ var pageInfo = function pageInfo(fromArr) {
     throw new Error('This is the page active number, please enter number only');
   }
 
-  if (!isNumber(pageLimit)) {
+  if (!isNumber(limitPerPage)) {
     throw new Error('This is the limit of entries in one page in a number, please enter number only');
   }
 
   var newArr = Array.from(fromArr);
-  var startPaginate = Number(pageLimit) * Number(pageActive) - (Number(pageLimit) - 1);
-  var endPaginate = Number(pageLimit) * Number(pageActive);
+  var startPaginate = Number(limitPerPage) * Number(pageActive) - (Number(limitPerPage) - 1);
+  var endPaginate = Number(limitPerPage) * Number(pageActive);
   return {
     from: startPaginate,
     to: endPaginate <= newArr.length ? endPaginate : newArr.length,
     of: newArr.length
   };
 };
-var pagination = function pagination(allPages) {
+var pagination = function pagination(totalPages) {
   var pageActive = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-  var pageLimit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var positionOfEllipsis = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
 
-  if (!isNumber(allPages)) {
+  if (!isNumber(totalPages)) {
     throw new Error('This is the total or all pages in numbers, please enter number only');
   }
 
@@ -1223,18 +1225,18 @@ var pagination = function pagination(allPages) {
     throw new Error('This is the page active number, please enter number only');
   }
 
-  if (!isNumber(pageLimit)) {
-    throw new Error('This is the limit of entries in one page in a number, please enter number only');
+  if (!isNumber(positionOfEllipsis)) {
+    throw new Error('This is the position of ellipsis [...], please enter number only');
   }
 
   var newArray = [];
-  var maxPages = Number(allPages) < Number(pageActive) ? Number(allPages) : Number(pageActive);
+  var maxPages = Number(totalPages) < Number(pageActive) ? Number(totalPages) : Number(pageActive);
   var minPages = Number(pageActive) < 1 ? 1 : Number(pageActive);
-  var pageAddition = maxPages + Number(pageLimit);
-  var pageSubtraction = minPages - Number(pageLimit);
+  var pageAddition = maxPages + Number(positionOfEllipsis);
+  var pageSubtraction = minPages - Number(positionOfEllipsis);
 
-  if (Number(pageLimit) === 0) {
-    for (var i = 1; i <= Number(allPages); i++) {
+  if (Number(positionOfEllipsis) === 0) {
+    for (var i = 1; i <= Number(totalPages); i++) {
       newArray.push(i);
     }
   } else {
@@ -1253,38 +1255,42 @@ var pagination = function pagination(allPages) {
     return num > 0;
   });
   var filterMax = filterNegative.filter(function (num) {
-    return num <= Number(allPages);
+    return num <= Number(totalPages);
   });
 
-  if (pageAddition < Number(allPages) && Number(pageLimit) !== 0) {
+  if (pageAddition < Number(totalPages) && Number(positionOfEllipsis) !== 0) {
     filterMax.push('...');
   }
 
-  if (pageSubtraction > 1 && Number(pageLimit) !== 0) {
+  if (pageSubtraction > 1 && Number(positionOfEllipsis) !== 0) {
     filterMax.unshift('...');
   }
 
   return filterMax;
 };
 
-var sum = function sum(oriArr) {
+var sum = function sum(fromArr) {
   var byObj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  if (_typeof(oriArr) !== 'object') return;
-  var originalArray = Array.from(oriArr);
+
+  if (!isArray(fromArr)) {
+    throw new Error('In the first argument, you must enter a data in array');
+  }
+
+  var newArray = Array.from(fromArr);
   var sumNum = 0;
 
-  if (typeof byObj === 'string') {
-    var objArray = [];
+  if (typeof byObj === 'string' && byObj !== '') {
+    var numArray = [];
 
-    var _iterator = _createForOfIteratorHelper(originalArray),
+    var _iterator = _createForOfIteratorHelper(newArray),
         _step;
 
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var oa = _step.value;
+        var na = _step.value;
 
-        if (byObj in oa) {
-          objArray.push(oa[byObj]);
+        if (byObj in na) {
+          numArray.push(na[byObj]);
         }
       }
     } catch (err) {
@@ -1293,18 +1299,17 @@ var sum = function sum(oriArr) {
       _iterator.f();
     }
 
-    for (var _i = 0, _objArray = objArray; _i < _objArray.length; _i++) {
-      var ba = _objArray[_i];
-      sumNum += Number(ba);
-    }
+    sumNum = numArray.reduce(function (accumulator, current) {
+      return accumulator + current;
+    });
   } else {
-    var _iterator2 = _createForOfIteratorHelper(originalArray),
+    var _iterator2 = _createForOfIteratorHelper(newArray),
         _step2;
 
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var oa2 = _step2.value;
-        sumNum += Number(oa2);
+        var ia = _step2.value;
+        sumNum += Number(ia);
       }
     } catch (err) {
       _iterator2.e(err);

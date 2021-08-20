@@ -1,1 +1,1 @@
-export function sum(oriArr: any, byObj?: any): number;
+export function sum(fromArr: any, byObj?: any): number;

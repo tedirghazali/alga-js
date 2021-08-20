@@ -1,26 +1,24 @@
-const sum = (oriArr, byObj = null) => {
-  if(typeof oriArr !== 'object') return
+import { isArray } from './isArray.js'
+
+export const sum = (fromArr, byObj = null) => {
+  if(!isArray(fromArr)) {
+    throw new Error('In the first argument, you must enter a data in array')
+  }
   
-  const originalArray = Array.from(oriArr)
+  const newArray = Array.from(fromArr)
   let sumNum = 0
-  if(typeof byObj === 'string') {
-    const objArray = []
-    for(const oa of originalArray) {
-      if(byObj in oa) {
-        objArray.push(oa[byObj])
+  if(typeof byObj === 'string' && byObj !== '') {
+    const numArray = []
+    for(const na of newArray) {
+      if(byObj in na) {
+        numArray.push(na[byObj])
       }
     }
-    for(const ba of objArray) {
-      sumNum += Number(ba)
-    }
+    sumNum = numArray.reduce((accumulator, current) => accumulator + current)
   } else {
-    for(const oa2 of originalArray) {
-      sumNum += Number(oa2)
+    for(const ia of newArray) {
+      sumNum += Number(ia)
     }
   }
   return sumNum
-}
-
-export {
-  sum
 }
