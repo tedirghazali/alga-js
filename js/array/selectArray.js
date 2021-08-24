@@ -8,19 +8,16 @@ export const select = (fromArr, ...selProp) => {
     throw new Error('On the second argument, you must enter at least one value')
   }
   
-  const fromArray = Array.from(fromArr)
-  let newArray = []
-  for(const obj of fromArray) {
-    let newObject = {}
-    selProp.forEach(sel => {
-      if(sel in obj) {
-        newObject[sel] = obj[sel]
+  const newArray = Array.from(fromArr) 
+  return newArray.map(item => {
+    const newObject = {}
+    for(let sel of selProp) {
+      if(sel in item) {
+        newObject[sel] = item[sel]
       }
-    })
-    newArray.push(newObject)
-  }
-    
-  return newArray
+    }
+    return newObject
+  })
 }
 
 export const hidden = (fromArr, ...selProp) => {
@@ -31,17 +28,14 @@ export const hidden = (fromArr, ...selProp) => {
     throw new Error('On the second argument, you must enter at least one value')
   }
     
-  const fromArray = Array.from(fromArr)
-  let newArray = []
-  for(const obj of fromArray) {
-    let newObject = obj
-    selProp.forEach(sel => {
-      if(sel in obj) {
+  const newArray = Array.from(fromArr)
+  return newArray.map(item => {
+    const newObject = item
+    for(let sel of selProp) {
+      if(sel in item) {
         delete newObject[sel]
       }
-    })
-    newArray.push(newObject)
-  }
-    
-  return newArray
+    }
+    return newObject
+  })
 }

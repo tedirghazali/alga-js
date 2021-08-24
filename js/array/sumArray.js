@@ -16,9 +16,7 @@ export const sum = (fromArr, byObj = null) => {
     }
     sumNum = numArray.reduce((accumulator, current) => accumulator + current)
   } else {
-    for(const ia of newArray) {
-      sumNum += Number(ia)
-    }
+    sumNum = newArray.reduce((acc, val) => acc + val)
   }
   return sumNum
 }

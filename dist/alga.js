@@ -699,70 +699,78 @@ var destroy = function destroy(oriArr) {
 };
 
 var select = function select(fromArr) {
-  if (!isArray(fromArr)) {
-    throw new Error('On the first argument, you have to provide array only');
-  }
-
   for (var _len = arguments.length, selProp = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     selProp[_key - 1] = arguments[_key];
   }
 
-  if (selProp.length < 1) {
-    throw new Error('On the second argument, you must enter at least one value');
-  }
-
-  var fromArray = Array.from(fromArr);
-  var newArray = [];
-
-  var _loop = function _loop() {
-    var obj = _fromArray[_i];
-    var newObject = {};
-    selProp.forEach(function (sel) {
-      if (sel in obj) {
-        newObject[sel] = obj[sel];
-      }
-    });
-    newArray.push(newObject);
-  };
-
-  for (var _i = 0, _fromArray = fromArray; _i < _fromArray.length; _i++) {
-    _loop();
-  }
-
-  return newArray;
-};
-var hidden = function hidden(fromArr) {
   if (!isArray(fromArr)) {
     throw new Error('On the first argument, you have to provide array only');
   }
 
+  if (selProp.length < 1) {
+    throw new Error('On the second argument, you must enter at least one value');
+  }
+
+  var newArray = Array.from(fromArr);
+  return newArray.map(function (item) {
+    var newObject = {};
+
+    var _iterator = _createForOfIteratorHelper(selProp),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var sel = _step.value;
+
+        if (sel in item) {
+          newObject[sel] = item[sel];
+        }
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
+    return newObject;
+  });
+};
+var hidden = function hidden(fromArr) {
   for (var _len2 = arguments.length, selProp = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
     selProp[_key2 - 1] = arguments[_key2];
+  }
+
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, you have to provide array only');
   }
 
   if (selProp.length < 1) {
     throw new Error('On the second argument, you must enter at least one value');
   }
 
-  var fromArray = Array.from(fromArr);
-  var newArray = [];
+  var newArray = Array.from(fromArr);
+  return newArray.map(function (item) {
+    var newObject = item;
 
-  var _loop2 = function _loop2() {
-    var obj = _fromArray2[_i2];
-    var newObject = obj;
-    selProp.forEach(function (sel) {
-      if (sel in obj) {
-        delete newObject[sel];
+    var _iterator2 = _createForOfIteratorHelper(selProp),
+        _step2;
+
+    try {
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        var sel = _step2.value;
+
+        if (sel in item) {
+          delete newObject[sel];
+        }
       }
-    });
-    newArray.push(newObject);
-  };
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
 
-  for (var _i2 = 0, _fromArray2 = fromArray; _i2 < _fromArray2.length; _i2++) {
-    _loop2();
-  }
-
-  return newArray;
+    return newObject;
+  });
 };
 
 var toggle = function toggle(val) {
@@ -1303,19 +1311,9 @@ var sum = function sum(fromArr) {
       return accumulator + current;
     });
   } else {
-    var _iterator2 = _createForOfIteratorHelper(newArray),
-        _step2;
-
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var ia = _step2.value;
-        sumNum += Number(ia);
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
+    sumNum = newArray.reduce(function (acc, val) {
+      return acc + val;
+    });
   }
 
   return sumNum;
@@ -1935,6 +1933,28 @@ var group = function group(param, callback) {
   return obj;
 };
 
+var calc = function calc(fromArr, newProp, callBack) {
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, you have to provide array only');
+  }
+
+  if (!isString(newProp)) {
+    throw new Error('New property must be in string type');
+  }
+
+  if (!isFunction(callBack)) {
+    throw new Error('Callback must be in function or method');
+  }
+
+  var newArray = Array.from(fromArr);
+  return newArray.map(function (item) {
+    item[newProp] = callBack.apply(void 0, _toConsumableArray(Object.values(item).filter(function (i) {
+      return isNaN(i) === false;
+    })));
+    return item;
+  });
+};
+
 var array = /*#__PURE__*/Object.freeze({
   __proto__: null,
   insert: insert,
@@ -1961,6 +1981,7 @@ var array = /*#__PURE__*/Object.freeze({
   show: pageInfo,
   pagination: pagination,
   sum: sum,
+  calc: calc,
   unique: unique,
   isArray: isArray,
   isSuperset: isSuperset,

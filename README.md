@@ -6,4 +6,4 @@
 <br/>
 
 # Alga.js (formerly pidie)
-Alga.js is a javascript helper and utility for any front-end web framework, see [the demo here](https://tedirghazali.gitbook.io/algajs/)
+Alga.js is a javascript helper for any front-end web framework, see [the demo here](https://tedirghazali.gitbook.io/algajs/)
