@@ -2,7 +2,7 @@ import { isArray } from './isArray.js'
 import { isFunction } from '../func/isFunc.js'
 import { isString } from '../string/isString.js'
 
-export const calc = (fromArr, newProp, callBack) => {
+export const calculate = (fromArr, newProp, callBack) => {
   if(!isArray(fromArr)) {
     throw new Error('On the first argument, you have to provide array only')
   }

@@ -1,6 +1,6 @@
 import { isArray } from './isArray.js'
 
-export const sum = (fromArr, byObj = null) => {
+export const sum = (fromArr, byObj = undefined) => {
   if(!isArray(fromArr)) {
     throw new Error('In the first argument, you must enter a data in array')
   }
@@ -8,15 +8,22 @@ export const sum = (fromArr, byObj = null) => {
   const newArray = Array.from(fromArr)
   let sumNum = 0
   if(typeof byObj === 'string' && byObj !== '') {
-    const numArray = []
+    /*const numArray = []
     for(const na of newArray) {
       if(byObj in na) {
         numArray.push(na[byObj])
       }
-    }
-    sumNum = numArray.reduce((accumulator, current) => accumulator + current)
+    }*/
+    const numArray = newArray.map(item => {
+      if(byObj in item) {
+        return Number(item[byObj])
+      } else {
+        return 0
+      }
+    })
+    sumNum = numArray.reduce((accumulator, current) => Number(accumulator) + Number(current))
   } else {
-    sumNum = newArray.reduce((acc, val) => acc + val)
+    sumNum = newArray.reduce((acc, val) => Number(acc) + Number(val))
   }
   return sumNum
 }

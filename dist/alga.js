@@ -62,13 +62,51 @@ var isNegative = function isNegative(numArg) {
   return Math.sign(numArg) === -1 ? true : false;
 };
 
+var isString = function isString(param) {
+  return typeof param === 'string' ? true : false;
+};
+
+var calc = function calc(leftOperand, rightOperand, operator) {
+  if (!isNumber(leftOperand)) {
+    throw new Error('This is left operand and must be in number type');
+  }
+
+  if (!isNumber(rightOperand)) {
+    throw new Error('This is left operand and must be in number type');
+  }
+
+  if (!isString(operator)) {
+    throw new Error('Operator must be one of these: add, subtract, multiply, divide, reminder or exponent');
+  }
+
+  var calcNumber = 0;
+
+  if (operator === 'add' || operator === 'addition' || operator === 'plus' || operator === '+') {
+    calcNumber = Number(leftOperand) + Number(rightOperand);
+  } else if (operator === 'subtract' || operator === 'subtraction' || operator === 'minus' || operator === '-') {
+    calcNumber = Number(leftOperand) - Number(rightOperand);
+  } else if (operator === 'multiply' || operator === 'multiplication' || operator === '×' || operator === '*') {
+    calcNumber = Number(leftOperand) * Number(rightOperand);
+  } else if (operator === 'divide' || operator === 'division' || operator === '÷' || operator === '/') {
+    calcNumber = Number(leftOperand) / Number(rightOperand);
+  } else if (operator === 'remainder' || operator === 'modulo' || operator === '%') {
+    // remainder/modulo: the left operand must be greater than the right one, the right operand will be calculate first to match the number of the left operand until they the same or below the left number and the left over will be the result, otherwise the left operand as a result if lower than the right operand
+    calcNumber = Number(leftOperand) % Number(rightOperand);
+  } else if (operator === 'exponent' || operator === 'exponentiation' || operator === '**') {
+    calcNumber = Math.pow(Number(leftOperand), Number(rightOperand));
+  }
+
+  return calcNumber;
+};
+
 var number = /*#__PURE__*/Object.freeze({
   __proto__: null,
   random: random$1,
   loop: loop,
   isNumber: isNumber,
   isPositive: isPositive,
-  isNegative: isNegative
+  isNegative: isNegative,
+  calc: calc
 });
 
 var random$2 = function random() {
@@ -148,10 +186,6 @@ var capitalize = function capitalize(str) {
 var includes = function includes(valueStr, searchStr) {
   var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
   return valueStr.indexOf(searchStr, position) !== -1 ? true : false;
-};
-
-var isString = function isString(param) {
-  return typeof param === 'string' ? true : false;
 };
 
 var string = /*#__PURE__*/Object.freeze({
@@ -1278,7 +1312,7 @@ var pagination = function pagination(totalPages) {
 };
 
 var sum = function sum(fromArr) {
-  var byObj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+  var byObj = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
 
   if (!isArray(fromArr)) {
     throw new Error('In the first argument, you must enter a data in array');
@@ -1288,31 +1322,25 @@ var sum = function sum(fromArr) {
   var sumNum = 0;
 
   if (typeof byObj === 'string' && byObj !== '') {
-    var numArray = [];
-
-    var _iterator = _createForOfIteratorHelper(newArray),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var na = _step.value;
-
-        if (byObj in na) {
-          numArray.push(na[byObj]);
-        }
+    /*const numArray = []
+    for(const na of newArray) {
+      if(byObj in na) {
+        numArray.push(na[byObj])
       }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
+    }*/
+    var numArray = newArray.map(function (item) {
+      if (byObj in item) {
+        return Number(item[byObj]);
+      } else {
+        return 0;
+      }
+    });
     sumNum = numArray.reduce(function (accumulator, current) {
-      return accumulator + current;
+      return Number(accumulator) + Number(current);
     });
   } else {
     sumNum = newArray.reduce(function (acc, val) {
-      return acc + val;
+      return Number(acc) + Number(val);
     });
   }
 
@@ -1933,7 +1961,7 @@ var group = function group(param, callback) {
   return obj;
 };
 
-var calc = function calc(fromArr, newProp, callBack) {
+var calculate = function calculate(fromArr, newProp, callBack) {
   if (!isArray(fromArr)) {
     throw new Error('On the first argument, you have to provide array only');
   }
@@ -1981,7 +2009,8 @@ var array = /*#__PURE__*/Object.freeze({
   show: pageInfo,
   pagination: pagination,
   sum: sum,
-  calc: calc,
+  calculate: calculate,
+  calc: calculate,
   unique: unique,
   isArray: isArray,
   isSuperset: isSuperset,

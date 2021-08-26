@@ -26,7 +26,7 @@ import { chunk } from './chunkArray.js'
 import { shuffle } from './shuffleArray.js'
 import { group } from './groupArray.js'
 import { countDuplication, countBy } from './countArray.js'
-import { calc } from './calcArray.js'
+import { calculate } from './calculateArray.js'
 
 export {
   insert,
@@ -53,7 +53,8 @@ export {
   pageInfo as show, 
   pagination,
   sum,
-  calc,
+  calculate,
+  calculate as calc,
   unique,
   isArray,
   isSuperset,
