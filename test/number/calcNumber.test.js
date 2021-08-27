@@ -17,7 +17,7 @@ test('Divide the numbers', () => {
 })
 
 test('Reminder of the numbers', () => {
-  expect(calc(12, 4, 'reminder')).toEqual(0)
+  expect(calc(12, 4, 'remainder')).toEqual(0)
 })
 
 test('Exponent of the numbers', () => {

@@ -99,103 +99,6 @@ var calc = function calc(leftOperand, rightOperand, operator) {
   return calcNumber;
 };
 
-var number = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  random: random$1,
-  loop: loop,
-  isNumber: isNumber,
-  isPositive: isPositive,
-  isNegative: isNegative,
-  calc: calc
-});
-
-var random$2 = function random() {
-  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 11;
-  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
-  var output = '';
-  var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_~!@#$%^&*()+={}[]|:;<>,./?';
-
-  if (type === 'short' || type === 'alphadash') {
-    characters = characters.slice(0, 64);
-  } else if (type === 'narrow' || type === 'alphanumeric') {
-    characters = characters.slice(0, 62);
-  } else if (type === 'alpha') {
-    characters = characters.slice(10, 62);
-  } else if (type === 'hex') {
-    characters = characters.slice(0, 16);
-  } else if (type === 'number' || type === 'numeric') {
-    characters = characters.slice(0, 10);
-  }
-
-  for (var i = 0; i < size; i++) {
-    output += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-
-  return output;
-};
-
-var char = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  random: random$2
-});
-
-var split = function split(str) {
-  var splitString = function splitString(start) {
-    var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var strArray = [];
-
-    if (typeof str === 'string') {
-      if (start >= 1) {
-        strArray.push(str.slice(0, start));
-      }
-
-      if (end !== null) {
-        strArray.push(str.slice(start, end));
-        strArray.push(str.slice(end));
-      } else {
-        strArray.push(str.slice(start));
-      }
-    }
-
-    return strArray;
-  };
-
-  return splitString;
-};
-
-var capitalize = function capitalize(str) {
-  var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'single';
-  if (typeof str !== 'string') return;
-  var capStr = str;
-
-  if (opt === 'multiple') {
-    capStr = capStr.toLowerCase().replace(/\w\S*/g, function (w) {
-      return w.replace(/^\w/, function (c) {
-        return c.toUpperCase();
-      });
-    });
-  } else {
-    capStr = capStr.trimStart().replace(/^\w/, function (c) {
-      return c.toUpperCase();
-    });
-  }
-
-  return capStr;
-};
-
-var includes = function includes(valueStr, searchStr) {
-  var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-  return valueStr.indexOf(searchStr, position) !== -1 ? true : false;
-};
-
-var string = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  split: split,
-  capitalize: capitalize,
-  includes: includes,
-  isString: isString
-});
-
 function _typeof(obj) {
   "@babel/helpers - typeof";
 
@@ -232,6 +135,55 @@ function _createClass(Constructor, protoProps, staticProps) {
   if (protoProps) _defineProperties(Constructor.prototype, protoProps);
   if (staticProps) _defineProperties(Constructor, staticProps);
   return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly) symbols = symbols.filter(function (sym) {
+      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+    });
+    keys.push.apply(keys, symbols);
+  }
+
+  return keys;
+}
+
+function _objectSpread2(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function (key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function (key) {
+        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+      });
+    }
+  }
+
+  return target;
 }
 
 function _slicedToArray(arr, i) {
@@ -362,6 +314,135 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
     }
   };
 }
+
+var isObject = function isObject(objArg) {
+  return _typeof(objArg) === 'object' && objArg !== null && Object.prototype.toString.call(objArg) === "[object Object]" ? true : false;
+};
+
+var currency = function currency(amount) {
+  var ccy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'USD';
+  var locale = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'en-US';
+  var options = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+
+  if (!isNumber(amount)) {
+    throw new Error('Amount must be in a number type');
+  }
+
+  if (!isString(ccy) && ccy.length === 3) {
+    throw new Error('Currency code must have at least 3 uppercase character');
+  }
+
+  if (!isString(locale)) {
+    throw new Error('Locale code must contain 2 languages and 2 country code and separated by dash (-)');
+  }
+
+  if (!isObject(options)) {
+    throw new Error('Currency options must be in object type');
+  }
+
+  return new Intl.NumberFormat(locale, _objectSpread2({
+    style: 'currency',
+    currency: ccy.toUpperCase()
+  }, options)).format(amount);
+};
+
+var number = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  random: random$1,
+  loop: loop,
+  isNumber: isNumber,
+  isPositive: isPositive,
+  isNegative: isNegative,
+  calc: calc,
+  currency: currency
+});
+
+var random$2 = function random() {
+  var size = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 11;
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'long';
+  var output = '';
+  var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_~!@#$%^&*()+={}[]|:;<>,./?';
+
+  if (type === 'short' || type === 'alphadash') {
+    characters = characters.slice(0, 64);
+  } else if (type === 'narrow' || type === 'alphanumeric') {
+    characters = characters.slice(0, 62);
+  } else if (type === 'alpha') {
+    characters = characters.slice(10, 62);
+  } else if (type === 'hex') {
+    characters = characters.slice(0, 16);
+  } else if (type === 'number' || type === 'numeric') {
+    characters = characters.slice(0, 10);
+  }
+
+  for (var i = 0; i < size; i++) {
+    output += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+
+  return output;
+};
+
+var char = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  random: random$2
+});
+
+var split = function split(str) {
+  var splitString = function splitString(start) {
+    var end = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var strArray = [];
+
+    if (typeof str === 'string') {
+      if (start >= 1) {
+        strArray.push(str.slice(0, start));
+      }
+
+      if (end !== null) {
+        strArray.push(str.slice(start, end));
+        strArray.push(str.slice(end));
+      } else {
+        strArray.push(str.slice(start));
+      }
+    }
+
+    return strArray;
+  };
+
+  return splitString;
+};
+
+var capitalize = function capitalize(str) {
+  var opt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'single';
+  if (typeof str !== 'string') return;
+  var capStr = str;
+
+  if (opt === 'multiple') {
+    capStr = capStr.toLowerCase().replace(/\w\S*/g, function (w) {
+      return w.replace(/^\w/, function (c) {
+        return c.toUpperCase();
+      });
+    });
+  } else {
+    capStr = capStr.trimStart().replace(/^\w/, function (c) {
+      return c.toUpperCase();
+    });
+  }
+
+  return capStr;
+};
+
+var includes = function includes(valueStr, searchStr) {
+  var position = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  return valueStr.indexOf(searchStr, position) !== -1 ? true : false;
+};
+
+var string = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  split: split,
+  capitalize: capitalize,
+  includes: includes,
+  isString: isString
+});
 
 var isArray = function isArray(arg) {
   return _typeof(arg) === 'object' && arg !== null && Array.isArray(arg) ? true : false;
@@ -628,10 +709,6 @@ var replace = function replace() {
   }
 
   return newObj;
-};
-
-var isObject = function isObject(objArg) {
-  return _typeof(objArg) === 'object' && objArg !== null && Object.prototype.toString.call(objArg) === "[object Object]" ? true : false;
 };
 
 var update = function update(setObj) {
