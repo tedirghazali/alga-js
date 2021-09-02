@@ -1015,16 +1015,20 @@ var nested = function nested(flatArr) {
   return nestedArray;
 };
 
-var unique = function unique(oriArr) {
-  var byProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  if (_typeof(oriArr) !== 'object') return;
-  var oriArray = Array.from(oriArr);
+var unique = function unique(fromArr) {
+  var byProp = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : undefined;
+
+  if (!isArray(fromArr)) {
+    throw new Error('');
+  }
+
+  var fromArray = Array.from(fromArr);
   var newArray = [];
 
   if (typeof byProp === 'string') {
     var newSet = new Set();
 
-    var _iterator = _createForOfIteratorHelper(oriArray),
+    var _iterator = _createForOfIteratorHelper(fromArray),
         _step;
 
     try {
@@ -1043,124 +1047,155 @@ var unique = function unique(oriArr) {
 
     newArray = _toConsumableArray(newSet);
   } else {
-    var _newSet = new Set();
-
-    var _iterator2 = _createForOfIteratorHelper(oriArray),
-        _step2;
-
-    try {
-      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-        var _oriItem = _step2.value;
-
-        if (!_newSet.has(_oriItem)) {
-          _newSet.add(_oriItem);
-        }
-      }
-    } catch (err) {
-      _iterator2.e(err);
-    } finally {
-      _iterator2.f();
-    }
-
-    newArray = _toConsumableArray(_newSet);
+    newArray = Array.from(new Set(fromArray));
   }
 
   return newArray;
 };
 
-var search = function search() {
-  for (var _len = arguments.length, searchStr = new Array(_len), _key = 0; _key < _len; _key++) {
-    searchStr[_key] = arguments[_key];
+var search = function search(fromArr) {
+  if (!isArray) {
+    throw new Error('The first argument must be in array');
   }
 
-  if (!searchStr) return;
-  return function (fromArr) {
-    if (_typeof(fromArr) !== 'object') return;
-    var filteredArray = [];
-    searchStr.forEach(function (searchString) {
-      var filterFromArr = Array.from(fromArr).filter(function (obj) {
-        for (var _i = 0, _Object$entries = Object.entries(obj); _i < _Object$entries.length; _i++) {
-          var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+  for (var _len = arguments.length, searchStr = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    searchStr[_key - 1] = arguments[_key];
+  }
+
+  if (searchStr.length < 1) {
+    throw new Error('On the next arguments, you must provide at least one argument in either string or number');
+  }
+
+  var filteredArray = [];
+
+  var _loop = function _loop() {
+    var searchString = _searchStr[_i];
+    var filterFromArr = Array.from(fromArr).filter(function (obj) {
+      if (isNumber(obj) && Number(obj) === Number(searchString)) {
+        return true;
+      } else if (isString(obj) && obj.toLowerCase().includes(searchString.toLowerCase())) {
+        return true;
+      } else if (isObject(obj)) {
+        for (var _i2 = 0, _Object$entries = Object.entries(obj); _i2 < _Object$entries.length; _i2++) {
+          var _Object$entries$_i = _slicedToArray(_Object$entries[_i2], 2),
               key = _Object$entries$_i[0],
               val = _Object$entries$_i[1];
 
-          if (Number(obj[key]) !== 'NaN' && Number(val) === Number(searchString)) {
+          if (isNumber(obj[key]) && Number(val) === Number(searchString)) {
             return true;
-          } else if (typeof obj[key] === 'string' && val.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+          } else if (isString(obj[key]) && val.toLowerCase().includes(searchString.toLowerCase())) {
             return true;
           }
         }
+      }
 
-        return false;
-      });
-      filteredArray = unique(filteredArray.concat(filterFromArr));
+      return false;
     });
-    return filteredArray;
+    filteredArray = unique(filteredArray.concat(filterFromArr));
   };
+
+  for (var _i = 0, _searchStr = searchStr; _i < _searchStr.length; _i++) {
+    _loop();
+  }
+
+  return filteredArray;
 };
 var searchBy = function searchBy() {
   for (var _len2 = arguments.length, filterStr = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
     filterStr[_key2] = arguments[_key2];
   }
 
-  if (!filterStr) return;
-  return function (fromArr, whereArr) {
-    if (_typeof(fromArr) !== 'object') return;
-    var filteredArray = [];
-    filterStr.forEach(function (filterString) {
-      var filterFromArr = Array.from(fromArr).filter(function (obj) {
-        for (var _i2 = 0, _Array$from = Array.from(whereArr); _i2 < _Array$from.length; _i2++) {
-          var val = _Array$from[_i2];
+  if (filterStr.length < 1) {
+    throw new Error('This argument must have at least one argument in either string or number');
+  }
 
-          if (val in obj) {
-            if (Number(obj[val]) !== 'NaN' && Number(obj[val]) === Number(filterString)) {
-              return true;
-            } else if (typeof obj[val] === 'string' && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
-              return true;
+  return function (fromArr) {
+    for (var _len3 = arguments.length, whereArr = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+      whereArr[_key3 - 1] = arguments[_key3];
+    }
+
+    if (!isArray(fromArr)) {
+      throw new Error('Array of objects is needed in order to be searched');
+    }
+
+    if (whereArr.length < 1) {
+      throw new Error('The last argument required at least one argument in either string or number');
+    }
+
+    var filteredArray = [];
+
+    var _iterator = _createForOfIteratorHelper(filterStr),
+        _step;
+
+    try {
+      var _loop2 = function _loop2() {
+        var filterString = _step.value;
+        var filterFromArr = Array.from(fromArr).filter(function (obj) {
+          for (var _i3 = 0, _Array$from = Array.from(whereArr); _i3 < _Array$from.length; _i3++) {
+            var val = _Array$from[_i3];
+
+            if (val in obj) {
+              if (isNumber(obj[val]) && Number(obj[val]) === Number(filterString)) {
+                return true;
+              } else if (isString(obj[val]) && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
+                return true;
+              }
             }
           }
-        }
 
-        return false;
-      });
-      filteredArray = unique(filteredArray.concat(filterFromArr));
-    });
+          return false;
+        });
+        filteredArray = unique(filteredArray.concat(filterFromArr));
+      };
+
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        _loop2();
+      }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+
     return filteredArray;
   };
 };
-/*export const find = (...findStr) => {
-  
-}*/
 
-var filtered = function filtered() {
-  for (var _len = arguments.length, filterStr = new Array(_len), _key = 0; _key < _len; _key++) {
-    filterStr[_key] = arguments[_key];
+var filtered = function filtered(fromArr, filterObj) {
+  if (!isArray(fromArr)) {
+    throw new Error('The first argument must be in array of objects');
   }
 
-  if (!filterStr) return;
-  return function (fromArr, whereArr) {
-    if (_typeof(fromArr) !== 'object') return;
-    var filteredArray = Array.from(fromArr);
-    filterStr.forEach(function (filterString, index) {
-      var filterFromArr = filteredArray.filter(function (obj) {
-        if (whereArr[index] !== undefined || whereArr[index] !== null) {
-          var val = whereArr[index];
+  if (!isObject(filterObj)) {
+    throw new Error('The second argument must be in object type and must have at least one property');
+  }
 
-          if (val in obj) {
-            if (Number(obj[val]) !== 'NaN' && Number(obj[val]) === Number(filterString)) {
-              return true;
-            } else if (typeof obj[val] === 'string' && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
-              return true;
-            }
-          }
+  var filteredArray = Array.from(fromArr);
+
+  var _loop = function _loop() {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+        ftrKey = _Object$entries$_i[0],
+        ftrVal = _Object$entries$_i[1];
+
+    var filterFromArr = filteredArray.filter(function (obj) {
+      if (ftrKey in obj) {
+        if (isNumber(obj[ftrKey]) && Number(obj[ftrKey]) === Number(ftrVal)) {
+          return true;
+        } else if (isString(obj[ftrKey]) && obj[ftrKey].toLowerCase().includes(ftrVal.toLowerCase())) {
+          return true;
         }
+      }
 
-        return false;
-      });
-      filteredArray = filterFromArr;
+      return false;
     });
-    return filteredArray;
+    filteredArray = filterFromArr;
   };
+
+  for (var _i = 0, _Object$entries = Object.entries(filterObj); _i < _Object$entries.length; _i++) {
+    _loop();
+  }
+
+  return filteredArray;
 };
 
 var sort = function sort(oriArr) {
@@ -1294,15 +1329,6 @@ var pages = function pages(fromArr) {
 
   var newArr = Array.from(fromArr);
   var divideLength = newArr.length / Number(limitPerPage);
-  /*const splitFloatNum = divideLength.toString().split('.')
-  const checkFloatNum = (Number(splitFloatNum[1]) >= 5) ? 0 : 1
-  let pageNumber = 0
-  if(Number.isInteger(divideLength)) {
-    pageNumber = divideLength
-  } else {
-    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum
-  }*/
-
   var pageNumber = Math.ceil(divideLength); //(pageNumber === Number(limitPerPage)) ? 1 : pageNumber
 
   return pageNumber;
@@ -1653,27 +1679,25 @@ var transpose = function transpose() {
     restArr[_key] = arguments[_key];
   }
 
-  if (restArr.length < 2) {
+  if (restArr.length < 2 && !isArray(restArr[0]) && !isArray(restArr[1]) && Number(restArr[0].length) !== Number(restArr[1].length)) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length');
   }
 
-  var newObj = {};
-  var lengthArr = restArr[0].length;
-
-  for (var i = 0; i < lengthArr; i++) {
-    newObj[i] = [];
-  }
+  var newArray = Array.from(restArr[0]).map(function (item) {
+    item = [];
+    return item;
+  });
 
   for (var _i = 0, _restArr = restArr; _i < _restArr.length; _i++) {
-    var varArr = _restArr[_i];
-    varArr.forEach(function (item, ind) {
-      if (String(ind) in newObj) {
-        newObj[ind].push(item);
+    var itemArr = _restArr[_i];
+    itemArr.forEach(function (item, index) {
+      if (index in newArray) {
+        newArray[index].push(item);
       }
     });
   }
 
-  return Object.values(newObj);
+  return newArray;
 };
 
 var zip = function zip() {

@@ -1,22 +1,22 @@
+import { isArray } from './isArray.js'
+
 export const transpose = (...restArr) => {
-  if(restArr.length < 2) {
+  if(restArr.length < 2 && !isArray(restArr[0]) && !isArray(restArr[1]) && Number(restArr[0].length) !== Number(restArr[1].length)) {
     throw new Error('You have to provide at least 2 arguments, both in arrays with the same length')
   }
   
-  const newObj = {}
-  const lengthArr = restArr[0].length
+  const newArray = Array.from(restArr[0]).map((item) => {
+    item = []
+    return item
+  })
   
-  for(let i = 0;i < lengthArr;i++) {
-    newObj[i] = []
-  }
-  
-  for(let varArr of restArr) {
-    varArr.forEach((item, ind) => {
-      if(String(ind) in newObj) {
-        newObj[ind].push(item)
+  for(let itemArr of restArr) {
+    itemArr.forEach((item, index) => {
+      if(index in newArray) {
+        newArray[index].push(item)
       }
     })
   }
   
-  return Object.values(newObj)
+  return newArray
 }

@@ -1,42 +1,62 @@
+import { isArray } from './isArray.js'
+import { isString } from '../string/isString.js'
+import { isNumber } from '../number/isNumber.js'
+import { isObject } from '../object/isObject.js'
 import { unique } from './uniqueArray.js'
 
-export const search = (...searchStr) => {
-  if(!searchStr) return
-  return (fromArr) => {
-    if(typeof fromArr !== 'object') return
-    
-    let filteredArray = []
-    searchStr.forEach(searchString => {
-      const filterFromArr = Array.from(fromArr).filter(obj => {
+export const search = (fromArr, ...searchStr) => {
+  if(!isArray) {
+    throw new Error('The first argument must be in array')
+  }
+  if(searchStr.length < 1) {
+    throw new Error('On the next arguments, you must provide at least one argument in either string or number')
+  }
+
+  let filteredArray = []
+  for(let searchString of searchStr) {
+    const filterFromArr = Array.from(fromArr).filter(obj => {
+      if(isNumber(obj) && Number(obj) === Number(searchString)) {
+        return true
+      } else if(isString(obj) && obj.toLowerCase().includes(searchString.toLowerCase())) {
+        return true
+      } else if(isObject(obj)) {
         for(const [key, val] of Object.entries(obj)) {
-          if(Number(obj[key]) !== 'NaN' && Number(val) === Number(searchString)) {
+          if(isNumber(obj[key]) && Number(val) === Number(searchString)) {
             return true
-          } else if(typeof obj[key] === 'string' && val.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) {
+          } else if(isString(obj[key]) && val.toLowerCase().includes(searchString.toLowerCase())) {
             return true
           }
         }
-        return false
-      })
-      filteredArray = unique(filteredArray.concat(filterFromArr))
+      }
+      return false
     })
-    
-    return filteredArray
+    filteredArray = unique(filteredArray.concat(filterFromArr))
   }
+    
+  return filteredArray
 }
 
 export const searchBy = (...filterStr) => {
-  if(!filterStr) return
-  return (fromArr, whereArr) => {
-    if(typeof fromArr !== 'object') return
+  if(filterStr.length < 1) {
+    throw new Error('This argument must have at least one argument in either string or number')
+  }
+  
+  return (fromArr, ...whereArr) => {
+    if(!isArray(fromArr)) {
+      throw new Error('Array of objects is needed in order to be searched')
+    }
+    if(whereArr.length < 1) {
+      throw new Error('The last argument required at least one argument in either string or number')
+    }
     
     let filteredArray = []
-    filterStr.forEach(filterString => {
+    for(let filterString of filterStr) {
       const filterFromArr = Array.from(fromArr).filter(obj => {
         for(const val of Array.from(whereArr)) {
           if(val in obj) {
-            if(Number(obj[val]) !== 'NaN' && Number(obj[val]) === Number(filterString)) {
+            if(isNumber(obj[val]) && Number(obj[val]) === Number(filterString)) {
               return true
-            } else if(typeof obj[val] === 'string' && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
+            } else if(isString(obj[val]) && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
               return true
             }
           }
@@ -44,12 +64,8 @@ export const searchBy = (...filterStr) => {
         return false
       })
       filteredArray = unique(filteredArray.concat(filterFromArr))
-    })
+    }
     
     return filteredArray
   }
 }
-
-/*export const find = (...findStr) => {
-  
-}*/

@@ -29,14 +29,7 @@ export const pages = (fromArr, limitPerPage = 10) => {
   
   const newArr = Array.from(fromArr)
   const divideLength = newArr.length / Number(limitPerPage)
-  /*const splitFloatNum = divideLength.toString().split('.')
-  const checkFloatNum = (Number(splitFloatNum[1]) >= 5) ? 0 : 1
-  let pageNumber = 0
-  if(Number.isInteger(divideLength)) {
-    pageNumber = divideLength
-  } else {
-    pageNumber = Number(Number.parseFloat(divideLength).toFixed(0)) + checkFloatNum
-  }*/
+  
   const pageNumber = Math.ceil(divideLength) //(pageNumber === Number(limitPerPage)) ? 1 : pageNumber
   return pageNumber
 }

@@ -1,1 +1,1 @@
-export function unique(oriArr: any, byProp?: any): any[];
+export function unique(fromArr: any, byProp?: any): any[];

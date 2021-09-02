@@ -1,6 +1,6 @@
 import { filtered } from '../../js/array/filteredArray.js'
 
-const values = [
+const fromArray = [
   { id: '1', name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
   { id: '2', name: 'Dawoud Tedir', office: 'Medan', age: 27 },
   { id: '3', name: 'Harist Tedir', office: 'Sigli', age: 15 },
@@ -15,11 +15,6 @@ const values = [
   { id: '12', name: 'Teuku Usman', office: 'Ternate', age: 58 }
 ]
 
-const results = [
-  { id: '1', name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
-  { id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 }
-]
-
 test('Filtering by property in array of objects', () => {
-  expect(filtered('ba')(values, ['name', 'office'])).toEqual(results)
+  expect(filtered(fromArray, {name: 'ba', office: 'la'})).toEqual([{ id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 }])
 })

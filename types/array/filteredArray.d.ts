@@ -1,1 +1,1 @@
-export function filtered(...filterStr: any[]): (fromArr: any, whereArr: any) => any[];
+export function filtered(fromArr: any, filterObj: any): any[];

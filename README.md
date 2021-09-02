@@ -1,10 +1,10 @@
-<p style="text-align: center">
+<p align="center" style="text-align: center">
   <a href="https://tedirghazali.gitbook.io/algajs/" target="_blank" rel="noopener noreferrer">
     <img width="180" src="alga-js-logo.png" alt="Alga.js logo">
   </a>
 </p>
 
-<p style="text-align: center">
+<p align="center" style="text-align: center">
   <a href="https://npmcharts.com/compare/alga-js?minimal=true"><img src="https://img.shields.io/npm/dm/alga-js.svg?sanitize=true" alt="Downloads"></a>
   <a href="https://www.npmjs.com/package/alga-js"><img src="https://img.shields.io/npm/v/alga-js.svg?sanitize=true" alt="Version"></a>
   <a href="https://www.npmjs.com/package/alga-js"><img src="https://img.shields.io/npm/l/alga-js.svg?sanitize=true" alt="License"></a>
@@ -17,7 +17,7 @@ Alga.js is a JavaScript helper to help build UI components by using any of moder
 ## Installation
 This Alga.js is a pure JavaScript plugin, so it doesn't have any dependencies and you can install it by using NPM or Yarn.
 
-```bash
+```sh
 npm install alga-js
 
 #or
@@ -30,14 +30,14 @@ You may want to use one of two JS modules either you use ES module or UMD module
 
 ```js
 // ES modules
-import { array, object, string, char, number, int, float, func, date, time, ...others* } from 'alga-js' // or
+import { array, object, string, number, func, date, ...others* } from 'alga-js' // or
 import * as $ from 'alga-js'
 
 // Node/CommonJS modules
 const $ = require('alga-js')
 
 // UMD (AMD/IIFE)
-<script src="alga-umd.js"></script>
+//<script src="alga-umd.js"></script>
 
 // Obsolete or deprecated
 import { $array, $object, $string, ... } from 'alga-js' // or

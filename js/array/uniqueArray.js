@@ -1,30 +1,25 @@
-const unique = (oriArr, byProp = null) => {
-  if(typeof oriArr !== 'object') return
+import { isArray } from './isArray.js'
+
+export const unique = (fromArr, byProp = undefined) => {
+  if(!isArray(fromArr)) {
+    throw new Error('')
+  }
   
-  const oriArray = Array.from(oriArr)
+  const fromArray = Array.from(fromArr)
   let newArray = []
   
   if(typeof byProp === 'string') {
     let newSet = new Set()
-    for(const oriItem of oriArray) {
+    for(const oriItem of fromArray) {
       if(!newSet.has(oriItem[byProp])) {
         newSet.add(oriItem[byProp])
       }
     }
     newArray = [...newSet]
   } else {
-    let newSet = new Set()
-    for(const oriItem of oriArray) {
-      if(!newSet.has(oriItem)) {
-        newSet.add(oriItem)
-      }
-    }
-    newArray = [...newSet]
+    newArray = Array.from(new Set(fromArray))
   }
   
   return newArray
 }
 
-export {
-  unique
-}
