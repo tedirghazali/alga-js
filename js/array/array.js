@@ -7,7 +7,7 @@ import { flatten } from './flattenArray.js'
 import { nested } from './nestedArray.js'
 import { index, toIndex, randomIndex } from './indexArray.js'
 import { search, searchBy } from './searchArray.js'
-import { filtered } from './filteredArray.js'
+import { filter } from './filterArray.js'
 import { sort, sorted } from './sortedArray.js'
 import { paginate, pages, pageInfo, pagination } from './paginateArray.js'
 import { sum } from './sumArray.js'
@@ -44,7 +44,8 @@ export {
   randomIndex,
   search, 
   searchBy, 
-  filtered,
+  filter, 
+  filter as filtered,
   sort,
   sorted,
   paginate, 

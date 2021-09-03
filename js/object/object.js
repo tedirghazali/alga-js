@@ -1,7 +1,8 @@
 import { remove, removeBy } from './removeObject.js'
 import { merge, replace } from './mergeObject.js'
-import { isObject } from './isObject.js'
+import { isObject, isObjectValues } from './isObject.js'
 import { invert } from './invertObject.js'
+import { clone } from './cloneObject.js'
 
 export {
   remove,
@@ -9,5 +10,7 @@ export {
   merge,
   replace,
   isObject,
-  invert
+  isObjectValues,
+  invert,
+  clone
 }

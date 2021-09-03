@@ -1,4 +1,4 @@
-import { filtered } from '../../js/array/filteredArray.js'
+import { filter } from '../../js/array/filterArray.js'
 
 const fromArray = [
   { id: '1', name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
@@ -16,5 +16,5 @@ const fromArray = [
 ]
 
 test('Filtering by property in array of objects', () => {
-  expect(filtered(fromArray, {name: 'ba', office: 'la'})).toEqual([{ id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 }])
+  expect(filter(fromArray, {name: 'ba', office: 'la'})).toEqual([{ id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 }])
 })

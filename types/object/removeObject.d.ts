@@ -1,2 +1,2 @@
-export function remove(...propKey: any[]): (fromObj: any) => {};
-export function removeBy(...propVal: any[]): (fromObj: any) => {};
+export function remove(fromObj: any, ...propKey: any[]): any;
+export function removeBy(fromObj: any, ...propVal: any[]): {};

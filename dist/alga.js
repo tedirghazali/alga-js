@@ -318,6 +318,11 @@ function _createForOfIteratorHelper(o, allowArrayLike) {
 var isObject = function isObject(objArg) {
   return _typeof(objArg) === 'object' && objArg !== null && Object.prototype.toString.call(objArg) === "[object Object]" ? true : false;
 };
+var isObjectValues = function isObjectValues(objArg) {
+  return Object.values(objArg).filter(function (objVal) {
+    return objVal !== '' && objVal !== 0 && objVal !== {} && objVal !== [];
+  }).join('') ? true : false;
+};
 
 var currency = function currency(amount) {
   var ccy = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'USD';
@@ -1161,7 +1166,61 @@ var searchBy = function searchBy() {
   };
 };
 
-var filtered = function filtered(fromArr, filterObj) {
+var remove = function remove(fromObj) {
+  if (!isObject(fromObj)) {
+    throw new Error('This is object helper, you must provide the first argument in an object');
+  }
+
+  for (var _len = arguments.length, propKey = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    propKey[_key - 1] = arguments[_key];
+  }
+
+  if (propKey.length < 1) {
+    throw new Error('The next arguments must be in a string and at least one argument');
+  }
+
+  var newObj = Object.assign({}, fromObj);
+
+  for (var _i = 0, _propKey = propKey; _i < _propKey.length; _i++) {
+    var key = _propKey[_i];
+
+    if (key in newObj) {
+      delete newObj[key];
+    }
+  }
+
+  return newObj;
+};
+
+var removeBy = function removeBy(fromObj) {
+  if (!isObject(fromObj)) {
+    throw new Error('This is object helper, you must provide the first argument in an object');
+  }
+
+  for (var _len2 = arguments.length, propVal = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    propVal[_key2 - 1] = arguments[_key2];
+  }
+
+  if (propVal.length < 1) {
+    throw new Error('The next arguments must be in a string or in a number and at least one argument');
+  }
+
+  var newObj = {};
+  var newSet = new Set(propVal);
+
+  for (var _i2 = 0, _Object$entries = Object.entries(fromObj); _i2 < _Object$entries.length; _i2++) {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i2], 1),
+        key = _Object$entries$_i[0];
+
+    if (!newSet.has(fromObj[key])) {
+      newObj[key] = fromObj[key];
+    }
+  }
+
+  return newObj;
+};
+
+var filter = function filter(fromArr, filterObj) {
   if (!isArray(fromArr)) {
     throw new Error('The first argument must be in array of objects');
   }
@@ -1191,7 +1250,7 @@ var filtered = function filtered(fromArr, filterObj) {
     filteredArray = filterFromArr;
   };
 
-  for (var _i = 0, _Object$entries = Object.entries(filterObj); _i < _Object$entries.length; _i++) {
+  for (var _i = 0, _Object$entries = Object.entries(removeBy(filterObj, '', 0)); _i < _Object$entries.length; _i++) {
     _loop();
   }
 
@@ -2101,7 +2160,8 @@ var array = /*#__PURE__*/Object.freeze({
   randomIndex: randomIndex,
   search: search,
   searchBy: searchBy,
-  filtered: filtered,
+  filter: filter,
+  filtered: filter,
   sort: sort,
   sorted: sorted,
   paginate: paginate,
@@ -2136,68 +2196,6 @@ var array = /*#__PURE__*/Object.freeze({
   countBy: countBy
 });
 
-var remove = function remove() {
-  for (var _len = arguments.length, propKey = new Array(_len), _key = 0; _key < _len; _key++) {
-    propKey[_key] = arguments[_key];
-  }
-
-  if (!propKey) return;
-  return function (fromObj) {
-    if (_typeof(fromObj) !== 'object' || fromObj === null) return;
-    var newObj = {};
-
-    for (var _i = 0, _Object$entries = Object.entries(fromObj); _i < _Object$entries.length; _i++) {
-      var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 1),
-          name = _Object$entries$_i[0];
-
-      newObj[name] = fromObj[name];
-    }
-
-    var _iterator = _createForOfIteratorHelper(propKey),
-        _step;
-
-    try {
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        var key = _step.value;
-
-        if (key in newObj) {
-          delete newObj[key];
-        }
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
-    }
-
-    return newObj;
-  };
-};
-
-var removeBy = function removeBy() {
-  for (var _len2 = arguments.length, propVal = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    propVal[_key2] = arguments[_key2];
-  }
-
-  if (!propVal) return;
-  return function (fromObj) {
-    if (_typeof(fromObj) !== 'object' || fromObj === null) return;
-    var newObj = {};
-    var newSet = new Set(propVal);
-
-    for (var _i2 = 0, _Object$entries2 = Object.entries(fromObj); _i2 < _Object$entries2.length; _i2++) {
-      var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 1),
-          key = _Object$entries2$_i[0];
-
-      if (!newSet.has(fromObj[key])) {
-        newObj[key] = fromObj[key];
-      }
-    }
-
-    return newObj;
-  };
-};
-
 var invert = function invert(objArg) {
   if (!isObject(objArg)) {
     throw new Error('You have to input object only here');
@@ -2208,6 +2206,18 @@ var invert = function invert(objArg) {
   return zip(allValues, allKeys)[0];
 };
 
+var clone = function clone() {
+  for (var _len = arguments.length, restArg = new Array(_len), _key = 0; _key < _len; _key++) {
+    restArg[_key] = arguments[_key];
+  }
+
+  if (restArg.length < 1) {
+    throw new Error('In this argument must have at least one argument and please provide it in object type');
+  }
+
+  return Object.assign.apply(Object, [{}].concat(restArg));
+};
+
 var object = /*#__PURE__*/Object.freeze({
   __proto__: null,
   remove: remove,
@@ -2215,7 +2225,9 @@ var object = /*#__PURE__*/Object.freeze({
   merge: merge,
   replace: replace,
   isObject: isObject,
-  invert: invert
+  isObjectValues: isObjectValues,
+  invert: invert,
+  clone: clone
 });
 
 var REGEX_PARSE_DATE = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[^0-9]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/;

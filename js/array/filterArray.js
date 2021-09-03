@@ -1,9 +1,10 @@
 import { isArray } from './isArray.js'
 import { isObject } from '../object/isObject.js'
+import { removeBy } from '../object/removeObject.js'
 import { isNumber } from '../number/isNumber.js'
 import { isString } from '../string/isString.js'
 
-export const filtered = (fromArr, filterObj) => {
+export const filter = (fromArr, filterObj) => {
   if(!isArray(fromArr)) {
     throw new Error('The first argument must be in array of objects')
   }
@@ -13,7 +14,7 @@ export const filtered = (fromArr, filterObj) => {
   
   let filteredArray = Array.from(fromArr)
   
-  for(let [ftrKey, ftrVal] of Object.entries(filterObj)) {
+  for(let [ftrKey, ftrVal] of Object.entries(removeBy(filterObj, '', 0))) {
     const filterFromArr = filteredArray.filter(obj => {
       if(ftrKey in obj) {
         if(isNumber(obj[ftrKey]) && Number(obj[ftrKey]) === Number(ftrVal)) {

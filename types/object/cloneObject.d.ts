@@ -1,1 +1,1 @@
-export function clone(...restParams: any[]): any;
+export function clone(...restArg: any[]): any;
