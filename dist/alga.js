@@ -1257,35 +1257,28 @@ var filter = function filter(fromArr, filterObj) {
   return filteredArray;
 };
 
-var sort = function sort(oriArr) {
+var isFunction = function isFunction(param) {
+  return typeof param === 'function' ? true : false;
+};
+
+var sort = function sort(fromArr) {
   var sortStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
-  if (_typeof(oriArr) !== 'object') return;
-  if (typeof sortStr !== 'string') return;
-  var newArray = Array.from(oriArr);
 
-  if (sortStr === 'desc') {
+  if (!isArray(fromArr)) {
+    throw new Error('Only array of strings or numbers accepted');
+  }
+
+  if (!isString(sortStr)) {
+    throw new Error('The second argument must be in a string and a value either "", "asc" or "desc"');
+  }
+
+  var newArray = Array.from(fromArr);
+
+  if (sortStr === 'asc') {
     newArray.sort(function (a, b) {
-      if (typeof a === 'number' && typeof b === 'number') {
-        return b - a;
-      } else if (typeof a === 'string' && typeof b === 'string') {
-        var propA = a.toLowerCase();
-        var propB = b.toLowerCase();
-        var propRes = 0;
-
-        if (propB < propA) {
-          propRes = -1;
-        } else if (propB > propA) {
-          propRes = 1;
-        }
-
-        return propRes;
-      }
-    });
-  } else {
-    newArray.sort(function (a, b) {
-      if (typeof a === 'number' && typeof b === 'number') {
-        return a - b;
-      } else if (typeof a === 'string' && typeof b === 'string') {
+      if (isNumber(a) && isNumber(b)) {
+        return Number(a) - Number(b);
+      } else if (isString(a) && isString(b)) {
         var propA = a.toLowerCase();
         var propB = b.toLowerCase();
         var propRes = 0;
@@ -1299,42 +1292,51 @@ var sort = function sort(oriArr) {
         return propRes;
       }
     });
+  } else if (sortStr === 'desc') {
+    newArray.sort(function (a, b) {
+      if (isNumber(a) && isNumber(b)) {
+        return Number(b) - Number(a);
+      } else if (isString(a) && isString(b)) {
+        var propA = a.toLowerCase();
+        var propB = b.toLowerCase();
+        var propRes = 0;
+
+        if (propB < propA) {
+          propRes = -1;
+        } else if (propB > propA) {
+          propRes = 1;
+        }
+
+        return propRes;
+      }
+    });
   }
 
   return newArray;
 };
+var sortBy = function sortBy(fromArr, propStr) {
+  var sortStr = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'asc';
 
-var sorted = function sorted(oriArr) {
-  if (_typeof(oriArr) !== 'object') return;
-  return function (propStr) {
-    var sortStr = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'asc';
-    if (typeof propStr !== 'string') return;
-    if (typeof sortStr !== 'string') return;
-    var newArray = Array.from(oriArr);
+  if (!isArray(fromArr)) {
+    throw new Error('Only array of objects accepted');
+  }
 
-    if (sortStr === 'desc') {
-      newArray.sort(function (a, b) {
-        if (propStr in a && propStr in b && typeof a[propStr] === 'number' && typeof b[propStr] === 'number') {
-          return b[propStr] - a[propStr];
-        } else if (propStr in a && propStr in b && typeof a[propStr] === 'string' && typeof b[propStr] === 'string') {
-          var propA = a[propStr].toLowerCase();
-          var propB = b[propStr].toLowerCase();
-          var propRes = 0;
+  if (!isString(propStr)) {
+    throw new Error('The second argument must be in a string and a value must be object property key or name');
+  }
 
-          if (propB < propA) {
-            propRes = -1;
-          } else if (propB > propA) {
-            propRes = 1;
-          }
+  if (!isString(sortStr)) {
+    throw new Error('The third argument must be in a string and a value either "", "asc" or "desc"');
+  }
 
-          return propRes;
-        }
-      });
-    } else {
-      newArray.sort(function (a, b) {
-        if (propStr in a && propStr in b && typeof a[propStr] === 'number' && typeof b[propStr] === 'number') {
-          return a[propStr] - b[propStr];
-        } else if (propStr in a && propStr in b && typeof a[propStr] === 'string' && typeof b[propStr] === 'string') {
+  var newArray = Array.from(fromArr);
+
+  if (sortStr === 'asc') {
+    newArray.sort(function (a, b) {
+      if (propStr in a && propStr in b) {
+        if (isNumber(a[propStr]) && isNumber(b[propStr])) {
+          return Number(a[propStr]) - Number(b[propStr]);
+        } else if (isString(a[propStr]) && isString(b[propStr])) {
           var propA = a[propStr].toLowerCase();
           var propB = b[propStr].toLowerCase();
           var propRes = 0;
@@ -1347,11 +1349,54 @@ var sorted = function sorted(oriArr) {
 
           return propRes;
         }
-      });
+      }
+    });
+  } else if (sortStr === 'desc') {
+    newArray.sort(function (a, b) {
+      if (propStr in a && propStr in b) {
+        if (isNumber(a[propStr]) && isNumber(b[propStr])) {
+          return Number(b[propStr]) - Number(a[propStr]);
+        } else if (isString(a[propStr]) && isString(b[propStr])) {
+          var propA = a[propStr].toLowerCase();
+          var propB = b[propStr].toLowerCase();
+          var propRes = 0;
+
+          if (propB < propA) {
+            propRes = -1;
+          } else if (propB > propA) {
+            propRes = 1;
+          }
+
+          return propRes;
+        }
+      }
+    });
+  }
+
+  return newArray;
+};
+var sortWith = function sortWith(fromArr, compareFunc) {
+  if (!isArray(fromArr)) {
+    throw new Error('The first argument must be in an array type');
+  }
+
+  if (!isFunction(compareFunc)) {
+    throw new Error('The second argument is a compare or callback function');
+  }
+
+  var fromArray = Array.from(fromArr);
+  fromArray.sort(function (a, b) {
+    var res = 0;
+
+    if (Math.sign(compareFunc(a, b)) === -1) {
+      res = -1;
+    } else {
+      res = 1;
     }
 
-    return newArray;
-  };
+    return res;
+  });
+  return fromArray;
 };
 
 var paginate = function paginate(fromArr) {
@@ -1516,10 +1561,6 @@ var union = function union() {
   }
 
   return Array.from(new Set(restArg.flat()));
-};
-
-var isFunction = function isFunction(param) {
-  return typeof param === 'function' ? true : false;
 };
 
 var countDuplication = function countDuplication(arrArg) {
@@ -2163,7 +2204,9 @@ var array = /*#__PURE__*/Object.freeze({
   filter: filter,
   filtered: filter,
   sort: sort,
-  sorted: sorted,
+  sortBy: sortBy,
+  sorted: sortBy,
+  sortWith: sortWith,
   paginate: paginate,
   pages: pages,
   pageInfo: pageInfo,

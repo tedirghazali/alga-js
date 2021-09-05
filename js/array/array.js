@@ -8,7 +8,7 @@ import { nested } from './nestedArray.js'
 import { index, toIndex, randomIndex } from './indexArray.js'
 import { search, searchBy } from './searchArray.js'
 import { filter } from './filterArray.js'
-import { sort, sorted } from './sortedArray.js'
+import { sort, sortBy, sortWith } from './sortArray.js'
 import { paginate, pages, pageInfo, pagination } from './paginateArray.js'
 import { sum } from './sumArray.js'
 import { unique } from './uniqueArray.js'
@@ -47,7 +47,9 @@ export {
   filter, 
   filter as filtered,
   sort,
-  sorted,
+  sortBy,
+  sortBy as sorted,
+  sortWith,
   paginate, 
   pages,
   pageInfo, 
