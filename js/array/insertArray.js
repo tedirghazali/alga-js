@@ -1,102 +1,87 @@
 import { isArray } from './isArray.js'
 import { isNumber } from '../number/isNumber.js'
+import { isObject } from '../object/isObject.js'
 
-class Insert {
-	constructor(valArr, toArr) {
-    this.valArr = valArr
-    this.toArr = toArr
+export const insert = (fromArr, at = {position: null, index: null}, ...restVal) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument, only array accept here')
+  }
+  if(!isObject(at)) {
+    throw new Error('On the second argument, only object with 2 properties (position and index property) accepted')
+  }
+  if(restVal.length < 1) {
+    throw new Error('On the third or the next arguments, you have to enter at least one argument')
   }
   
-  first() {
-    return [...this.valArr, ...this.toArr]  // unshift(value)
+  let newArray = []
+  if(at.position === 'first') {
+    newArray = insertFirst(fromArr, ...restVal)
+  } else if(at.position === 'last') {
+    newArray = insertLast(fromArr, ...restVal)
+  } else if(at.position === 'before') {
+    newArray = insertBefore(fromArr, at.index, ...restVal)
+  } else if(at.position === 'after') {
+    newArray = insertAfter(fromArr, at.index, ...restVal)
   }
-  
-  last() {
-    return [...this.toArr, ...this.valArr] // push(value)
-  }
-    
-  before(index) {
-    const indexBefore = (isNaN(index)) ? 1 : index;
-    this.toArr.splice(Number(indexBefore) - 1, 0, this.valArr);
-    return this.toArr.flat()
-  }
-  
-  after(index) {
-    const indexAfter = (isNaN(index)) ? 0 : index;
-    this.toArr.splice(Number(indexAfter) + 1, 0, this.valArr);
-    return this.toArr.flat()
-  }
+  return newArray
 }
 
-export const insert = (...value) => {
-  if(value.length < 1) {
-    throw new Error('You have to enter at least one value')
+export const insertFirst = (fromArr, ...restVal) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument must be in array type')
+  }
+  if(restVal.length < 1) {
+    throw new Error('On the next arguments, you have to provide at least one argument')
   }
   
-  const to = (toArr, toPosition = null, atIndex = null) => {
-    if(!isArray(toArr)) {
-      throw new Error('Only array accept here')
-    }
-    
-    const arrVal = Array.from(toArr)
-    let resArr = new Insert(value, arrVal)
-    
-    if(toPosition === 'first') {
-      resArr = resArr.first()
-    } else if(toPosition === 'last') {
-      resArr = resArr.last()
-    } else if(toPosition === 'before') {
-      resArr = resArr.before(atIndex)
-    } else if(toPosition === 'after') {
-      resArr = resArr.after(atIndex)
-    }
-    
-    return resArr
-  }
-  
-  return to
+  const fromArray = Array.from(fromArr)
+  fromArray.unshift(...restVal)
+  return fromArray
 }
 
-export const insertBefore = (...value) => {
-  if(value.length < 1) {
-    throw new Error('You have to enter at least one value')
+export const insertLast = (fromArr, ...restVal) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument must be in array type')
+  }
+  if(restVal.length < 1) {
+    throw new Error('On the next arguments, you have to provide at least one argument')
   }
   
-  return (toArr, atIndex) => {
-    if(!isArray(toArr)) {
-      throw new Error('In the first argument, here only accept array type')
-    }
-    if(!isNumber(atIndex)) {
-      throw new Error('In the second argument, accept only numeric or number type')
-    }
-    
-    const toArray = Array.from(toArr)
-    //return new Insert(value, toArray).before(atIndex)
-    
-    const indexBefore = (isNaN(atIndex)) ? 1 : atIndex;
-    toArray.splice(Number(indexBefore) - 1, 0, value);
-    return toArray.flat()
-  }
+  const fromArray = Array.from(fromArr)
+  fromArray.push(...restVal)
+  return fromArray
 }
 
-export const insertAfter = (...value) => {
-  if(value.length < 1) {
-    throw new Error('You have to enter at least one value')
+export const insertBefore = (fromArr, atIndex, ...restVal) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array type')
   }
-  
-  return (toArr, atIndex) => {
-    if(!isArray(toArr)) {
-      throw new Error('In the first argument, here only accept array type')
-    }
-    if(!isNumber(atIndex)) {
-      throw new Error('In the second argument, accept only numeric or number type')
-    }
-    
-    const toArray = Array.from(toArr)
-    //return new Insert(value, toArray).after(atIndex)
-    
-    const indexAfter = (isNaN(atIndex)) ? 0 : atIndex;
-    toArray.splice(Number(indexAfter) + 1, 0, value);
-    return toArray.flat()
+  if(!isNumber(atIndex)) {
+    throw new Error('On the second argument, accept only numeric or number type')
   }
+  if(restVal.length < 1) {
+    throw new Error('On the next arguments, you have to enter at least one value')
+  }
+    
+  const fromArray = Array.from(fromArr)
+  const indexBefore = (isNaN(atIndex)) ? 1 : atIndex;
+  fromArray.splice(Number(indexBefore) - 1, 0, ...restVal);
+  return fromArray
+}
+
+export const insertAfter = (fromArr, atIndex, ...restVal) => {
+  if(!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array type')
+  }
+  if(!isNumber(atIndex)) {
+    throw new Error('On the second argument, accept only numeric or number type')
+  }
+  if(restVal.length < 1) {
+    throw new Error('On the next arguments, you have to enter at least one value')
+  }
+    
+  const fromArray = Array.from(fromArr)
+  const indexAfter = (isNaN(atIndex)) ? 0 : atIndex;
+  fromArray.splice(Number(indexAfter) + 1, 0, ...restVal);
+  return fromArray
 }
