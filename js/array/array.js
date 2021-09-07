@@ -1,5 +1,5 @@
 import { insert, insertFirst, insertLast, insertBefore, insertAfter } from './insertArray.js'
-import { update } from './updateArray.js'
+import { update, updateBy } from './updateArray.js'
 import { destroy } from './destroyArray.js'
 import { select, hidden } from './selectArray.js'
 import { toggle } from './toggleArray.js'
@@ -35,6 +35,7 @@ export {
   insertBefore,
   insertAfter,
   update,
+  updateBy,
   destroy,
   select,
   hidden,

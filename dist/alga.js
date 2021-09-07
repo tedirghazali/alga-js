@@ -115,28 +115,6 @@ function _typeof(obj) {
   return _typeof(obj);
 }
 
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  return Constructor;
-}
-
 function _defineProperty(obj, key, value) {
   if (key in obj) {
     Object.defineProperty(obj, key, {
@@ -479,127 +457,119 @@ var isSuperset = function isSuperset(oriArr, subArr) {
   return true;
 };
 
-var Insert = /*#__PURE__*/function () {
-  function Insert(valArr, toArr) {
-    _classCallCheck(this, Insert);
-
-    this.valArr = valArr;
-    this.toArr = toArr;
-  }
-
-  _createClass(Insert, [{
-    key: "first",
-    value: function first() {
-      return [].concat(_toConsumableArray(this.valArr), _toConsumableArray(this.toArr)); // unshift(value)
-    }
-  }, {
-    key: "last",
-    value: function last() {
-      return [].concat(_toConsumableArray(this.toArr), _toConsumableArray(this.valArr)); // push(value)
-    }
-  }, {
-    key: "before",
-    value: function before(index) {
-      var indexBefore = isNaN(index) ? 1 : index;
-      this.toArr.splice(Number(indexBefore) - 1, 0, this.valArr);
-      return this.toArr.flat();
-    }
-  }, {
-    key: "after",
-    value: function after(index) {
-      var indexAfter = isNaN(index) ? 0 : index;
-      this.toArr.splice(Number(indexAfter) + 1, 0, this.valArr);
-      return this.toArr.flat();
-    }
-  }]);
-
-  return Insert;
-}();
-
-var insert = function insert() {
-  for (var _len = arguments.length, value = new Array(_len), _key = 0; _key < _len; _key++) {
-    value[_key] = arguments[_key];
-  }
-
-  if (value.length < 1) {
-    throw new Error('You have to enter at least one value');
-  }
-
-  var to = function to(toArr) {
-    var toPosition = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var atIndex = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-
-    if (!isArray(toArr)) {
-      throw new Error('Only array accept here');
-    }
-
-    var arrVal = Array.from(toArr);
-    var resArr = new Insert(value, arrVal);
-
-    if (toPosition === 'first') {
-      resArr = resArr.first();
-    } else if (toPosition === 'last') {
-      resArr = resArr.last();
-    } else if (toPosition === 'before') {
-      resArr = resArr.before(atIndex);
-    } else if (toPosition === 'after') {
-      resArr = resArr.after(atIndex);
-    }
-
-    return resArr;
+var insert = function insert(fromArr) {
+  var at = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
+    position: null,
+    index: null
   };
 
-  return to;
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, only array accept here');
+  }
+
+  if (!isObject(at)) {
+    throw new Error('On the second argument, only object with 2 properties (position and index property) accepted');
+  }
+
+  for (var _len = arguments.length, restVal = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    restVal[_key - 2] = arguments[_key];
+  }
+
+  if (restVal.length < 1) {
+    throw new Error('On the third or the next arguments, you have to enter at least one argument');
+  }
+
+  var newArray = [];
+
+  if (at.position === 'first') {
+    newArray = insertFirst.apply(void 0, [fromArr].concat(restVal));
+  } else if (at.position === 'last') {
+    newArray = insertLast.apply(void 0, [fromArr].concat(restVal));
+  } else if (at.position === 'before') {
+    newArray = insertBefore.apply(void 0, [fromArr, at.index].concat(restVal));
+  } else if (at.position === 'after') {
+    newArray = insertAfter.apply(void 0, [fromArr, at.index].concat(restVal));
+  }
+
+  return newArray;
 };
-var insertBefore = function insertBefore() {
-  for (var _len2 = arguments.length, value = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    value[_key2] = arguments[_key2];
+var insertFirst = function insertFirst(fromArr) {
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument must be in array type');
   }
 
-  if (value.length < 1) {
-    throw new Error('You have to enter at least one value');
+  for (var _len2 = arguments.length, restVal = new Array(_len2 > 1 ? _len2 - 1 : 0), _key2 = 1; _key2 < _len2; _key2++) {
+    restVal[_key2 - 1] = arguments[_key2];
   }
 
-  return function (toArr, atIndex) {
-    if (!isArray(toArr)) {
-      throw new Error('In the first argument, here only accept array type');
-    }
+  if (restVal.length < 1) {
+    throw new Error('On the next arguments, you have to provide at least one argument');
+  }
 
-    if (!isNumber(atIndex)) {
-      throw new Error('In the second argument, accept only numeric or number type');
-    }
-
-    var toArray = Array.from(toArr); //return new Insert(value, toArray).before(atIndex)
-
-    var indexBefore = isNaN(atIndex) ? 1 : atIndex;
-    toArray.splice(Number(indexBefore) - 1, 0, value);
-    return toArray.flat();
-  };
+  var fromArray = Array.from(fromArr);
+  fromArray.unshift.apply(fromArray, restVal);
+  return fromArray;
 };
-var insertAfter = function insertAfter() {
-  for (var _len3 = arguments.length, value = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-    value[_key3] = arguments[_key3];
+var insertLast = function insertLast(fromArr) {
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument must be in array type');
   }
 
-  if (value.length < 1) {
-    throw new Error('You have to enter at least one value');
+  for (var _len3 = arguments.length, restVal = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
+    restVal[_key3 - 1] = arguments[_key3];
   }
 
-  return function (toArr, atIndex) {
-    if (!isArray(toArr)) {
-      throw new Error('In the first argument, here only accept array type');
-    }
+  if (restVal.length < 1) {
+    throw new Error('On the next arguments, you have to provide at least one argument');
+  }
 
-    if (!isNumber(atIndex)) {
-      throw new Error('In the second argument, accept only numeric or number type');
-    }
+  var fromArray = Array.from(fromArr);
+  fromArray.push.apply(fromArray, restVal);
+  return fromArray;
+};
+var insertBefore = function insertBefore(fromArr, atIndex) {
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array type');
+  }
 
-    var toArray = Array.from(toArr); //return new Insert(value, toArray).after(atIndex)
+  if (!isNumber(atIndex)) {
+    throw new Error('On the second argument, accept only numeric or number type');
+  }
 
-    var indexAfter = isNaN(atIndex) ? 0 : atIndex;
-    toArray.splice(Number(indexAfter) + 1, 0, value);
-    return toArray.flat();
-  };
+  for (var _len4 = arguments.length, restVal = new Array(_len4 > 2 ? _len4 - 2 : 0), _key4 = 2; _key4 < _len4; _key4++) {
+    restVal[_key4 - 2] = arguments[_key4];
+  }
+
+  if (restVal.length < 1) {
+    throw new Error('On the next arguments, you have to enter at least one value');
+  }
+
+  var fromArray = Array.from(fromArr);
+  var indexBefore = isNaN(atIndex) ? 1 : atIndex;
+  fromArray.splice.apply(fromArray, [Number(indexBefore) - 1, 0].concat(restVal));
+  return fromArray;
+};
+var insertAfter = function insertAfter(fromArr, atIndex) {
+  if (!isArray(fromArr)) {
+    throw new Error('On the first argument, here only accept array type');
+  }
+
+  if (!isNumber(atIndex)) {
+    throw new Error('On the second argument, accept only numeric or number type');
+  }
+
+  for (var _len5 = arguments.length, restVal = new Array(_len5 > 2 ? _len5 - 2 : 0), _key5 = 2; _key5 < _len5; _key5++) {
+    restVal[_key5 - 2] = arguments[_key5];
+  }
+
+  if (restVal.length < 1) {
+    throw new Error('On the next arguments, you have to enter at least one value');
+  }
+
+  var fromArray = Array.from(fromArr);
+  var indexAfter = isNaN(atIndex) ? 0 : atIndex;
+  fromArray.splice.apply(fromArray, [Number(indexAfter) + 1, 0].concat(restVal));
+  return fromArray;
 };
 
 var index = function index(indexArr) {
@@ -716,34 +686,72 @@ var replace = function replace() {
   return newObj;
 };
 
-var update = function update(setObj) {
-  if (!isObject(setObj)) {
-    throw new Error('You must enter object only here');
+var update = function update(fromArr, setObj, whereArg) {
+  if (!isArray(fromArr)) {
+    throw new Error('You have to enter array only on the first argument');
   }
 
-  return function (oriArr, whereObj) {
-    if (!isArray(oriArr)) {
-      throw new Error('You have to enter array only on the first argument');
+  if (!isObject(setObj)) {
+    throw new Error('You must enter object only here on the second argument');
+  }
+
+  if (!isObject(whereArg) && !isNumber(whereArg)) {
+    throw new Error('You must enter object only on the second argument');
+  }
+
+  var fromArray = Array.from(fromArr);
+  var newArray = [];
+  var indexNum = isObject(whereArg) ? index(fromArray, whereArg) : Number(whereArg);
+  newArray = fromArray.map(function (obj, ind) {
+    var resMap = obj;
+
+    if (ind === indexNum) {
+      resMap = replace(obj, setObj);
     }
 
-    if (!isObject(whereObj)) {
-      throw new Error('You must enter object only on the second argument');
-    }
+    return resMap;
+  });
+  return newArray;
+};
+var updateBy = function updateBy(fromArr, setObj, whereArr) {
+  if (!isArray(fromArr)) {
+    throw new Error('You have to enter array only on the first argument');
+  }
 
-    var oriArray = Array.from(oriArr);
-    var newArray = [];
-    var indexNum = index(oriArray, whereObj);
-    newArray = oriArray.map(function (obj, ind) {
-      var resMap = obj;
+  if (!isObject(setObj)) {
+    throw new Error('You must enter object only here on the second argument');
+  }
 
-      if (ind === indexNum) {
-        resMap = replace(obj, setObj);
+  if (!isArray(whereArr)) {
+    throw new Error('You must enter array of objects or numbers on the second argument');
+  }
+
+  var fromArray = Array.from(fromArr);
+  var newArray = [];
+  newArray = fromArray.map(function (obj, ind) {
+    var resMap = obj;
+
+    var _iterator = _createForOfIteratorHelper(whereArr),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var where = _step.value;
+        var indexNum = isObject(where) ? index(fromArray, where) : Number(where);
+
+        if (ind === indexNum) {
+          resMap = replace(obj, setObj);
+        }
       }
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
 
-      return resMap;
-    });
-    return newArray;
-  };
+    return resMap;
+  });
+  return newArray;
 };
 
 var destroy = function destroy(oriArr) {
@@ -2187,9 +2195,12 @@ var calculate = function calculate(fromArr, newProp, callBack) {
 var array = /*#__PURE__*/Object.freeze({
   __proto__: null,
   insert: insert,
+  insertFirst: insertFirst,
+  insertLast: insertLast,
   insertBefore: insertBefore,
   insertAfter: insertAfter,
   update: update,
+  updateBy: updateBy,
   destroy: destroy,
   select: select,
   hidden: hidden,

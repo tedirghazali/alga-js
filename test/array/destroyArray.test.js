@@ -1,6 +1,21 @@
 import data from './arrayData.js'
 import { destroy } from '../../js/array/destroyArray.js'
 
+const fromArray = [
+  { id: '1', name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
+  { id: '2', name: 'Dawoud Tedir', office: 'Medan', age: 27 },
+  { id: '3', name: 'Harist Tedir', office: 'Sigli', age: 15 },
+  { id: '4', name: 'Tedir Ghazali', office: 'Banda Aceh', age: 29 },
+  { id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 },
+  { id: '6', name: 'Dawoud Usman', office: 'Pidie', age: 25 },
+  { id: '7', name: 'Harist Usman', office: 'Samarinda', age: 18 },
+  { id: '8', name: 'Ghazali Usman', office: 'Balikpapan', age: 45 },
+  { id: '9', name: 'Bukhari Usman', office: 'Makassar', age: 44 },
+  { id: '10', name: 'Boyhaki Usman', office: 'Jaya Pura', age: 35 },
+  { id: '11', name: 'Zulkifli Usman', office: 'Manado', age: 56 },
+  { id: '12', name: 'Teuku Usman', office: 'Ternate', age: 58 }
+]
+
 test('Delete the first data from the array and create a new array after that', () => {
   expect(destroy(['a', 'b', 'c'], 'first')).toEqual(['b', 'c'])
 })
@@ -14,78 +29,14 @@ test('Delete the data by index numbers', () => {
 })
 
 test('Delete the data by object properties', () => {
-  expect(destroy(data.third, {id: 161}, 'first', 'last', 4)).toEqual([
-      {
-        id: 160,
-        name: 'Dawoud Tedir',
-        position: 'Alga.js Developer',
-        office: 'Medan',
-        extension: 2456,
-        startdate: '2011-10-01',
-        salary: 270000
-      },
-      {
-        id: 162,
-        name: 'Annisa Tedir',
-        position: 'Alga.js Developer',
-        office: 'Banda Aceh',
-        extension: 2456,
-        startdate: '2011-10-02',
-        salary: 290000
-      },
-      {
-        id: 164,
-        name: 'Dawoud Usman',
-        position: 'Alga.js Developer',
-        office: 'Pidie',
-        extension: 2456,
-        startdate: '2011-10-03',
-        salary: 250000
-      },
-      {
-        id: 165,
-        name: 'Harist Usman',
-        position: 'Alga.js Developer',
-        office: 'Samarinda',
-        extension: 2456,
-        startdate: '2011-10-03',
-        salary: 180000
-      },
-      {
-        id: 166,
-        name: 'Rizal Usman',
-        position: 'Alga.js Developer',
-        office: 'Balikpapan',
-        extension: 2456,
-        startdate: '2011-10-03',
-        salary: 450000
-      },
-      {
-        id: 167,
-        name: 'Bukhari Usman',
-        position: 'Alga.js Developer',
-        office: 'Makassar',
-        extension: 2456,
-        startdate: '2011-10-03',
-        salary: 440000
-      },
-      {
-        id: 168,
-        name: 'Boyhaki Usman',
-        position: 'Alga.js Developer',
-        office: 'Jaya Pura',
-        extension: 2456,
-        startdate: '2011-10-04',
-        salary: 35000
-      },
-      {
-        id: 169,
-        name: 'Zulkifli Usman',
-        position: 'Alga.js Developer',
-        office: 'Manado',
-        extension: 2456,
-        startdate: '2011-10-05',
-        salary: 560000
-      }
+  expect(destroy(fromArray, {id: '7'}, 'first', 'last', 4)).toEqual([
+    { id: '2', name: 'Dawoud Tedir', office: 'Medan', age: 27 },
+    { id: '3', name: 'Harist Tedir', office: 'Sigli', age: 15 },
+    { id: '4', name: 'Tedir Ghazali', office: 'Banda Aceh', age: 29 },
+    { id: '6', name: 'Dawoud Usman', office: 'Pidie', age: 25 },
+    { id: '8', name: 'Ghazali Usman', office: 'Balikpapan', age: 45 },
+    { id: '9', name: 'Bukhari Usman', office: 'Makassar', age: 44 },
+    { id: '10', name: 'Boyhaki Usman', office: 'Jaya Pura', age: 35 },
+    { id: '11', name: 'Zulkifli Usman', office: 'Manado', age: 56 }
   ])
 })

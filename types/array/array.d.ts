@@ -1,7 +1,10 @@
 import { insert } from "./insertArray.js";
+import { insertFirst } from "./insertArray.js";
+import { insertLast } from "./insertArray.js";
 import { insertBefore } from "./insertArray.js";
 import { insertAfter } from "./insertArray.js";
 import { update } from "./updateArray.js";
+import { updateBy } from "./updateArray.js";
 import { destroy } from "./destroyArray.js";
 import { select } from "./selectArray.js";
 import { hidden } from "./selectArray.js";
@@ -45,4 +48,4 @@ import { shuffle } from "./shuffleArray.js";
 import { group } from "./groupArray.js";
 import { countDuplication } from "./countArray.js";
 import { countBy } from "./countArray.js";
-export { insert, insertBefore, insertAfter, update, destroy, select, hidden, toggle, flatten, nested, index, toIndex, randomIndex, search, searchBy, filter, filter as filtered, sort, sortBy, sortBy as sorted, sortWith, paginate, pages, pageInfo, pageInfo as show, pagination, sum, calculate, calculate as calc, unique, isArray, isSuperset, union, intersection, difference, asymmetricDifference, complement, without, transpose, zip, unzip, range, move, switched, transfer, compact, chunk, shuffle, group, countDuplication, countBy };
+export { insert, insertFirst, insertLast, insertBefore, insertAfter, update, updateBy, destroy, select, hidden, toggle, flatten, nested, index, toIndex, randomIndex, search, searchBy, filter, filter as filtered, sort, sortBy, sortBy as sorted, sortWith, paginate, pages, pageInfo, pageInfo as show, pagination, sum, calculate, calculate as calc, unique, isArray, isSuperset, union, intersection, difference, asymmetricDifference, complement, without, transpose, zip, unzip, range, move, switched, transfer, compact, chunk, shuffle, group, countDuplication, countBy };
