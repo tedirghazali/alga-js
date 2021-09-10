@@ -7,23 +7,19 @@ export const sum = (fromArr, byObj = undefined) => {
   
   const newArray = Array.from(fromArr)
   let sumNum = 0
-  if(typeof byObj === 'string' && byObj !== '') {
-    /*const numArray = []
-    for(const na of newArray) {
-      if(byObj in na) {
-        numArray.push(na[byObj])
-      }
-    }*/
-    const numArray = newArray.map(item => {
-      if(byObj in item) {
-        return Number(item[byObj])
-      } else {
-        return 0
-      }
-    })
-    sumNum = numArray.reduce((accumulator, current) => Number(accumulator) + Number(current))
-  } else {
-    sumNum = newArray.reduce((acc, val) => Number(acc) + Number(val))
+  if(newArray.length >= 1) {
+    if(typeof byObj === 'string' && byObj !== '') {
+      const numArray = newArray.map(item => {
+        if(byObj in item) {
+          return Number(item[byObj])
+        } else {
+          return 0
+        }
+      })
+      sumNum = numArray.reduce((accumulator, current) => Number(accumulator) + Number(current))
+    } else {
+      sumNum = newArray.reduce((acc, val) => Number(acc) + Number(val))
+    }
   }
   return sumNum
 }

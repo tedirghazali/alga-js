@@ -1536,27 +1536,23 @@ var sum = function sum(fromArr) {
   var newArray = Array.from(fromArr);
   var sumNum = 0;
 
-  if (typeof byObj === 'string' && byObj !== '') {
-    /*const numArray = []
-    for(const na of newArray) {
-      if(byObj in na) {
-        numArray.push(na[byObj])
-      }
-    }*/
-    var numArray = newArray.map(function (item) {
-      if (byObj in item) {
-        return Number(item[byObj]);
-      } else {
-        return 0;
-      }
-    });
-    sumNum = numArray.reduce(function (accumulator, current) {
-      return Number(accumulator) + Number(current);
-    });
-  } else {
-    sumNum = newArray.reduce(function (acc, val) {
-      return Number(acc) + Number(val);
-    });
+  if (newArray.length >= 1) {
+    if (typeof byObj === 'string' && byObj !== '') {
+      var numArray = newArray.map(function (item) {
+        if (byObj in item) {
+          return Number(item[byObj]);
+        } else {
+          return 0;
+        }
+      });
+      sumNum = numArray.reduce(function (accumulator, current) {
+        return Number(accumulator) + Number(current);
+      });
+    } else {
+      sumNum = newArray.reduce(function (acc, val) {
+        return Number(acc) + Number(val);
+      });
+    }
   }
 
   return sumNum;
