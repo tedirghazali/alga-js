@@ -27,7 +27,7 @@ test('Get pagination page numbers', () => {
 })
 
 test('Showing page information', () => {
-  expect(pageInfo(values, 3, 5)).toEqual({ from: 11, to: 12, of: 12 })
+  expect(pageInfo(values, 3, 5)).toEqual({ start: 11, from: 11, end: 12, to: 12, length: 12, of: 12 })
 })
 
 test('Getting pagination numbers in array', () => {

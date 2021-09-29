@@ -1113,65 +1113,55 @@ var search = function search(fromArr) {
 
   return filteredArray;
 };
-var searchBy = function searchBy() {
-  for (var _len2 = arguments.length, filterStr = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    filterStr[_key2] = arguments[_key2];
+var searchBy = function searchBy(fromArr, queryArr, propArr) {
+  if (!isArray(fromArr)) {
+    throw new Error('The first argument must be in array of objects and it is needed in order to be searched');
   }
 
-  if (filterStr.length < 1) {
-    throw new Error('This argument must have at least one argument in either string or number');
+  if (!isArray(queryArr) && queryArr.length < 1) {
+    throw new Error('The second argument must have at least one argument either in a string or in a number');
   }
 
-  return function (fromArr) {
-    for (var _len3 = arguments.length, whereArr = new Array(_len3 > 1 ? _len3 - 1 : 0), _key3 = 1; _key3 < _len3; _key3++) {
-      whereArr[_key3 - 1] = arguments[_key3];
-    }
+  if (!isArray(propArr) && propArr.length < 1) {
+    throw new Error('The last argument required at least one argument either in a string or in a number');
+  }
 
-    if (!isArray(fromArr)) {
-      throw new Error('Array of objects is needed in order to be searched');
-    }
+  var filteredArray = [];
 
-    if (whereArr.length < 1) {
-      throw new Error('The last argument required at least one argument in either string or number');
-    }
+  var _iterator = _createForOfIteratorHelper(queryArr),
+      _step;
 
-    var filteredArray = [];
+  try {
+    var _loop2 = function _loop2() {
+      var query = _step.value;
+      var filterFromArr = Array.from(fromArr).filter(function (obj) {
+        for (var _i3 = 0, _Array$from = Array.from(propArr); _i3 < _Array$from.length; _i3++) {
+          var val = _Array$from[_i3];
 
-    var _iterator = _createForOfIteratorHelper(filterStr),
-        _step;
-
-    try {
-      var _loop2 = function _loop2() {
-        var filterString = _step.value;
-        var filterFromArr = Array.from(fromArr).filter(function (obj) {
-          for (var _i3 = 0, _Array$from = Array.from(whereArr); _i3 < _Array$from.length; _i3++) {
-            var val = _Array$from[_i3];
-
-            if (val in obj) {
-              if (isNumber(obj[val]) && Number(obj[val]) === Number(filterString)) {
-                return true;
-              } else if (isString(obj[val]) && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
-                return true;
-              }
+          if (val in obj) {
+            if (isNumber(obj[val]) && Number(obj[val]) === Number(query)) {
+              return true;
+            } else if (isString(obj[val]) && obj[val].toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+              return true;
             }
           }
+        }
 
-          return false;
-        });
-        filteredArray = unique(filteredArray.concat(filterFromArr));
-      };
+        return false;
+      });
+      filteredArray = unique(filteredArray.concat(filterFromArr));
+    };
 
-      for (_iterator.s(); !(_step = _iterator.n()).done;) {
-        _loop2();
-      }
-    } catch (err) {
-      _iterator.e(err);
-    } finally {
-      _iterator.f();
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _loop2();
     }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
 
-    return filteredArray;
-  };
+  return filteredArray;
 };
 
 var remove = function remove(fromObj) {
@@ -1465,9 +1455,12 @@ var pageInfo = function pageInfo(fromArr) {
   var startPaginate = Number(limitPerPage) * Number(pageActive) - (Number(limitPerPage) - 1);
   var endPaginate = Number(limitPerPage) * Number(pageActive);
   return {
-    from: startPaginate,
+    from: newArr.length >= 1 ? startPaginate : 0,
+    start: newArr.length >= 1 ? startPaginate : 0,
     to: endPaginate <= newArr.length ? endPaginate : newArr.length,
-    of: newArr.length
+    end: endPaginate <= newArr.length ? endPaginate : newArr.length,
+    of: newArr.length,
+    length: newArr.length
   };
 };
 var pagination = function pagination(totalPages) {
@@ -3421,24 +3414,24 @@ var exported = function exported(oriArr, toFile) {
 
     xmlStr += '\n</data>';
     toStringFile = 'data:application/xml;charset=utf-8,' + xmlStr;
-  } else if (toFile.toLowerCase() === 'vhs') {
-    var vhsStr = '//visit official site: http://vhs-file-format.glitch.me \n("data", [';
+  } else if (toFile.toLowerCase() === 'xhs') {
+    var xhsStr = '//visit official site: http://xhs.glitch.me \n("data", [';
 
     var _iterator3 = _createForOfIteratorHelper(oriArray),
         _step3;
 
     try {
       for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-        var vhsObj = _step3.value;
-        vhsStr += '\n  ("entry", [';
+        var xhsObj = _step3.value;
+        xhsStr += '\n  ("entry", [';
 
-        for (var vhsKey in vhsObj) {
-          vhsStr += '\n    ("' + vhsKey + '", ';
-          vhsStr += vhsObj[vhsKey] + '),';
+        for (var xhsKey in xhsObj) {
+          xhsStr += '\n    ("' + xhsKey + '", ';
+          xhsStr += xhsObj[xhsKey] + '),';
         }
 
-        vhsStr = vhsStr.trim().substring(0, vhsStr.length - 1);
-        vhsStr += ']),';
+        xhsStr = xhsStr.trim().substring(0, xhsStr.length - 1);
+        xhsStr += ']),';
       }
     } catch (err) {
       _iterator3.e(err);
@@ -3446,9 +3439,9 @@ var exported = function exported(oriArr, toFile) {
       _iterator3.f();
     }
 
-    vhsStr = vhsStr.trim().substring(0, vhsStr.length - 1);
-    vhsStr = '])';
-    toStringFile = 'data:application/vhs;charset=utf-8,' + vhsStr;
+    xhsStr = xhsStr.trim().substring(0, xhsStr.length - 1);
+    xhsStr = '])';
+    toStringFile = 'data:application/xhs;charset=utf-8,' + xhsStr;
   }
 
   return toStringFile;

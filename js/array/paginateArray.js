@@ -49,7 +49,14 @@ export const pageInfo = (fromArr, pageActive = 1, limitPerPage = 10) => {
   const startPaginate = (Number(limitPerPage) * Number(pageActive)) - (Number(limitPerPage) - 1)
   const endPaginate = Number(limitPerPage) * Number(pageActive)
     
-  return { from: startPaginate, to: (endPaginate <= newArr.length) ? endPaginate : newArr.length, of: newArr.length}
+  return { 
+    from: (newArr.length >= 1) ? startPaginate : 0,
+    start: (newArr.length >= 1) ? startPaginate : 0,
+    to: (endPaginate <= newArr.length) ? endPaginate : newArr.length,
+    end: (endPaginate <= newArr.length) ? endPaginate : newArr.length,
+    of: newArr.length,
+    length: newArr.length
+  }
 }
 
 export const pagination = (totalPages, pageActive = 1, positionOfEllipsis = 0) => {

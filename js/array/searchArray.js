@@ -36,36 +36,33 @@ export const search = (fromArr, ...searchStr) => {
   return filteredArray
 }
 
-export const searchBy = (...filterStr) => {
-  if(filterStr.length < 1) {
-    throw new Error('This argument must have at least one argument in either string or number')
+export const searchBy = (fromArr, queryArr, propArr) => {
+  if(!isArray(fromArr)) {
+    throw new Error('The first argument must be in array of objects and it is needed in order to be searched')
+  }
+  if(!isArray(queryArr) && queryArr.length < 1) {
+    throw new Error('The second argument must have at least one argument either in a string or in a number')
+  }
+  if(!isArray(propArr) && propArr.length < 1) {
+    throw new Error('The last argument required at least one argument either in a string or in a number')
   }
   
-  return (fromArr, ...whereArr) => {
-    if(!isArray(fromArr)) {
-      throw new Error('Array of objects is needed in order to be searched')
-    }
-    if(whereArr.length < 1) {
-      throw new Error('The last argument required at least one argument in either string or number')
-    }
-    
-    let filteredArray = []
-    for(let filterString of filterStr) {
-      const filterFromArr = Array.from(fromArr).filter(obj => {
-        for(const val of Array.from(whereArr)) {
-          if(val in obj) {
-            if(isNumber(obj[val]) && Number(obj[val]) === Number(filterString)) {
-              return true
-            } else if(isString(obj[val]) && obj[val].toLowerCase().indexOf(filterString.toLowerCase()) !== -1) {
-              return true
-            }
+  let filteredArray = []
+  for(let query of queryArr) {
+    const filterFromArr = Array.from(fromArr).filter(obj => {
+      for(const val of Array.from(propArr)) {
+        if(val in obj) {
+          if(isNumber(obj[val]) && Number(obj[val]) === Number(query)) {
+            return true
+          } else if(isString(obj[val]) && obj[val].toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+            return true
           }
         }
-        return false
-      })
-      filteredArray = unique(filteredArray.concat(filterFromArr))
-    }
-    
-    return filteredArray
+      }
+      return false
+    })
+    filteredArray = unique(filteredArray.concat(filterFromArr))
   }
+    
+  return filteredArray
 }

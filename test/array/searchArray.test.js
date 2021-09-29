@@ -37,7 +37,7 @@ test('search array only', () => {
 })
 
 test('Searching by property in array of objects', () => {
-  expect(searchBy('dan', 'han')(fromArray, 'name', 'office')).toEqual([
+  expect(searchBy(fromArray, ['dan', 'han'], ['name', 'office'])).toEqual([
     { id: '2', name: 'Dawoud Tedir', office: 'Medan', age: 27 },
     { id: '1', name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
     { id: '5', name: 'Hanbal Usman', office: 'Langsa', age: 27 }
