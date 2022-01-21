@@ -1,9 +1,10 @@
-import {terser} from 'rollup-plugin-terser';
-import resolve from '@rollup/plugin-node-resolve';
-import babel from '@rollup/plugin-babel';
+import { terser } from 'rollup-plugin-terser'
+//import babel from '@rollup/plugin-babel'
+import typescript from '@rollup/plugin-typescript';
+import { nodeResolve } from '@rollup/plugin-node-resolve'
 
 export default [
-  {
+  /*{
     input: 'js/app.js',
     output: [
       {
@@ -16,7 +17,7 @@ export default [
         plugins: [terser()]
       }
     ],
-    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+    plugins: [ babel({ babelHelpers: 'bundled' }) ]
   },
   {
     input: 'js/umd.js',
@@ -26,7 +27,7 @@ export default [
       name: '$',
       plugins: [terser()]
     },
-    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+    plugins: [ babel({ babelHelpers: 'bundled' }) ]
   },
   {
     input: 'js/array/array.js',
@@ -35,7 +36,7 @@ export default [
       format: 'es',
       plugins: [terser()]
     },
-    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+    plugins: [ babel({ babelHelpers: 'bundled' }) ]
   },
   {
     input: 'js/object/object.js',
@@ -44,7 +45,7 @@ export default [
       format: 'es',
       plugins: [terser()]
     },
-    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+    plugins: [ babel({ babelHelpers: 'bundled' }) ]
   },
   {
     input: 'js/string/string.js',
@@ -53,24 +54,35 @@ export default [
       format: 'es',
       plugins: [terser()]
     },
-    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
-  },
+    plugins: [ babel({ babelHelpers: 'bundled' }) ]
+  },*/
   {
-    input: 'js/date/date.js',
-    output: {
-      file: 'lib/date.js',
-      format: 'es',
-      plugins: [terser()]
-    },
-    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
+    input: 'ts/date/date.ts',
+    output: [
+      {
+        file: 'lib/date.es.js',
+        format: 'es'
+      },
+      {
+        file: 'lib/date.cjs.js',
+        format: 'cjs'
+      },
+      {
+        file: 'lib/date.js',
+        format: 'iife',
+        name: 'date',
+        plugins: [terser()]
+      }
+    ],
+    plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
   },
-  {
+  /*{
     input: 'js/number/number.js',
     output: {
       file: 'lib/number.js',
       format: 'es',
       plugins: [terser()]
     },
-    plugins: [ resolve(), babel({ babelHelpers: 'bundled' }) ]
-  }
+    plugins: [ babel({ babelHelpers: 'bundled' }) ]
+  }*/
 ];

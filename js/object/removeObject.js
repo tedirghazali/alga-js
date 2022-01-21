@@ -28,7 +28,7 @@ const removeBy = (fromObj, ...propVal) => {
     
   const newObj = {}
   const newSet = new Set(propVal)
-  for(const [key] of Object.entries(fromObj)) {
+  for(const key of Object.keys(fromObj)) {
     if(!newSet.has(fromObj[key])) {
       newObj[key] = fromObj[key]
     }

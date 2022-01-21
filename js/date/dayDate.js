@@ -20,12 +20,12 @@ export const day = (yearParams, monthParams = 1, dateParams = 1, locale = 'en-US
   // kemudian kita ubah menjadi nama hari
   return new Intl.DateTimeFormat(locale, { weekday: dayType }).format(localDate)
 }
-// fungsi ini untuk mendapatkan semua nama hari dalam tipe array
+// this will generate all weekday names in a new array
 export const days = (locale = 'en-US', dayType = 'long') => {
   let daysArr = []
-  // melakukan iterasi dari tanggal 4 sampai 10 April 2021, kemudian kita isi nama harinya kedalam array
-  for(let i = 4; i <= 10; i++) {
-    const localDate = new Date(Date.UTC(2021, 3, i))
+  // the month of august is start on Sunday, 1
+  for(let i = 1; i <= 7; i++) {
+    const localDate = new Date(Date.UTC(2021, 7, i))
     daysArr.push(new Intl.DateTimeFormat(locale, { weekday: dayType }).format(localDate))
   }
   return daysArr
@@ -38,14 +38,40 @@ export const daysInMonth = (yearParams, monthParams = 1) => {
   if(!isMonth(monthParams)) {
     throw new Error(msgDate.monthMsg)
   }
-  // jumlah hari (rata-rata) dari setiap bulan
+  // the common days in a month either 28 or 29 in february, 30 or 31 in other months
   const commonDays = [28, 29, 30, 31]
-  // ambil hari ini (angka)
+  // take the last day of the previous month
   const numOfDays = new Date(Date.UTC(Number(yearParams), Number(monthParams), 0)).getUTCDate()
-  // kemudian saring atau cek apakah angkanya sesuai dari jumlah hari diatas, jika tidak maka hasilnya 31
+  // and make sure the days not below 28 or above 31
   return (commonDays.includes(numOfDays)) ? numOfDays : 31
 }
 
+export const daysInPrevMonth = (yearParams, monthParams = 1) => {
+  if(!isYear(yearParams)) {
+    throw new Error(msgDate.yearMsg)
+  }
+  if(!isMonth(monthParams)) {
+    throw new Error(msgDate.monthMsg)
+  }
+  const prevDays = []
+  const getDay = new Date(Date.UTC(yearParams, Number(monthParams) - 1, 1)).getUTCDay()
+  for(let i = Number(getDay) - 1; i >= 0; i--) {
+    prevDays.push(new Date(Date.UTC(yearParams, Number(monthParams) - 1, Number('-'+i))).getUTCDate())
+  }
+  return prevDays
+}
+  
+export const daysInNextMonth = (yearParams, monthParams = 1) => {
+  if(!isYear(yearParams)) {
+    throw new Error(msgDate.yearMsg)
+  }
+  if(!isMonth(monthParams)) {
+    throw new Error(msgDate.monthMsg)
+  }
+  const getDay = new Date(Date.UTC(yearParams, Number(monthParams) - 1, daysInMonth(yearParams, monthParams))).getUTCDay()
+  return (6 - Number(getDay)) + 7
+}
+  
 export const daysInYear = (yearParams) => {
   if(!isYear(yearParams)) {
     throw new Error(msgDate.yearMsg)

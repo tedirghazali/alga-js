@@ -1,6 +1,8 @@
 {
-  "include": ["js/**/*"],
+  "include": ["ts/**/*"],
   "compilerOptions": {
+    "lib": ["es2021"],
+    "esModuleInterop": true,
     "allowJs": true,
     "declaration": true,
     "emitDeclarationOnly": true,
