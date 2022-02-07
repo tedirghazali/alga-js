@@ -29,5 +29,15 @@ export const daysInBetween = (startDate: IsDate, endDate: IsDate, modeDate: stri
   const startNum: number = modeDateHelper(startDate, modeDate)
   const endNum: number = modeDateHelper(endDate, modeDate)
   const timeDifference: number = Number(endNum) - Number(startNum)
-  return timeDifference / (1000 * 60 * 60 * 24)
+  return Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+}
+
+export const monthsInBetween = (startDate: IsDate, endDate: IsDate): number => {
+  const calcMonth: number = Number(new Date(endDate).getMonth()) - Number(new Date(startDate).getMonth())
+  const calcYear: number = (Number(new Date(endDate).getFullYear()) - Number(new Date(startDate).getFullYear())) * 12
+  return Math.floor(calcMonth + calcYear)
+}
+
+export const yearsInBetween = (startDate: IsDate, endDate: IsDate): number => {
+  return Math.floor(monthsInBetween(startDate, endDate) / 12)
 }

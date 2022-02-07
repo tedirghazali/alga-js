@@ -1,4 +1,4 @@
-import { daysInMonth, daysOfPrevMonth, daysOfNextMonth, daysInYear, daysInBetween } from '../../ts/date/numberDate'
+import { daysInMonth, daysOfPrevMonth, daysOfNextMonth, daysInYear, daysInBetween, monthsInBetween, yearsInBetween } from '../../ts/date/numberDate'
 
 const today: Date = new Date()
 const startDate: Date = new Date()
@@ -25,6 +25,14 @@ test('The number of days in one month only', () => {
   expect(daysInYear(2024)).toBe(366)
 })
 
-test('The number of days between '+startDate.toJSON()+' and '+endDate.toJSON(), () => {
+test('The number of days in between '+startDate.toJSON()+' and '+endDate.toJSON(), () => {
   expect(daysInBetween(startDate, endDate)).toBe(10)
+})
+
+test('The number of months in between '+new Date('October 11, 1992 03:24:00').toJSON()+' and '+new Date('2022-01-26T03:24:00').toJSON(), () => {
+  expect(monthsInBetween(new Date('October 11, 1992 03:24:00'), new Date('2022-01-26T03:24:00'))).toBe(351)
+})
+
+test('The number of years in between '+new Date('October 11, 1992 03:24:00').toJSON()+' and '+new Date('2022-01-26T03:24:00').toJSON(), () => {
+  expect(yearsInBetween(new Date('October 11, 1992 03:24:00'), new Date('2022-01-26T03:24:00'))).toBe(29)
 })
