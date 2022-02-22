@@ -60,15 +60,15 @@ export default [
     input: 'ts/date/date.ts',
     output: [
       {
-        file: 'lib/date.es.js',
+        file: 'lib/date/date.es.js',
         format: 'es'
       },
       {
-        file: 'lib/date.cjs.js',
+        file: 'lib/date/date.cjs.js',
         format: 'cjs'
       },
       {
-        file: 'lib/date.js',
+        file: 'lib/date/date.js',
         format: 'iife',
         name: 'date',
         plugins: [terser()]
@@ -76,13 +76,64 @@ export default [
     ],
     plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
   },
-  /*{
-    input: 'js/number/number.js',
-    output: {
-      file: 'lib/number.js',
-      format: 'es',
-      plugins: [terser()]
-    },
-    plugins: [ babel({ babelHelpers: 'bundled' }) ]
-  }*/
+  {
+    input: 'ts/number/number.ts',
+    output: [
+      {
+        file: 'lib/number/number.es.js',
+        format: 'es'
+      },
+      {
+        file: 'lib/number/number.cjs.js',
+        format: 'cjs'
+      },
+      {
+        file: 'lib/number/number.js',
+        format: 'iife',
+        name: 'number',
+        plugins: [terser()]
+      }
+    ],
+    plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
+  },
+  {
+    input: 'ts/array/array.ts',
+    output: [
+      {
+        file: 'lib/array/array.es.js',
+        format: 'es'
+      },
+      {
+        file: 'lib/array/array.cjs.js',
+        format: 'cjs'
+      },
+      {
+        file: 'lib/array/array.js',
+        format: 'iife',
+        name: 'array',
+        plugins: [terser()]
+      }
+    ],
+    plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
+  },
+  {
+    input: 'ts/object/object.ts',
+    output: [
+      {
+        file: 'lib/object/object.es.js',
+        format: 'es'
+      },
+      {
+        file: 'lib/object/object.cjs.js',
+        format: 'cjs'
+      },
+      {
+        file: 'lib/object/object.js',
+        format: 'iife',
+        name: 'array',
+        plugins: [terser()]
+      }
+    ],
+    plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
+  },
 ];
