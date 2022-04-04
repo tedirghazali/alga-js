@@ -1,11 +1,4 @@
-export function paginate(fromArr: any, pageActive?: number, limitPerPage?: number): any[];
-export function pages(fromArr: any, limitPerPage?: number): number;
-export function pageInfo(fromArr: any, pageActive?: number, limitPerPage?: number): {
-    from: number;
-    start: number;
-    to: number;
-    end: number;
-    of: number;
-    length: number;
-};
-export function pagination(totalPages: any, pageActive?: number, positionOfEllipsis?: number): number[];
+export declare const paginate: (fromArray: any[], pageActive?: number, limitPerPage?: number) => any[];
+export declare const pages: (fromArray: any[], limitPerPage?: number) => number;
+export declare const pageInfo: (fromArray: any[], pageActive?: number, limitPerPage?: number) => any;
+export declare const pagination: (totalPages: number, pageActive?: number, positionOfEllipsis?: number) => string[];

@@ -1,2 +1,2 @@
-export function search(fromArr: any, ...searchStr: any[]): any[];
-export function searchBy(fromArr: any, queryArr: any, propArr: any): any[];
+export declare const search: (fromArrayay: any[], ...searchString: any[]) => any[];
+export declare const searchBy: (fromArray: any[], queryArray: any[], propArray: string[]) => any[];

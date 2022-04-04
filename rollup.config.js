@@ -130,7 +130,27 @@ export default [
       {
         file: 'lib/object/object.js',
         format: 'iife',
-        name: 'array',
+        name: 'object',
+        plugins: [terser()]
+      }
+    ],
+    plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
+  },
+  {
+    input: 'ts/string/string.ts',
+    output: [
+      {
+        file: 'lib/string/string.es.js',
+        format: 'es'
+      },
+      {
+        file: 'lib/string/string.cjs.js',
+        format: 'cjs'
+      },
+      {
+        file: 'lib/string/string.js',
+        format: 'iife',
+        name: 'string',
         plugins: [terser()]
       }
     ],

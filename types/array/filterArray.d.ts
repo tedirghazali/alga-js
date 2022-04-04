@@ -1,1 +1,1 @@
-export function filter(fromArr: any, filterObj: any): any[];
+export declare const filter: (fromArray: any[], filterObject: any) => any[];

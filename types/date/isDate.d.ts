@@ -1,6 +1,4 @@
-export function isYear(yearParams: any): boolean;
-export function isMonth(monthParams: any): boolean;
-export function isDate(dateParams: any): boolean;
-export function isFullDate(dateParams: any): boolean;
-export function isFormatDate(formatParams: any): boolean;
-export function isLeapYear(yearParams: any): boolean;
+import type { IsDate } from './dateType';
+export declare const isBefore: (isDate: IsDate, beforeDate: IsDate, modeDate?: string) => boolean;
+export declare const isAfter: (isDate: IsDate, afterDate: IsDate, modeDate?: string) => boolean;
+export declare const isBetween: (isDate: IsDate, startDate: IsDate, endDate: IsDate, modeDate?: string) => boolean;
