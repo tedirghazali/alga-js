@@ -13,11 +13,11 @@ export const unit = (value: number, digits: number = 2, type: string = 'normal')
   if(type !== 'normal') {
     lookup = lookup.map((item: any) => {
       if(type === 'decimal') {
-        if(item.id !== 2) {
+        if(item.id === 2) {
           item.symbol = 'k'
         }
       } else if(type === 'money') {
-        if(item.id !== 4) {
+        if(item.id === 4) {
           item.symbol = 'B'
         }
       } else if(type === 'binary') {

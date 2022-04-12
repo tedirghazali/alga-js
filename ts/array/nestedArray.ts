@@ -1,20 +1,12 @@
 export const nested = (flatArray: any[], options: {prop: string, parent: string, children: string} = {prop: 'id', parent: 'parent', children: 'children'}): any[] => {
-  const nestedArray: any[] = []
+  let nestedArray: any[] = []
   const flattenArray: any[] = Array.from(flatArray)
   const nestedOptions: {prop: string, parent: string, children: string} = options
   
   const parentArray = (flattenArr: any[]) => {
-    flattenArr.forEach(item => {
-      if(typeof item === 'object' && item !== null) {
-        let newObject = null
-        if(isNaN(item[nestedOptions.parent]) === false && Number(item[nestedOptions.parent]) === 0) {
-          newObject = createNewObject(item)
-        }
-        if(newObject !== null) {
-          nestedArray.push(newObject)
-        }
-      }
-    })
+    nestedArray = flattenArr.filter((item: any) => {
+      return typeof item === 'object' && item !== null && !flattenArr.map((i: any) => String(i[nestedOptions.prop]).trim()).includes(String(item[nestedOptions.parent]).trim())
+    }).map((item: any) => createNewObject(item))
   }
   
   const createNewObject = (itemObj: any): any => {
