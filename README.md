@@ -30,11 +30,13 @@ You may want to use one of two JS modules either you use ES module or UMD module
 
 ```js
 // ES modules
-import { array, object, string, number, func, date, ...others* } from 'alga-js' // or
-import * as $ from 'alga-js'
+import { paginate, pages, pageInfo, pagination, ... } from 'alga-js/array' // highly recommended
+
+import { array, object, string, number, func, date, ...others* } from 'alga-js' // don't use this import
+import * as $ from 'alga-js' // don't use this import
 
 // Node/CommonJS modules
-const $ = require('alga-js')
+const $ = require('alga-js')  // other than $, you can use algaJs or any variable name
 
 // UMD (AMD/IIFE)
 //<script src="alga-umd.js"></script>
@@ -44,7 +46,7 @@ import { $array, $object, $string, ... } from 'alga-js' // or
 import * as _ from 'alga-js' // or
 import * as Alga from 'alga-js'
 
-// Tree-shakable
+// Tree-shakable // not recommended
 import { paginate, pages, ... } from 'alga-js/lib/array.js'
 import { weeks } from 'alga-js/lib/date.js' // or
 import { ...[helperMethod]* } from 'alga-js/lib/[helperFile].js'
