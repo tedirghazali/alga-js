@@ -6,24 +6,24 @@
   "main": "dist/alga-umd.js",
   "exports": {
     ".": {
-      "import": "dist/alga.min.js",
-      "require": "dist/alga-umd.js"
+      "import": "./dist/alga.min.js",
+      "require": "./dist/alga-umd.js"
     },
     "./date": {
-      "import": "lib/date/date.es.js",
-      "require": "lib/date/date.cjs.js"
+      "import": "./lib/date/date.es.js",
+      "require": "./lib/date/date.cjs.js"
     },
     "./number": {
-      "import": "lib/number/number.es.js",
-      "require": "lib/number/number.cjs.js"
+      "import": "./lib/number/number.es.js",
+      "require": "./lib/number/number.cjs.js"
     },
     "./array": {
-      "import": "lib/array/array.es.js",
-      "require": "lib/array/array.cjs.js"
+      "import": "./lib/array/array.es.js",
+      "require": "./lib/array/array.cjs.js"
     },
     "./string": {
-      "import": "lib/string/string.es.js",
-      "require": "lib/string/string.cjs.js"
+      "import": "./lib/string/string.es.js",
+      "require": "./lib/string/string.cjs.js"
     }
   },
   "unpkg": "dist/alga-umd.js",
