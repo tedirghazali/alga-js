@@ -29,7 +29,7 @@ test('Pagination is series of page numbers in array of string', () => {
 })
 
 test('Pages is a total number of pages', () => {
-  expect(pages(arrayOfObjects, limitPerPage)).toBe(3)
+  expect(pages(arrayOfObjects.length, limitPerPage)).toBe(3)
 })
 
 test('PageInfo is an object data about how many entries', () => {

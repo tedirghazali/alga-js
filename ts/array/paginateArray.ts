@@ -6,9 +6,9 @@ export const paginate = (fromArray: any[], pageActive: number = 1, limitPerPage:
   return newArray.slice(startPaginate - 1, (endPaginate <= newArray.length) ? endPaginate : newArray.length)
 }
 
-export const pages = (fromArray: any[], limitPerPage: number = 10): number => {
-  const newArray: any[] = Array.from(fromArray)
-  const divideLength: number = Number(newArray.length) / Number(limitPerPage)
+export const pages = (lengthOfArray: any[] | number, limitPerPage: number = 10): number => {
+  const arrayLength: number = Array.isArray(lengthOfArray) ? lengthOfArray.length : lengthOfArray
+  const divideLength: number = Number(arrayLength) / Number(limitPerPage)
   
   const pageNumber: number = Math.ceil(divideLength)
   return pageNumber

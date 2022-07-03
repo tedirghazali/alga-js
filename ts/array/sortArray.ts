@@ -1,46 +1,6 @@
-interface CallBack<Type> {
+/*interface CallBack<Type> {
   (a: Type, b: Type): number;
-}
-
-export const sort = (fromArray: any[], sortString: string = 'asc'): any[] => {
-  const newArray: any[] = Array.from(fromArray)
-  if(sortString === 'asc') {
-    newArray.sort((a: any, b: any) => {
-      if(isNaN(a) === false && isNaN(b) === false) {
-        return Number(a) - Number(b)
-      } else if(typeof a === 'string' && typeof b === 'string') {
-        const propA: string = a.toLowerCase()
-        const propB: string = b.toLowerCase()
-        let propRes: number = 0
-          
-        if(propA < propB) {
-          propRes = -1
-        } else if(propA > propB) {
-          propRes = 1
-        }
-        return propRes
-      }
-    })
-  } else if(sortString === 'desc') {
-    newArray.sort((a: any, b: any) => {
-      if(isNaN(a) === false && isNaN(b) === false) {
-        return Number(b) - Number(a)
-      } else if(typeof a === 'string' && typeof b === 'string') {
-        const propA: string = a.toLowerCase()
-        const propB: string = b.toLowerCase()
-        let propRes: number = 0
-          
-        if(propB < propA) {
-          propRes = -1
-        } else if(propB > propA) {
-          propRes = 1
-        }
-        return propRes
-      }
-    })
-  }
-  return newArray
-}
+} compareFunc: CallBack<any>*/
 
 export const sortBy = (fromArray: any[], propString: string, sortString: string = 'asc'): any[] => {
   const newArray: any[] = Array.from(fromArray)
@@ -86,16 +46,14 @@ export const sortBy = (fromArray: any[], propString: string, sortString: string 
   return newArray
 }
 
-export const sortWith = (fromArray: any[], compareFunc: CallBack<any>): any[] => {
+export const sort = sortBy
+
+export const order = (fromArray: any[], newProp: string = 'order'): any[] => {
   const newArray = Array.from(fromArray)
-  newArray.sort((a: any, b: any) => {
-    let res = 0
-    if(Math.sign(compareFunc(a, b)) === -1) {
-      res = -1
-    } else {
-      res = 1
+  return newArray.map((item: any, index: number) => {
+    if(typeof item === 'object' && item !== null) {
+      item[newProp] = Number(index) + 1
     }
-    return res;
+    return item
   })
-  return newArray
 }
