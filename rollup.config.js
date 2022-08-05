@@ -77,6 +77,26 @@ export default [
     plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
   },
   {
+    input: 'ts/time/time.ts',
+    output: [
+      {
+        file: 'lib/time/time.es.js',
+        format: 'es'
+      },
+      {
+        file: 'lib/time/time.cjs.js',
+        format: 'cjs'
+      },
+      {
+        file: 'lib/time/time.js',
+        format: 'iife',
+        name: 'time',
+        plugins: [terser()]
+      }
+    ],
+    plugins: [ nodeResolve({ extensions: ['.js', '.ts'] }), typescript() ]
+  },
+  {
     input: 'ts/number/number.ts',
     output: [
       {

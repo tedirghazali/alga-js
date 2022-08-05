@@ -1,3 +1,4 @@
+//export * from './nowDate.js'
 export * from './isDate.js'
 export * from './numberDate.js'
 export * from './stringDate.js'
