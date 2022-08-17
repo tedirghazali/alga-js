@@ -1,6 +1,7 @@
 import { isBefore } from '../date/isDate'
 import { daysInBetween } from '../date/numberDate'
 import { doubleFormat } from '../date/stringDate'
+import { hoursInBetween } from './numberTime'
 
 export const relative = (dateValue: Date | string | number, timeZone: string = 'utc', locale: string = 'en-US', options: any = {}, defaultValue: string = 'new') => {
   const nowDate: Date = new Date()
@@ -13,7 +14,7 @@ export const relative = (dateValue: Date | string | number, timeZone: string = '
   let compareDate = daysInBetween(valDate, nowDate)
   if(Number(compareDate) <= 365) {
     if(Number(compareDate) <= 28) {
-      if(Number(nowDate.getDate()) === Number(valDate.getDate())) {
+      if(Number(compareDate) === 0) {
         if(Number(nowDate.getHours()) === Number(valDate.getHours())) {
           if(Number(nowDate.getMinutes()) === Number(valDate.getMinutes())) {
             const subSecondVal = Number(valDate.getSeconds()) - Number(nowDate.getSeconds())
@@ -23,7 +24,12 @@ export const relative = (dateValue: Date | string | number, timeZone: string = '
             newTimeRelative = new Intl.RelativeTimeFormat(locale, options).format(subMinuteVal, 'minute')
           }
         } else {
-          const subHourVal = Number(valDate.getHours()) - Number(nowDate.getHours())
+          let subHourVal;
+          if(isBefore(valDate, nowDate)) {
+            subHourVal = Number('-'+hoursInBetween(valDate, nowDate))
+          } else {
+            subHourVal = Number(valDate.getHours()) - Number(nowDate.getHours())
+          }
           newTimeRelative = new Intl.RelativeTimeFormat(locale, options).format(subHourVal, 'hour')
         }
       } else {
