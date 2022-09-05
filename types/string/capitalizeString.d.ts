@@ -1,1 +1,1 @@
-export function capitalize(str: any, opt?: string): string;
+export declare const capitalize: (str: string, opt?: string) => string;
