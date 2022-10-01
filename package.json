@@ -1,6 +1,6 @@
 {
   "name": "alga-js",
-  "version": "0.1.0-stone-7",
+  "version": "0.1.0-stone-9",
   "description": "Alga.js is a JavaScript helper to help build UI components by using any of modern web frameworks or libraries",
   "module": "./dist/alga.min.js",
   "main": "./dist/alga-umd.js",
