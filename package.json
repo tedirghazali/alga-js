@@ -1,6 +1,6 @@
 {
   "name": "alga-js",
-  "version": "0.1.0-stone-9",
+  "version": "0.1.0-iron-0",
   "description": "Alga.js is a JavaScript helper to help build UI components by using any of modern web frameworks or libraries",
   "module": "./dist/alga.min.js",
   "main": "./dist/alga-umd.js",
@@ -22,6 +22,10 @@
     "./array": {
       "import": "./lib/array/array.es.js",
       "require": "./lib/array/array.cjs.js"
+    },
+    "./object": {
+      "import": "./lib/object/object.es.js",
+      "require": "./lib/object/object.cjs.js"
     },
     "./string": {
       "import": "./lib/string/string.es.js",

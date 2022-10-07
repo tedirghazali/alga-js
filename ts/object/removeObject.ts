@@ -11,12 +11,16 @@ export const remove = (fromObject: any, ...propKey): any => {
 
 export const removeBy = (fromObject: any, ...propVal): any => {
   const newObject: any = {}
-  const newSet = new Set(propVal)
+  const newSet = new Set(propVal.map((i: any | any[]) => String(i)))
   for(const key of Object.keys(fromObject)) {
-    if(!newSet.has(fromObject[key])) {
+    if(!newSet.has(String(fromObject[key]))) {
       newObject[key] = fromObject[key]
     }
   }
     
   return newObject
 }
+
+export const removeByKey = remove
+
+export const removeByVal = removeBy
