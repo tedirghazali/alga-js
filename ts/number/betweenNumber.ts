@@ -10,9 +10,9 @@ export const between = (minArg: string | number, maxArg: string | number, exclud
   // generate random number from 0 to maxVal number
   let randVal = Math.floor(Math.random() * Number(maxVal))
   
-  // and check if the randVal is below minVal, if yes, then return minVal as a result
+  // and check if the randVal is less than minVal, then calculate between minVal and randVal
   if(randVal <= minVal) {
-    randVal = minVal
+    randVal = Number(minVal) + Number(randVal)
   }
   
   return randVal

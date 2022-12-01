@@ -3,22 +3,24 @@ import { modeDateHelper, getYearHelper, getMonthHelper } from './dateHelper'
 
 export const daysInMonth = (yearNum: number = getYearHelper(), monthNum: number = getMonthHelper()): number => {
   const commonDays: number[] = [28, 29, 30, 31]
-  const numOfDays: number = Number(new Date(Date.UTC(Number(yearNum), Number(monthNum), 0)).getUTCDate())
+  const numOfDays: number = Number(new Date(yearNum, monthNum, 0).getDate())
   return (commonDays.includes(numOfDays)) ? numOfDays : 31
 }
 
 export const daysOfPrevMonth = (yearNum: number = getYearHelper(), monthNum: number = getMonthHelper()): number[] => {
   const prevDays: number[] = []
-  const getDays: number = Number(new Date(Date.UTC(yearNum, Number(monthNum) - 1, 1)).getUTCDay())
+  const getDays: number = Number(new Date(yearNum, Number(monthNum) - 1, 1).getDay())
   for(let i = Number(getDays) - 1; i >= 0; i--) {
-    prevDays.push(Number(new Date(Date.UTC(yearNum, Number(monthNum) - 1, Number('-'+i))).getUTCDate()))
+    prevDays.push(Number(new Date(yearNum, Number(monthNum) - 1, Number('-'+i)).getDate()))
   }
   return prevDays
 }
   
 export const daysOfNextMonth = (yearNum: number = getYearHelper(), monthNum: number = getMonthHelper()): number => {
-  const getDays: number = Number(new Date(Date.UTC(yearNum, Number(monthNum) - 1, daysInMonth(yearNum, monthNum))).getUTCDay())
-  return (6 - Number(getDays)) + 7
+  const getDays: number = Number(new Date(yearNum, Number(monthNum) - 1, daysInMonth(yearNum, monthNum)).getDay())
+  const nextMonthDays = 6 - Number(getDays)
+  const totalMonthDays = Number(daysInMonth(yearNum, monthNum)) + Number(daysOfPrevMonth(yearNum, monthNum).length) + Number(nextMonthDays)
+  return Number(nextMonthDays) + (42 - Number(totalMonthDays))
 }
 
 export const daysInYear = (yearNum: number = getYearHelper()): number => {

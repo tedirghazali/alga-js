@@ -1,6 +1,6 @@
 import { between, isBetween } from '../../ts/number/betweenNumber'
 
-test('Get a number between two numbers', () => {
+test('Get a random number between two numbers', () => {
   const exclude = between(20, 100)
   const include = between(20, 100, false)
   expect(exclude).toEqual(exclude)
