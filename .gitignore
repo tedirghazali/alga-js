@@ -58,6 +58,8 @@ validation-status.json
 bower_components
 node_modules
 adsense
+dist
+lib
 
 # Special files
 update_builder.bat

@@ -1,1 +1,1 @@
-export function format(dateParam: any, formatStr: any, locale?: string, dayType?: string): any;
+export declare const format: (date: Date | string | number, type?: string, locale?: string, options?: any) => string;

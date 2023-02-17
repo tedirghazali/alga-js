@@ -1,7 +1,0 @@
-const separate = () => {
-
-}
-
-export {
-  separate
-}

@@ -1,47 +1,52 @@
 {
   "name": "alga-js",
-  "version": "0.1.0-iron-3",
+  "version": "0.1.0-alpha-5",
   "description": "Alga.js is a JavaScript helper to help build UI components by using any of modern web frameworks or libraries",
-  "module": "./dist/alga.min.js",
-  "main": "./dist/alga-umd.js",
+  "module": "./lib/alga.es.js",
+  "main": "./lib/alga.js",
   "exports": {
     ".": {
-      "import": "./dist/alga.min.js",
-      "require": "./dist/alga-umd.js"
+      "import": "./dist/alga.es.js",
+      "require": "./dist/alga-cjs.js",
+      "types": "./types/alga.d.ts"
     },
     "./lib/*": "./lib/*.es.js",
     "./lib/*.js": "./lib/*.js",
     "./date": {
       "import": "./lib/date/date.es.js",
-      "require": "./lib/date/date.cjs.js"
+      "require": "./lib/date/date.cjs.js",
+      "types": "./types/date/date.d.ts"
     },
     "./number": {
       "import": "./lib/number/number.es.js",
-      "require": "./lib/number/number.cjs.js"
+      "require": "./lib/number/number.cjs.js",
+      "types": "./types/number/number.d.ts"
     },
     "./array": {
       "import": "./lib/array/array.es.js",
-      "require": "./lib/array/array.cjs.js"
+      "require": "./lib/array/array.cjs.js",
+      "types": "./types/array/array.d.ts"
     },
     "./object": {
       "import": "./lib/object/object.es.js",
-      "require": "./lib/object/object.cjs.js"
+      "require": "./lib/object/object.cjs.js",
+      "types": "./types/object/object.d.ts"
     },
     "./string": {
       "import": "./lib/string/string.es.js",
-      "require": "./lib/string/string.cjs.js"
+      "require": "./lib/string/string.cjs.js",
+      "types": "./types/string/string.d.ts"
     },
     "./time": {
       "import": "./lib/time/time.es.js",
-      "require": "./lib/time/time.cjs.js"
+      "require": "./lib/time/time.cjs.js",
+      "types": "./types/time/time.d.ts"
     }
   },
-  "unpkg": "dist/alga-umd.js",
-  "typings": "types/app.d.ts",
+  "unpkg": "./lib/alga.js",
+  "typings": "./types/alga.d.ts",
   "files": [
     "ts",
-    "dist/alga.min.js",
-    "dist/alga-umd.js",
     "lib/**/*.js",
     "types/**/*.d.ts"
   ],
