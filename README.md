@@ -12,17 +12,17 @@
 <br/>
 
 # Alga.js
-Alga.js is a JavaScript helper to help build UI components by using any of modern web frameworks or libraries, especially the frameworks that we currently use like Vue, Petite-Vue, Alpine.js and Vanilla Web Components to produce our custom elements, see [the documentation here](https://algajs.tedir.dev) or visit this link `https://algajs.tedir.dev`.
+Alga.js is a JavaScript helper to help build UI components by using any of modern web frameworks or libraries, see [the documentation here](https://algajs.tedir.dev) or visit this link `https://algajs.tedir.dev`.
 
 ## Installation
-This Alga.js is a pure JavaScript plugin, so it doesn't have any dependencies and you can install it by using NPM or Yarn.
+This Alga.js is a pure JavaScript plugin, so it doesn't have any dependencies and you can install it by using NPM or Yarn. Don't forget to use `--save-dev` flag when installing it.
 
 ```sh
 npm install alga-js --save-dev
 
 #or
 
-yarn add alga-js
+yarn add alga-js --dev
 ```
 
 ## Usage

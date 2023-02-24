@@ -1,13 +1,13 @@
 {
   "name": "alga-js",
-  "version": "0.1.0-alpha-5",
+  "version": "0.1.0-alpha-6",
   "description": "Alga.js is a JavaScript helper to help build UI components by using any of modern web frameworks or libraries",
   "module": "./lib/alga.es.js",
   "main": "./lib/alga.js",
   "exports": {
     ".": {
-      "import": "./dist/alga.es.js",
-      "require": "./dist/alga-cjs.js",
+      "import": "./lib/alga.es.js",
+      "require": "./lib/alga-cjs.js",
       "types": "./types/alga.d.ts"
     },
     "./lib/*": "./lib/*.es.js",
