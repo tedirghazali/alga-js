@@ -14,8 +14,7 @@ export const format = (date: Date | string | number, type: string = '', locale: 
     }
     
     if(locale !== '') {
-      //newValue = newDate.toLocaleDateString(locale, options)
-      newValue = new Intl.DateTimeFormat(locale, options).format(newDate)
+      newValue = newDate.toLocaleDateString(locale, options)
     }
   } else if(type === 'time') {
     newValue = `${doubleFormat(newDate.getHours())}:${doubleFormat(newDate.getMinutes())}:${doubleFormat(newDate.getSeconds())}`
@@ -24,12 +23,10 @@ export const format = (date: Date | string | number, type: string = '', locale: 
     }
     
     if(locale !== '') {
-      //newValue = newDate.toLocaleTimeString(locale, options)
-      newValue = new Intl.DateTimeFormat(locale, { timeStyle: 'medium', ...options }).format(newDate)
+      newValue = newDate.toLocaleTimeString(locale, options)
     }
   } else {
     if(locale !== '') {
-      //newValue = newDate.toLocaleString(locale, options)
       newValue = new Intl.DateTimeFormat(locale, options).format(newDate)
     }
   }
