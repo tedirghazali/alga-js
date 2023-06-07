@@ -1,7 +1,7 @@
 export const uniqid = (lastId: number = 0): string => {
   let newId: string = ''
   const chars: string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-  const times: string = String(Math.abs(new Date().valueOf()))
+  const times: string = String(JSON.parse(new Date().toJSON().replace(/-|T|Z|:|\./g, '')))
   
   if(Number(lastId) >= 1) {
     newId += String(Number(lastId) + 1)
