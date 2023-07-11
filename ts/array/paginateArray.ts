@@ -14,6 +14,10 @@ export const pages = (lengthOfArray: any[] | number, limitPerPage: number = 10):
   return pageNumber
 }
 
+export const pageStart = (pageActive: number = 1, limitPerPage: number = 10) => {
+  return (Number(pageActive) - 1) * Number(limitPerPage)
+}
+
 export const pageInfo = (fromArray: any[], pageActive: number = 1, limitPerPage: number = 10): any => {
   const newArray: any[] = Array.from(fromArray)
   const startPaginate: number = (Number(limitPerPage) * Number(pageActive)) - (Number(limitPerPage) - 1)

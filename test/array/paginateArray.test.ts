@@ -1,4 +1,4 @@
-import { paginate, pagination, pages, pageInfo } from '../../ts/array/paginateArray'
+import { paginate, pagination, pages, pageStart, pageInfo } from '../../ts/array/paginateArray'
 
 const arrayOfObjects = [
   { id: 1, name: 'Hanbal Tedir', office: 'Jakarta', age: 30 },
@@ -28,8 +28,12 @@ test('Pagination is series of page numbers in array of string', () => {
   expect(pagination(12, 5, 2)).toEqual(['...', '3', '4', '5', '6', '7', '...'])
 })
 
-test('Pages is a total number of pages', () => {
+test('Pages are total number of pages', () => {
   expect(pages(arrayOfObjects.length, limitPerPage)).toBe(3)
+})
+
+test('PageStart is an offset or a start of paginated data', () => {
+  expect(pageStart(currentPage, limitPerPage)).toBe(10)
 })
 
 test('PageInfo is an object data about how many entries', () => {
