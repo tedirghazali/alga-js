@@ -1,1 +1,1 @@
-export declare type IsDate = Date | string | number;
+export type IsDate = Date | string | number;

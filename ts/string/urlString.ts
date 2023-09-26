@@ -25,3 +25,7 @@ export const urlDecodeAsync = async (textPromise: Promise<string>, type: string 
   const text = await Promise.resolve(textPromise)
   return Promise.resolve(urlDecode(text, type))
 }
+
+export const urlData = (content: string, type: string): string => {
+  return `data:${type};base64,${content}`
+}
