@@ -4,14 +4,14 @@ export const double = (value: string, separator: string = ':', type: string = 'd
   if(type === 'double') {
     newValues = newValues.map((i: string) => {
       if(i.length <= 1) {
-        i = i + '0'
+        i = '0' + i
       }
       return i
     })
   } else if(type === 'normal') {
     newValues = newValues.map((i: string, ind: number) => {
       if(i.length <= 1 && ind >= 1) {
-        i = i + '0'
+        i = '0' + i
       }
       return i
     })

@@ -11,5 +11,5 @@ test('Formatted time', () => {
 })
 
 test('Double number of time', () => {
-  expect(double('8:5:0')).toBe('80:50:00')
+  expect(double('8:5:0')).toBe('08:05:00')
 })
