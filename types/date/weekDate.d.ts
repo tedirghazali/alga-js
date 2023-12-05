@@ -1,3 +1,3 @@
-export declare const week: (current?: Date) => number;
+export declare const week: (current?: Date | string | number) => number;
 export declare const weeks: () => number;
-export declare const weekDates: (current?: Date) => string[];
+export declare const weekDates: (current?: Date | string | number) => string[];

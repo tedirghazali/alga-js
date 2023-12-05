@@ -1,7 +1,7 @@
 import { daysInYear } from './numberDate'
 import { format } from './formatDate'
 
-export const week = (current: Date = new Date()): number => {
+export const week = (current: Date | string | number = new Date()): number => {
   const currentDate: Date = new Date(current || null)
   currentDate.setTime(currentDate.getTime() + 24 * 60 * 60 * 1000)
   const startDate: Date = new Date(currentDate.getFullYear(), 0, 1)
@@ -27,7 +27,7 @@ export const weeks = (): number => {
   return Number(Math.ceil(daysOfYear / 7)) - Number(subtractWeek)
 }
 
-export const weekDates = (current: Date = new Date()): string[] => {
+export const weekDates = (current: Date | string | number = new Date()): string[] => {
   let newWeekDates: string[] = []
   const currentDate: Date = new Date(current || null)
 
@@ -35,7 +35,7 @@ export const weekDates = (current: Date = new Date()): string[] => {
     newWeekDates.push(format(new Date(currentDate.getFullYear(), currentDate.getMonth(), Number(currentDate.getDate()) - Number(i)), 'date'))
   }
 
-  for(let j = Number(currentDate.getDay()); j < 6; j++) {
+  for(let j = Number(currentDate.getDay()) - 1; j < 5; j++) {
     newWeekDates.push(format(new Date(currentDate.getFullYear(),currentDate.getMonth(), Number(currentDate.getDate()) + Number(j)), 'date'))
   }
 
