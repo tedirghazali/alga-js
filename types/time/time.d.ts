@@ -4,4 +4,4 @@ export * from './readingTime.js';
 export * from './nowTime.js';
 export * from './formatTime.js';
 export * from './doubleTime.js';
-export * from './percentageTime.js';
+export * from './decimalTime.js';

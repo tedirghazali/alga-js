@@ -1,6 +1,6 @@
 {
   "name": "alga-js",
-  "version": "0.1.0-beta-13",
+  "version": "0.1.0-beta-14",
   "description": "Alga.js is a JavaScript helper to help build UI components by using any of modern web frameworks or libraries",
   "module": "./lib/alga.es.js",
   "main": "./lib/alga.js",
