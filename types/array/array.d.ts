@@ -9,3 +9,5 @@ export * from './paginateArray.js';
 export * from './duplicateArray.js';
 export * from './shuffleArray.js';
 export * from './columnArray.js';
+export * from './mathArray.js';
+export * from './moveArray.js';
