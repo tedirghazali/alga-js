@@ -27,7 +27,7 @@ export const format = (date: Date | string | number, type: string = '', locale: 
     }
   } else {
     if(locale !== '') {
-      newValue = new Intl.DateTimeFormat(locale, options).format(newDate)
+      newValue = newDate.toLocaleString(locale, options)
     }
   }
   
